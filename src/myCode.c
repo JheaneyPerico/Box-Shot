@@ -1,17 +1,32 @@
 #include <ncurses.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 int splash_screen() {
 
 	clear();
-                      //_________     _____     ___   ___   ___       _______        _____  
-	mvprintw(5,10, "_________     _____    ___   ___   ___     ______      _____    ");
-	mvprintw(6,10, "|__   __|    /     \\   \\  \\  | |  /  /    |  ____|    |  _  \\  ");
-	mvprintw(7,10, "   | |      |       |   \\  \\ | | /  /     | |____     | |_)  | ");
-	mvprintw(8,10, "   | |      |       |    \\  \\| |/  /      | _____|    |  _  / ");
-	mvprintw(9,10, "   | |      |       |     \\  \\ /  /       | |____     | | \\ \\");
-	mvprintw(10,10, "   |_|       \\_____/       \\_____/        |______|    |_|  \\_\\");
 
-	
+	mvprintw(10,10, " ________  ________     ___    ___");
+	mvprintw(11,10, "|\\   __  \\|\\   __  \\   |\\  \\  /  /|");
+	mvprintw(12,10, "\\ \\  \\|\\ /\\ \\  \\|\\  \\  \\ \\  \\/  / /");
+	mvprintw(13,10, " \\ \\   __  \\ \\  \\\\\\  \\  \\ \\    / /");
+	mvprintw(14,10, "  \\ \\  \\|\\  \\ \\  \\\\\\  \\  /     \\/");
+	mvprintw(15,10, "   \\ \\_______\\ \\_______\\/  /\\   \\");
+	mvprintw(16,10, "    \\|_______|\\|_______/__/ /\\ __\\");
+	mvprintw(17,10, "                       |__|/ \\|__|");
+
+
+	mvprintw(10, 60, " ________  ___  ___  ________  _________");
+	mvprintw(11, 60, "|\\       \\|\\  \\|\\  \\|\\   __  \\|\\___   ___\\");
+	mvprintw(12, 60, "\\ \\  \\___|\\ \\  \\\\\\  \\ \\  \\|\\  \\|___ \\  \\_|");
+	mvprintw(13, 60, " \\ \\_____  \\ \\   __  \\ \\  \\\\\\  \\   \\ \\  \\");
+	mvprintw(14, 60, "  \\|____|\\  \\ \\  \\ \\  \\ \\  \\\\\\  \\   \\ \\  \\");
+	mvprintw(15, 60, "    ____\\_\\  \\ \\__\\ \\__\\ \\_______\\   \\ \\__\\");
+	mvprintw(16, 60, "   |\\_________\\|__|\\|__|\\|_______|    \\|__|");
+	mvprintw(17, 60, "   \\|_________|");
+
+
 	WINDOW *inputWin = newwin(11, 14, 30, 45);
 	wborder(inputWin, '|', '|', '-', '-', '+', '+', '+', '+');
 	
@@ -21,11 +36,13 @@ int splash_screen() {
 
 	int xStr = 2, yStr = 2;
 
+	// Add buttons
 	mvwprintw(inputWin, yStr, xStr, "START");
 	mvwprintw(inputWin, yStr + 2, xStr, "LEVEL 1");
 	mvwprintw(inputWin, yStr + 4, xStr, "LEVEL 2");
 	mvwprintw(inputWin, yStr + 6, xStr, "LEVEL 3");
 
+	// Selecting button
 	int x = 10, y = 2;
 	mvwprintw(inputWin, y, x, "<");
 	
@@ -98,7 +115,7 @@ int splash_screen() {
 
 }
 
-void Player(WINDOW *win){
+void Player(){
 
 	int playerX, playerY;
 
@@ -134,22 +151,22 @@ void Player(WINDOW *win){
 		switch(key) {
 			case KEY_UP:
 				playerY--;
-				playerY--;
+			//	playerY--;
 				break;
 
 			case KEY_DOWN:
 				playerY++;
-				playerY++;
+			//	playerY++;
 				break;
 
 			case KEY_LEFT:
 				playerX--;
-				playerX--;
+			//	playerX--;
 				break;
 
 			case KEY_RIGHT:
 				playerX++;
-				playerX++;
+			//	playerX++;
 				break;
 
 			default:
@@ -171,6 +188,70 @@ void Player(WINDOW *win){
 
 }
 
+void Enemies(int MAX_ENEMIES){
+
+	int enemyX[MAX_ENEMIES], enemyY[MAX_ENEMIES];
+
+	int max_y, max_x;
+	getmaxyx(stdscr, max_y, max_x);
+
+	srand(time(NULL));
+
+	for (int i = 0; i < MAX_ENEMIES; ++i){
+		enemyX[i] = rand() % max_x;
+		enemyY[i] = rand() % max_y;
+	}
+
+	if (has_colors()){
+		start_color();
+		init_pair(3, COLOR_BLACK, COLOR_RED);
+	}
+
+	attron(COLOR_PAIR(3));
+
+	for (int i = 0; i < MAX_ENEMIES; ++i){
+		mvprintw(enemyY[i], enemyX[i], "Zb");
+		refresh();
+	}
+
+	attroff(COLOR_PAIR(3));
+	refresh();
+
+
+}
+
+void upgrade_box(int MAX_NUM){
+	int upgX[MAX_NUM], upgY[MAX_NUM];
+
+	int max_y, max_x;
+
+	getmaxyx(stdscr, max_y, max_x);
+
+	srand(time(NULL));
+
+	for (int i = 0; i < MAX_NUM; ++i){
+		upgX[i] = rand() % max_x;
+		upgY[i] = rand() % max_y;
+
+	}
+
+	if (has_colors()){
+		start_color();
+		init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
+	}
+
+	attron(COLOR_PAIR(4));
+
+	for (int i = 0; i < MAX_NUM; ++i){
+		mvprintw(upgX[i], upgY[i], "##");
+		refresh();
+	}
+
+	attroff(COLOR_PAIR(4));
+	refresh();
+
+}
+
 void display_level(int lvl){
 	clear();
 	
@@ -185,7 +266,6 @@ void display_level(int lvl){
 	int start_x = (max_x - mid_width) / 2 - 5;
 
 	WINDOW *win = newwin(max_y, max_x, 0, 0);
-	box(win, 0,0);
 
 	// CREATE BOXES
 	WINDOW *box1 = newwin(mid_height - 15, mid_width - 45, start_y, start_x); // top left box
@@ -193,6 +273,7 @@ void display_level(int lvl){
 	WINDOW *box3 = newwin(mid_height - 15, mid_width - 45, (start_y), (start_x * 3)); // top right box
 	WINDOW *box4 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x * 3)); // bottom right box
 	WINDOW *box5 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x)); // bottom left box
+
 
 	// WHITE COLOR -> Pair(2)
 	if (has_colors()){
@@ -214,7 +295,7 @@ void display_level(int lvl){
 			// ADD BOXES
 			box(box1, 0,0);
 			box(box4,0,0);
-
+	
 			// FILL BOXES WITH WHITE SPACE
 			for (int i = 1; i <  (mid_height - 15); ++i){
 				for (int j = 1; j < (mid_width - 45); ++j){
@@ -234,7 +315,7 @@ void display_level(int lvl){
 			wrefresh(win);
 			wrefresh(box1);
 			wrefresh(box4);
-			
+
 			break;
 
 		case 2:
