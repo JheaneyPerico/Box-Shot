@@ -98,6 +98,68 @@ int splash_screen() {
 
 }
 
+void Player(WINDOW *win){
+
+	int playerX, playerY;
+
+	int MAX_HEIGHT = 20;
+	int MAX_WIDTH = 40;
+
+	playerX = MAX_WIDTH / 2;
+	playerY = MAX_HEIGHT / 2;
+
+	if (playerX < 0) playerX = 0;
+	if (playerX >= MAX_WIDTH) playerX = MAX_WIDTH - 1;
+	if (playerY < 0) playerY = 0;
+	if (playerY >= MAX_HEIGHT) playerY = MAX_HEIGHT - 1;
+
+	mvprintw(playerY, playerX, "P");
+
+	keypad(stdscr, true);
+
+	int key = getch();
+
+	while (key != '\n'){
+
+		mvprintw(playerY, playerX, " ");
+
+		switch(key) {
+			case KEY_UP:
+				playerY--;
+				playerY--;
+				break;
+
+			case KEY_DOWN:
+				playerY++;
+				playerY++;
+				break;
+
+			case KEY_LEFT:
+				playerX--;
+				playerX--;
+				break;
+
+			case KEY_RIGHT:
+				playerX++;
+				playerX++;
+				break;
+
+			default:
+				refresh();
+				break;
+
+		} 
+
+		mvprintw(playerY, playerX, "P");
+
+		refresh();
+
+		key = getch();
+	} 
+
+
+}
+
 void display_level(int lvl){
 	clear();
 	
@@ -108,24 +170,17 @@ void display_level(int lvl){
 	int mid_height = max_y / 2;
 	int mid_width = max_x / 2;
 
-	int start_y = (max_y - mid_height) / 2;
-	int start_x = (max_x - mid_width) / 2;
+	int start_y = (max_y - mid_height) / 2 - 2;
+	int start_x = (max_x - mid_width) / 2 - 5;
 
 	WINDOW *win = newwin(max_y, max_x, 0, 0);
 	box(win, 0,0);
 
-	WINDOW *box1 = newwin(mid_height - 15, mid_width - 45, start_y, start_x);
-	WINDOW *box2 = newwin(mid_height - 15, mid_width - 45, (start_y * 2), (start_x * 2));
-	WINDOW *box3 = newwin(mid_height - 15, mid_width - 45, (start_y * 3 ), (start_x * 3));
-
-	const char* person = 
-		" O\n"
-		"/|\\\n"
-		"/ \\\n";
-
-	int py = (max_y - 3) / 2; // ASCII art has 3 lines
-	int px = (max_x -3) / 2; // ASCII art has 3 characters in each line
-
+	WINDOW *box1 = newwin(mid_height - 15, mid_width - 45, start_y, start_x); // top left box
+	WINDOW *box2 = newwin(mid_height - 15, mid_width - 45, (start_y * 2), (start_x * 2)); // middle box
+	WINDOW *box3 = newwin(mid_height - 15, mid_width - 45, (start_y), (start_x * 3)); // bottom right box
+	WINDOW *box4 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x * 3)); // top right box
+	WINDOW *box5 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x));
 
 	// Display level layout
 	switch(lvl) {
@@ -136,8 +191,24 @@ void display_level(int lvl){
 			box(box1, 0,0);
 			box(box2, 0,0);
 			box(box3, 0,0);
+			box(box4, 0,0);
+			box(box5, 0,0);
+
+			refresh();
+
+			wrefresh(win);
+			wrefresh(box1);
+			wrefresh(box2);
+			wrefresh(box3);
+			wrefresh(box4);
+			wrefresh(box5);
 			
-			mvwprintw(win, 1,1, person);
+			break;
+
+		case 2:
+			// Print lvl 2 layout
+			box(box1, 0,0);
+			box(box3, 0,0);
 
 			refresh();
 
@@ -147,13 +218,23 @@ void display_level(int lvl){
 			wrefresh(box3);
 
 			break;
-
-		case 2:
-			// Print lvl 2 layout
 			
 
 		case 3: 
 			// Print lvl 3 layout
+			box(box1, 0,0);
+			box(box2, 0,0);
+			box(box3, 0,0);
+			box(box4, 0,0);
+
+			refresh();
+
+			wrefresh(win);
+			wrefresh(box1);
+			wrefresh(box2);
+			wrefresh(box3);
+			wrefresh(box4);
+
 			break;
 	}
 
