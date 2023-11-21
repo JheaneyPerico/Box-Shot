@@ -16,31 +16,37 @@ int splash_screen() {
 		init_pair(1, COLOR_RED, A_NORMAL);
 	}
 	
+	int max_x, max_y;
+	getmaxyx(stdscr, max_x, max_y);
+
+	int mid_height = max_y / 2;
+	int mid_width = max_x / 2;
+
 	// SPLASH SCREEN
 	attron(A_BOLD);
-	mvprintw(10,10, " ________  ________     ___    ___");
-	mvprintw(11,10, "|\\   __  \\|\\   __  \\   |\\  \\  /  /|");
-	mvprintw(12,10, "\\ \\  \\|\\ /\\ \\  \\|\\  \\  \\ \\  \\/  / /");
-	mvprintw(13,10, " \\ \\   __  \\ \\  \\\\\\  \\  \\ \\    / /");
-	mvprintw(14,10, "  \\ \\  \\|\\  \\ \\  \\\\\\  \\  /     \\/");
-	mvprintw(15,10, "   \\ \\_______\\ \\_______\\/  /\\   \\");
-	mvprintw(16,10, "    \\|_______|\\|_______/__/ /\\ __\\");
-	mvprintw(17,10, "                       |__|/ \\|__|");
+	mvprintw(10, mid_width - 25, " ________  ________     ___    ___");
+	mvprintw(11,mid_width - 25, "|\\   __  \\|\\   __  \\   |\\  \\  /  /|");
+	mvprintw(12,mid_width - 25, "\\ \\  \\|\\ /\\ \\  \\|\\  \\  \\ \\  \\/  / /");
+	mvprintw(13,mid_width - 25, " \\ \\   __  \\ \\  \\\\\\  \\  \\ \\    / /");
+	mvprintw(14,mid_width - 25, "  \\ \\  \\|\\  \\ \\  \\\\\\  \\  /     \\/");
+	mvprintw(15,mid_width - 25, "   \\ \\_______\\ \\_______\\/  /\\   \\");
+	mvprintw(16,mid_width - 25, "    \\|_______|\\|_______/__/ /\\ __\\");
+	mvprintw(17,mid_width - 25, "                       |__|/ \\|__|"); // 16
 
 	attron(COLOR_PAIR(1)); // red
-	mvprintw(10, 58, " ________  ___  ___  ________  _________");
-	mvprintw(11, 58, "|\\       \\|\\  \\|\\  \\|\\   __  \\|\\___   ___\\");
-	mvprintw(12, 58, "\\ \\  \\___|\\ \\  \\\\\\  \\ \\  \\|\\  \\|___ \\  \\_|");
-	mvprintw(13, 58, " \\ \\_____  \\ \\   __  \\ \\  \\\\\\  \\   \\ \\  \\");
-	mvprintw(14, 58, "  \\|____|\\  \\ \\  \\ \\  \\ \\  \\\\\\  \\   \\ \\  \\");
-	mvprintw(15, 58, "    ____\\_\\  \\ \\__\\ \\__\\ \\_______\\   \\ \\__\\");
-	mvprintw(16, 58, "   |\\_________\\|__|\\|__|\\|_______|    \\|__|");
-	mvprintw(17, 58, "   \\|_________|");
+	mvprintw(10, mid_width + 25, " ________  ___  ___  ________  _________");
+	mvprintw(11, mid_width + 25, "|\\       \\|\\  \\|\\  \\|\\   __  \\|\\___   ___\\");
+	mvprintw(12, mid_width + 25, "\\ \\  \\___|\\ \\  \\\\\\  \\ \\  \\|\\  \\|___ \\  \\_|");
+	mvprintw(13, mid_width + 25, " \\ \\_____  \\ \\   __  \\ \\  \\\\\\  \\   \\ \\  \\");
+	mvprintw(14, mid_width + 25, "  \\|____|\\  \\ \\  \\ \\  \\ \\  \\\\\\  \\   \\ \\  \\");
+	mvprintw(15, mid_width + 25, "    ____\\_\\  \\ \\__\\ \\__\\ \\_______\\   \\ \\__\\");
+	mvprintw(16, mid_width + 25, "   |\\_________\\|__|\\|__|\\|_______|    \\|__|");
+	mvprintw(17, mid_width + 25, "   \\|_________|"); // 58
 
 	attroff(COLOR_PAIR(1));
 
-	mvprintw(25, 43, "WELCOME TO BOX SHOT");
-	mvprintw(27, 36, "SELECT DIFFICULTY AND PRESS ENTER");
+	mvprintw(25, mid_width + strlen("WELCOME TO BOX SHOT")/2, "WELCOME TO BOX SHOT");
+	mvprintw(27, mid_width + 2, "SELECT DIFFICULTY AND PRESS ENTER");
 	attroff(A_BOLD);
 	
 	attron(A_DIM);
@@ -231,25 +237,12 @@ void Enemies(int MAX_ENEMIES){
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
 
+	int mid_height = max_y / 2;
+	int mid_width = max_x / 2;
 
-	int start_x = (max_x - (max_x / 2)) / 2 - 12;
-	int start_y = (max_y - (max_y / 2)) / 2 - 2;
+	int start_y = (max_y - mid_height) / 2 - 2;
+	int start_x = (max_x - mid_width) / 2 - 5;
 
-	srand(time(NULL));
-	
-	// Have Enemies randomly spawn outside the box range
-	for (int i = 0; i < MAX_ENEMIES; ++i){
-		enemyX[i] = rand() % (max_x); //(1 to max_x)
-		enemyY[i] = rand() % (max_y); // (1 to max_y)
-		
-		if ((enemyY[i] >= start_y && enemyY[i] <= start_y + 25) && (enemyX[i] >= start_x && enemyX[i] <= start_x + 80)){
-			while ((enemyX[i] > start_x) && (enemyX[i] < (start_x + 80)))
-				enemyX[i] = rand() % (max_x);
-
-			while ((enemyY[i] >= start_y) && (enemyY[i] <= (start_y + 25)))
-				enemyY[i] = rand() % (max_y);
-				}
-		}
 
 	// COLOR RED -> PAIR(3)
 	if (has_colors()){
@@ -257,14 +250,52 @@ void Enemies(int MAX_ENEMIES){
 		init_pair(3, COLOR_BLACK, COLOR_RED);
 	}
 
-	attron(COLOR_PAIR(3)); // red
+	srand(time(NULL));
+		
+	attron(COLOR_PAIR(3));
 
+	int count1 = 5;
+	int count2 = 5;
+	int count3 = 5;
+	int count4 = 5;
+
+	// Left
+	for (int i = 0; i < MAX_ENEMIES * (1/4); ++i){
+		enemyX[i] = 5;
+		enemyY[i] = count1;
+		count1 += 5;
+	}
+
+	// Right
+	for (int i = MAX_ENEMIES / 4; i < MAX_ENEMIES * (2/4); ++i){
+		enemyX[i] = max_x - 5;
+		enemyY[i] = count2;
+		count2 += 5;
+
+	}
+	
+	// Top
+	for (int i = MAX_ENEMIES * (2/4); i < MAX_ENEMIES * (3/4); ++i){
+		enemyX[i] = count3;
+		enemyY[i] = 5;
+		count3 += 5;
+
+	}
+
+	// Bottom
+	for (int i = MAX_ENEMIES * (3/4); i < MAX_ENEMIES; ++i){
+	       enemyX[i] = count4;
+	       enemyY[i] = max_y - 5;
+	       count4 += 5;
+       	}	       
+
+	// Print Enemies
 	for (int i = 0; i < MAX_ENEMIES; ++i){
-		mvprintw(enemyY[i], enemyX[i], "Zb");
+		mvprintw(enemyX[i], enemyY[i], ENEMY);
 		refresh();
 	}
 
-	attroff(COLOR_PAIR(3));
+	attron(COLOR_PAIR(3));
 	refresh();
 
 
@@ -329,11 +360,11 @@ void display_level(int lvl){
 	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+'); // display the boundaries
 
 	// CREATE BOXES (WALL)
-	WINDOW *box1 = newwin(mid_height - 15, mid_width - 45, start_y, start_x); // top left box
-	WINDOW *box2 = newwin(mid_height - 15, mid_width - 45, (start_y * 2), (start_x * 2)); // middle box
-	WINDOW *box3 = newwin(mid_height - 15, mid_width - 45, (start_y), (start_x * 3)); // top right box
-	WINDOW *box4 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x * 3)); // bottom right box
-	WINDOW *box5 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x)); // bottom left box
+	WINDOW *box1 = newwin(10, 20, start_y, start_x); // top left box
+	WINDOW *box2 = newwin(10, 20, (start_y * 2), (start_x * 2)); // middle box
+	WINDOW *box3 = newwin(10, 20, (start_y), (start_x * 3)); // top right box
+	WINDOW *box4 = newwin(10, 20, (start_y * 3), (start_x * 3)); // bottom right box
+	WINDOW *box5 = newwin(10, 20, (start_y * 3), (start_x)); // bottom left box
 
 	// WHITE COLOR -> Pair(2)
 	if (has_colors()){
@@ -449,8 +480,8 @@ void display_level(int lvl){
 			box(box5, 0,0);
 
 			// FILL BOXES WITH WHITE SPACE
-			for (int i = 1; i < (mid_height - 15); ++i){
-				for (int j = 1; j < (mid_width - 45); ++j){
+			for (int i = 1; i < (mid_height); ++i){
+				for (int j = 1; j < (mid_width); ++j){
 					mvwaddch(box1, i, j, ' ');
 					mvwaddch(box2, i, j, ' ');
 					mvwaddch(box3, i, j, ' ');
@@ -478,8 +509,25 @@ void display_level(int lvl){
 
 			break;
 	}
+	
 
 	wrefresh(win);
 	refresh();
 }
+/*
+void pause_screen(){
+	clear();
 
+	mvprintw(2, 10," _________  ___  ___  _______           ________  ________  _____ ______   _______           ___  ________           ________  ________  ___  ___  ________  _______   ________     ");
+	mvprintw(4,10, "|\\___   ___\\\\  \\|\\  \\|\\  ___ \\         |\\   ____\\|\\   __  \\|\\   _ \\  _   \\|\\  ___ \         |\\  \\|\\   ____\\         |\\   __  \\|\\   __  \\|\\  \\|\\  \\|\\   ____\\|\\  ___ \\ |\\   ___ \\    ");
+	mvprintw(6,10, "\\|___ \\  \\_\\ \\  \\\\\\  \\ \\   __/|        \\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\   __/|        \\ \\  \\ \\  \\___|_        \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\\\\\  \\ \\  \\___|\\ \\   __/|\\ \\  \\_|\\ \\   ");
+	mvprintw(8,10, "     \\ \\  \\ \\ \\   __  \\ \\  \\_|/__       \\ \\  \\  __\\ \\   __  \\ \\  \\\\|__| \\  \\ \\  \\_|/__       \\ \\  \\ \\_____  \\        \\ \\   ____\\ \\   __  \\ \\  \\\\\\  \\ \\_____  \\ \\  \\_|/_\\ \\  \\ \\\\ \\  ");
+	mvprintw(10,10,"      \\ \\  \\ \\ \\  \\ \\  \\ \\  \\_|\\ \\       \\ \\  \\|\\  \\ \\  \\ \\  \\ \\  \\    \\ \\  \\ \\  \\_|\\ \\       \\ \\  \\|____|\\  \\        \\ \\  \\___|\\ \\  \\ \\  \\ \\  \\\\\\  \\|____|\\  \\ \\  \\_|\\ \\ \\  \\_\\\\ \\ ");
+	mvprintw(12,10,"       \\ \\__\\ \\ \\__\\ \\__\\ \\_______\\       \\ \\_______\\ \\__\\ \__\\ \\__\\    \\ \\__\\ \\_______\\       \\ \\__\\____\\_\\  \\        \\ \\__\\    \\ \\__\\ \\__\\ \\_______\\____\\_\\  \\ \\_______\\ \\_______\\");
+	mvprintw(14,10,"        \\|__|  \\|__|\\|__|\\|_______|        \\|_______|\\|__|\\|__|\\|__|     \\|__|\\|_______|        \\|__|\\_________\\        \\|__|     \\|__|\\|__|\\|_______|\_________\\|_______|\\|_______|");
+	mvprintw(16,10,"                                                                                                    \\|_________|                                     \\|_________|                   ");
+
+	refresh();
+
+}
+*/
