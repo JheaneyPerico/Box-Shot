@@ -1,5 +1,5 @@
 int splash_screen();
 void display_level(int lvl);
-void Player();
+int Player(int lvl);
 void Enemies(int MAX_ENEMIES);
-void upgrade_box(int MAX_NUM);
+int upgrade_box(int MAX_NUM);

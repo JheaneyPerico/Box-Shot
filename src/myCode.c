@@ -9,12 +9,14 @@
 int splash_screen() {
 
 	clear();
-	
+
+	// COLOR RED -> PAIR(1)
 	if (has_colors()){
 		start_color();
 		init_pair(1, COLOR_RED, A_NORMAL);
 	}
 	
+	// SPLASH SCREEN
 	attron(A_BOLD);
 	mvprintw(10,10, " ________  ________     ___    ___");
 	mvprintw(11,10, "|\\   __  \\|\\   __  \\   |\\  \\  /  /|");
@@ -25,7 +27,7 @@ int splash_screen() {
 	mvprintw(16,10, "    \\|_______|\\|_______/__/ /\\ __\\");
 	mvprintw(17,10, "                       |__|/ \\|__|");
 
-	attron(COLOR_PAIR(1));
+	attron(COLOR_PAIR(1)); // red
 	mvprintw(10, 58, " ________  ___  ___  ________  _________");
 	mvprintw(11, 58, "|\\       \\|\\  \\|\\  \\|\\   __  \\|\\___   ___\\");
 	mvprintw(12, 58, "\\ \\  \\___|\\ \\  \\\\\\  \\ \\  \\|\\  \\|___ \\  \\_|");
@@ -42,6 +44,7 @@ int splash_screen() {
 	
 	attroff(A_BOLD);
 
+	// BORDER
 	WINDOW *inputWin = newwin(11, 14, 30, 45);
 	wborder(inputWin, '|', '|', '-', '-', '+', '+', '+', '+');
 	
@@ -115,12 +118,15 @@ int splash_screen() {
 
 	refresh();
 
+	// Level 1
 	if (y == yStr + 2)
 		return 1;
 
+	// Level 2
 	else if (y == yStr + 4)
 		return 2;
-
+	
+	// Level 3
 	else if (y == yStr + 6)
 		return 3;
 
@@ -130,19 +136,25 @@ int splash_screen() {
 
 }
 
-void Player(){
+int Player(int lvl){
 
 	int playerX, playerY;
+	
+	int MAX_HEIGHT, MAX_WIDTH;
+	getmaxyx(stdscr, MAX_HEIGHT, MAX_WIDTH);
 
-	int MAX_HEIGHT = 20;
-	int MAX_WIDTH = 40;
-
-	playerX = MAX_WIDTH / 2;
+	playerX = (MAX_WIDTH / 2) - 3;
 	playerY = MAX_HEIGHT / 2;
 
-	if (playerX < 0) playerX = 0;
+	// Have player position slightly up for level 3
+	if (lvl == 3){
+		playerY -= 7;
+	}
+
+	// Make Player inside bound
+	if (playerX < 1) playerX = 1;
 	if (playerX >= MAX_WIDTH) playerX = MAX_WIDTH - 1;
-	if (playerY < 0) playerY = 0;
+	if (playerY < 1) playerY = 1;
 	if (playerY >= MAX_HEIGHT) playerY = MAX_HEIGHT - 1;
 
 	// GREEN COLOR -> PAIR(1)
@@ -151,7 +163,7 @@ void Player(){
 		init_pair(1, COLOR_BLACK, COLOR_GREEN);
 	}
 
-	attron(COLOR_PAIR(1));
+	attron(COLOR_PAIR(1)); // green
 	mvprintw(playerY, playerX, PLAYER);
 	attroff(COLOR_PAIR(1));
 
@@ -161,8 +173,10 @@ void Player(){
 
 	while (key != '\n'){
 
+		// CLEAR CURRENT POSITION
 		mvprintw(playerY, playerX, "  ");
-
+		
+		// MOVE PLAYER
 		switch(key) {
 			case KEY_UP:
 				playerY--;
@@ -197,7 +211,11 @@ void Player(){
 		refresh();
 
 		key = getch();
+
+		
 	} 
+
+	return 0;
 
 
 
@@ -214,32 +232,36 @@ void Enemies(int MAX_ENEMIES){
 	int start_x = (max_x - (max_x / 2)) / 2 - 12;
 	int start_y = (max_y - (max_y / 2)) / 2 - 2;
 
-	//WINDOW *bord = newwin(25, 80,start_x, start_y);
-	//box(bord, 0,0);
+	/*
 	
+	WINDOW *bord = newwin(25, 80,start_y, start_x);
+	box(bord, 0,0);
+	wrefresh(bord);
+	*/
+
 	srand(time(NULL));
 	
+	// Have Enemies randomly spawn outside the box range
 	for (int i = 0; i < MAX_ENEMIES; ++i){
 		enemyX[i] = rand() % (max_x);
 		enemyY[i] = rand() % (max_y);
 		
-		if (enemyY[i] > start_y && enemyY[i] < start_y + 25){
-			while (!(enemyX[i] < start_x) && !(enemyX[i] > (start_x + 80)))
+		if ((enemyY[i] >= start_y && enemyY[i] <= start_y + 25) && (enemyX[i] >= start_x && enemyX[i] <= start_x + 80)){
+			while ((enemyX[i] > start_x) && (enemyX[i] < (start_x + 80)))
 				enemyX[i] = rand() % (max_x);
-		}
-		
-		if (enemyX[i] > start_x && enemyX[i] < start_x + 80){
-			while (!(enemyY[i] < start_y) && !(enemyY[i] > (start_y + 25)))
-				enemyY[i] = rand() % (max_y);
-		}
-	}
 
+			while ((enemyY[i] >= start_y) && (enemyY[i] <= (start_y + 25)))
+				enemyY[i] = rand() % (max_y);
+				}
+		}
+
+	// COLOR RED -> PAIR(3)
 	if (has_colors()){
 		start_color();
 		init_pair(3, COLOR_BLACK, COLOR_RED);
 	}
 
-	attron(COLOR_PAIR(3));
+	attron(COLOR_PAIR(3)); // red
 
 	for (int i = 0; i < MAX_ENEMIES; ++i){
 		mvprintw(enemyY[i], enemyX[i], "Zb");
@@ -252,35 +274,46 @@ void Enemies(int MAX_ENEMIES){
 
 }
 
-void upgrade_box(int MAX_NUM){
-	int upgX[MAX_NUM], upgY[MAX_NUM];
+int upgrade_box(int MAX_NUM){
 
 	int max_y, max_x;
-
 	getmaxyx(stdscr, max_y, max_x);
 
-	srand(time(NULL));
+	int guntype;
 
-	for (int i = 0; i < MAX_NUM; ++i){
-		upgX[i] = rand() % max_x;
-		upgY[i] = rand() % max_y;
-
-	}
-
+	// COLOR YELLO -> PAIR(4)
 	if (has_colors()){
 		start_color();
 		init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
 	}
 
-	attron(COLOR_PAIR(4));
+	attron(COLOR_PAIR(4)); // yellow
+	switch(MAX_NUM) {
+		case 1: // (lvl 1 -> 1 box)
+			mvprintw(max_y / 2 + 7, max_x / 4 + 5, "##");
+			guntype = 1;
+			break;
 
-	for (int i = 0; i < MAX_NUM; ++i){
-		mvprintw(upgX[i], upgY[i], "##");
-		refresh();
+		case 2: // (lvl 2 -> 2 boxes)
+			mvprintw(max_y / 4 - 1, max_x / 3 + 5, "##");
+			mvprintw(max_y / 2 + 8, max_x / 2 + 6, "##");
+			guntype = 2;
+			break;
+
+		case 3: // (lvl 3 -> 3 boxes)
+			mvprintw(max_y / 4 - 1, max_x / 3 + 5, "##");
+			mvprintw(max_y / 2 + 3, max_x / 2 + 23, "##");
+			mvprintw(max_y / 2 + 8, max_x / 2 - 5, "##");
+			guntype = 3;
+			break;
+
 	}
 
 	attroff(COLOR_PAIR(4));
+
 	refresh();
+
+	return guntype;
 
 }
 
@@ -299,7 +332,7 @@ void display_level(int lvl){
 
 	WINDOW *win = newwin(max_y, max_x, 0, 0);
 
-	// CREATE BOXES
+	// CREATE BOXES (WALL)
 	WINDOW *box1 = newwin(mid_height - 15, mid_width - 45, start_y, start_x); // top left box
 	WINDOW *box2 = newwin(mid_height - 15, mid_width - 45, (start_y * 2), (start_x * 2)); // middle box
 	WINDOW *box3 = newwin(mid_height - 15, mid_width - 45, (start_y), (start_x * 3)); // top right box
