@@ -41,8 +41,15 @@ int splash_screen() {
 
 	mvprintw(25, 43, "WELCOME TO BOX SHOT");
 	mvprintw(27, 36, "SELECT DIFFICULTY AND PRESS ENTER");
-	
 	attroff(A_BOLD);
+	
+	attron(A_DIM);
+	mvprintw(31, 9, "INSTRUCTIONS:");
+	mvprintw(33, 5, "MOVE USING ARROR KEYS");
+	mvprintw(35, 5, "USE 'SPACE' TO SHOOT");
+	mvprintw(37, 4, "COLLECT WEAPONS AND ITEMS");
+	mvprintw(39, 3, "ELIMINATE ALL ZOMBIES TO WIN");
+	attroff(A_DIM);
 
 	// BORDER
 	WINDOW *inputWin = newwin(11, 14, 30, 45);
@@ -180,22 +187,18 @@ int Player(int lvl){
 		switch(key) {
 			case KEY_UP:
 				playerY--;
-			//	playerY--;
 				break;
 
 			case KEY_DOWN:
 				playerY++;
-			//	playerY++;
 				break;
 
 			case KEY_LEFT:
 				playerX--;
-			//	playerX--;
 				break;
 
 			case KEY_RIGHT:
 				playerX++;
-			//	playerX++;
 				break;
 
 			default:
@@ -232,19 +235,12 @@ void Enemies(int MAX_ENEMIES){
 	int start_x = (max_x - (max_x / 2)) / 2 - 12;
 	int start_y = (max_y - (max_y / 2)) / 2 - 2;
 
-	/*
-	
-	WINDOW *bord = newwin(25, 80,start_y, start_x);
-	box(bord, 0,0);
-	wrefresh(bord);
-	*/
-
 	srand(time(NULL));
 	
 	// Have Enemies randomly spawn outside the box range
 	for (int i = 0; i < MAX_ENEMIES; ++i){
-		enemyX[i] = rand() % (max_x);
-		enemyY[i] = rand() % (max_y);
+		enemyX[i] = rand() % (max_x); //(1 to max_x)
+		enemyY[i] = rand() % (max_y); // (1 to max_y)
 		
 		if ((enemyY[i] >= start_y && enemyY[i] <= start_y + 25) && (enemyX[i] >= start_x && enemyX[i] <= start_x + 80)){
 			while ((enemyX[i] > start_x) && (enemyX[i] < (start_x + 80)))
@@ -319,7 +315,6 @@ int upgrade_box(int MAX_NUM){
 
 void display_level(int lvl){
 	clear();
-	
 
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
@@ -331,6 +326,7 @@ void display_level(int lvl){
 	int start_x = (max_x - mid_width) / 2 - 5;
 
 	WINDOW *win = newwin(max_y, max_x, 0, 0);
+	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+'); // display the boundaries
 
 	// CREATE BOXES (WALL)
 	WINDOW *box1 = newwin(mid_height - 15, mid_width - 45, start_y, start_x); // top left box
@@ -338,7 +334,6 @@ void display_level(int lvl){
 	WINDOW *box3 = newwin(mid_height - 15, mid_width - 45, (start_y), (start_x * 3)); // top right box
 	WINDOW *box4 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x * 3)); // bottom right box
 	WINDOW *box5 = newwin(mid_height - 15, mid_width - 45, (start_y * 3), (start_x)); // bottom left box
-
 
 	// WHITE COLOR -> Pair(2)
 	if (has_colors()){
@@ -352,7 +347,10 @@ void display_level(int lvl){
 
 		case 1:
 			// Print lvl 1 layout
-			
+			wattron(win, A_BOLD);
+			mvwprintw(win, 2, 2, "LEVEL 1");
+			wattroff(win, A_BOLD);
+
 			// COLOR THE BOXES TO WHITE		
 			wattron(box1, COLOR_PAIR(2));
 			wattron(box4, COLOR_PAIR(2));
@@ -385,7 +383,10 @@ void display_level(int lvl){
 
 		case 2:
 			// Print lvl 2 layout
-			
+			wattron(win, A_BOLD);
+			mvwprintw(win, 2, 2, "LEVEL 2");
+			wattroff(win, A_BOLD);
+
 			// COLOR THE BOXES TO WHITE
 			wattron(box1, COLOR_PAIR(2));
 			wattron(box3, COLOR_PAIR(2));
@@ -428,7 +429,11 @@ void display_level(int lvl){
 
 		case 3: 
 			// Print lvl 3 layout
-			
+			wattron(win, A_BOLD);
+			mvwprintw(win, 2, 2, "LEVEL 3");
+			wattroff(win, A_BOLD);
+					
+			// BOXES COLOR	
 			wattron(box1, COLOR_PAIR(2));
 			wattron(box2, COLOR_PAIR(2));
 			wattron(box3, COLOR_PAIR(2));
@@ -474,6 +479,7 @@ void display_level(int lvl){
 			break;
 	}
 
+	wrefresh(win);
 	refresh();
 }
 
