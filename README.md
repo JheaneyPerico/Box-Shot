@@ -1,7 +1,7 @@
 GAME PLAN:
 
-1.  Shoot and kill all zombies, while trying to avoid getting hit (collide by them). 
-2. The levels will have different number of zombies attacking you, depending on the level you're in. There will be various zombie types that have more HP and faster as the levels progress. There will also more walls as levels increase. You can not shoot through the wall, and zombies can not go through the wall.
-3.  Players can collect orange boxes which will upgrade their gun, increasing firing rate, range, etc.
+1.  Shoot and kill all zombies, while evading them (avoid collision). 
+2. As level progress, the number of zombies will increase. New zombie types will be introduced, including zombies who are faster and have a higher hit point.
+3. Wall structure will be different per level. As levels increase, so will the number of walls. The player can not shoot through the wall, and zombies can not go through the wall.
+4. Players can collect orange boxes which will upgrade their gun, increasing firing rate, range, etc.
 
-.
