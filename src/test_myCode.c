@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include "myCode.h"
+#include "character.h"
 
 int main(){
 	initscr();
@@ -9,13 +10,29 @@ int main(){
 	int lvl;	
 	lvl = splash_screen();
 
+	int playerX, playerY;
+
+	int max_y, max_x;
+	getmaxyx(stdscr, max_y, max_x);
+
+	playerX = (max_x / 2) - 3;
+	playerY = (max_y / 2);
+
+	if (lvl == 3) playerY -= 7;
+
+	Character player = {playerX, playerY, "P1", playerX, playerY};
+
 	while(1){
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
 			display_level(1);
 			upgrade_box(1);
 			Enemies(5,1);
-			Player(1);
+			printCharacter(player);
+			
+			char key = getch();
+			if (key != 'q')
+				moveCharacter(&player, key);
 		}
 
 		// LEVEL 2
@@ -24,7 +41,6 @@ int main(){
 			display_level(2);
 			upgrade_box(2);
 			Enemies(9,2);
-			Player(2);
 		}
 
 		// LEVEL 3
@@ -33,16 +49,15 @@ int main(){
 			display_level(3);
 			upgrade_box(3);
 			Enemies(15,3);
-			Player(3);
 		}
-		char ch = getch();
-
 		refresh();
 
-		endwin();
+		char ch = getch();
+		if (ch == 'q') break;
 
-		return 0;
 	}
+
+	endwin();
 
 	return 0;
 }

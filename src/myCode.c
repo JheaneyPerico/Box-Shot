@@ -4,6 +4,7 @@
 #include <time.h>
 #include <string.h>
 #include <math.h>
+#include "character.h"
 #define PLAYER "P1"
 #define ENEMY "Zb"
 
@@ -150,69 +151,29 @@ int splash_screen() {
 
 }
 
-typedef struct{
-	int x;
-	int y;
-	char symbol[20];
-} Character;
-
 void printCharacter(Character character){
 	mvprintw(character.y, character.x, "%s", character.symbol);
+	refresh();
 }
 
-int Player(int lvl){
+void moveCharacter(Character *character, int key){
 
-	int playerX, playerY;
-	
-	int MAX_HEIGHT, MAX_WIDTH;
-	getmaxyx(stdscr, MAX_HEIGHT, MAX_WIDTH);
-
-	playerX = (MAX_WIDTH / 2) - 3;
-	playerY = MAX_HEIGHT / 2;
-
-	if (lvl == 3) playerY -= 7;
-
-	Character player = {playerX, playerY, "P1"};
-
-	printCharacter(player);
-
-	// GREEN COLOR -> PAIR(1)
-	if (has_colors()){
-		start_color();
-		init_pair(1, COLOR_BLACK, COLOR_GREEN);
-	}
-
-	attron(COLOR_PAIR(1)); // green
-	mvprintw(playerY, playerX, PLAYER);
-	attroff(COLOR_PAIR(1));
-
-	keypad(stdscr, true);
-
-	int key = getch();
-	
-	int y, x;
-	getyx(stdscr, y, x);
-
-
-	// CLEAR CURRENT POSITION
-	mvprintw(playerY, playerX, "  ");
-		
 	// MOVE PLAYER
 	switch(key) {
 		case KEY_UP:
-			player.y--;
+			character->y--;
 			break;
 
 		case KEY_DOWN:
-			player.y++;
+			character->y++;
 			break;
 
 		case KEY_LEFT:
-			player.x--;
+			character->x--;
 			break;
 
 		case KEY_RIGHT:
-			player.x++;
+			character->x++;
 			break;
 
 		default:
@@ -220,19 +181,14 @@ int Player(int lvl){
 			break;
 	} 
 
-	attron(COLOR_PAIR(1));
-	printCharacter(player);
-	attroff(COLOR_PAIR(1));
-
 	refresh();
 
-	key = getch();
 
-		 
+}
 
-	return 0;
-
-
+void resetCharacterPosition(Character *character){
+	character->x = character->initial_x;
+	character->y = character->initial_y;
 
 }
 
