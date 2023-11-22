@@ -150,6 +150,16 @@ int splash_screen() {
 
 }
 
+typedef struct{
+	int x;
+	int y;
+	char symbol[20];
+} Character;
+
+void printCharacter(Character character){
+	mvprintw(character.y, character.x, "%s", character.symbol);
+}
+
 int Player(int lvl){
 
 	int playerX, playerY;
@@ -160,10 +170,11 @@ int Player(int lvl){
 	playerX = (MAX_WIDTH / 2) - 3;
 	playerY = MAX_HEIGHT / 2;
 
-	// Have player position slightly up for level 3
-	if (lvl == 3){
-		playerY -= 7;
-	}
+	if (lvl == 3) playerY -= 7;
+
+	Character player = {playerX, playerY, "P1"};
+
+	printCharacter(player);
 
 	// GREEN COLOR -> PAIR(1)
 	if (has_colors()){
@@ -182,46 +193,42 @@ int Player(int lvl){
 	int y, x;
 	getyx(stdscr, y, x);
 
-	while(key != '\n'){
 
-		// CLEAR CURRENT POSITION
-		mvprintw(playerY, playerX, "  ");
+	// CLEAR CURRENT POSITION
+	mvprintw(playerY, playerX, "  ");
 		
-		// MOVE PLAYER
-		switch(key) {
-			case KEY_UP:
-				if (mvinch(y-1,x) == ' ')
-					playerY--;
-				break;
+	// MOVE PLAYER
+	switch(key) {
+		case KEY_UP:
+			player.y--;
+			break;
 
-			case KEY_DOWN:
-				playerY++;
-				break;
+		case KEY_DOWN:
+			player.y++;
+			break;
 
-			case KEY_LEFT:
-				playerX--;
-				break;
+		case KEY_LEFT:
+			player.x--;
+			break;
 
-			case KEY_RIGHT:
-				playerX++;
-				break;
+		case KEY_RIGHT:
+			player.x++;
+			break;
 
-			default:
-				refresh();
-				break;
-
-		} 
-
-		attron(COLOR_PAIR(1));
-		mvprintw(playerY, playerX, "P1");
-		attroff(COLOR_PAIR(1));
-
-		refresh();
-
-		key = getch();
-
-		
+		default:
+			refresh();
+			break;
 	} 
+
+	attron(COLOR_PAIR(1));
+	printCharacter(player);
+	attroff(COLOR_PAIR(1));
+
+	refresh();
+
+	key = getch();
+
+		 
 
 	return 0;
 
