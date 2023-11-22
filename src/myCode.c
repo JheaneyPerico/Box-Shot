@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <math.h>
 #define PLAYER "P1"
 #define ENEMY "Zb"
 
@@ -164,12 +165,6 @@ int Player(int lvl){
 		playerY -= 7;
 	}
 
-	// Make Player inside bound
-	if (playerX < 1) playerX = 1;
-	if (playerX >= MAX_WIDTH) playerX = MAX_WIDTH - 1;
-	if (playerY < 1) playerY = 1;
-	if (playerY >= MAX_HEIGHT) playerY = MAX_HEIGHT - 1;
-
 	// GREEN COLOR -> PAIR(1)
 	if (has_colors()){
 		start_color();
@@ -183,8 +178,11 @@ int Player(int lvl){
 	keypad(stdscr, true);
 
 	int key = getch();
+	
+	int y, x;
+	getyx(stdscr, y, x);
 
-	while (key != '\n'){
+	while(key != '\n'){
 
 		// CLEAR CURRENT POSITION
 		mvprintw(playerY, playerX, "  ");
@@ -192,7 +190,8 @@ int Player(int lvl){
 		// MOVE PLAYER
 		switch(key) {
 			case KEY_UP:
-				playerY--;
+				if (mvinch(y-1,x) == ' ')
+					playerY--;
 				break;
 
 			case KEY_DOWN:
@@ -230,7 +229,7 @@ int Player(int lvl){
 
 }
 
-void Enemies(int MAX_ENEMIES){
+void Enemies(int MAX_ENEMIES, int lvl){
 
 	int enemyX[MAX_ENEMIES], enemyY[MAX_ENEMIES];
 
@@ -254,48 +253,48 @@ void Enemies(int MAX_ENEMIES){
 		
 	attron(COLOR_PAIR(3));
 
-	int count1 = 5;
-	int count2 = 5;
-	int count3 = 5;
-	int count4 = 5;
+	int count1 = 35 / lvl;
+	int count2 = 35 / lvl;
+	int count3 = 140 /lvl;
+	int count4 = 140 / lvl;
 
-	// Left
-	for (int i = 0; i < MAX_ENEMIES * (1/4); ++i){
+
+	// LEFT
+	for (int i = 0; i < floor(MAX_ENEMIES * 0.25); ++i){
 		enemyX[i] = 5;
 		enemyY[i] = count1;
-		count1 += 5;
+		count1 += 20;
 	}
 
-	// Right
-	for (int i = MAX_ENEMIES / 4; i < MAX_ENEMIES * (2/4); ++i){
+	// RIGHT
+	for (int i = floor(MAX_ENEMIES * 0.25); i < floor(MAX_ENEMIES * 0.5); ++i){
 		enemyX[i] = max_x - 5;
 		enemyY[i] = count2;
-		count2 += 5;
+		count2 += 20;
+	}
 
+	// TOP
+	for (int i = floor(MAX_ENEMIES * 0.5); i < floor(MAX_ENEMIES * 0.75); ++i){
+		enemyX[i] = count3;
+		enemyY[i] = 2;
+		count3 += 40;
+
+	}
+
+	// BOTTOM
+	for (int i = floor(MAX_ENEMIES * 0.75); i < MAX_ENEMIES; ++i){
+		enemyX[i] = count4;
+		enemyY[i] = max_y - 3;
+		count4 += 40;
 	}
 	
-	// Top
-	for (int i = MAX_ENEMIES * (2/4); i < MAX_ENEMIES * (3/4); ++i){
-		enemyX[i] = count3;
-		enemyY[i] = 5;
-		count3 += 5;
-
-	}
-
-	// Bottom
-	for (int i = MAX_ENEMIES * (3/4); i < MAX_ENEMIES; ++i){
-	       enemyX[i] = count4;
-	       enemyY[i] = max_y - 5;
-	       count4 += 5;
-       	}	       
-
 	// Print Enemies
 	for (int i = 0; i < MAX_ENEMIES; ++i){
-		mvprintw(enemyX[i], enemyY[i], ENEMY);
+		mvprintw(enemyY[i], enemyX[i], ENEMY);
 		refresh();
 	}
 
-	attron(COLOR_PAIR(3));
+	attroff(COLOR_PAIR(3));
 	refresh();
 
 
