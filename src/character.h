@@ -8,4 +8,3 @@ typedef struct {
 
 void printCharacter(Character character);
 void moveCharacter(Character *character, int key);
-void resetCharacterPosition(Character *character);

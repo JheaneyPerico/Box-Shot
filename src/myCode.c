@@ -152,13 +152,25 @@ int splash_screen() {
 }
 
 void printCharacter(Character character){
+
+	if(has_colors()){
+		start_color();
+		init_pair(1, COLOR_BLACK, COLOR_GREEN);
+	}
+
+	attron(COLOR_PAIR(1));
+
 	mvprintw(character.y, character.x, "%s", character.symbol);
+
+	attroff(COLOR_PAIR(1));
 	refresh();
 }
 
 void moveCharacter(Character *character, int key){
 
 	// MOVE PLAYER
+	keypad(stdscr, true);
+
 	switch(key) {
 		case KEY_UP:
 			character->y--;
@@ -183,12 +195,6 @@ void moveCharacter(Character *character, int key){
 
 	refresh();
 
-
-}
-
-void resetCharacterPosition(Character *character){
-	character->x = character->initial_x;
-	character->y = character->initial_y;
 
 }
 

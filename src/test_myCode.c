@@ -31,8 +31,13 @@ int main(){
 			printCharacter(player);
 			
 			char key = getch();
-			if (key != 'q')
+			if (key != 'q'){
+				//mvprintw(player.x, player.y, "  ");
 				moveCharacter(&player, key);
+				printCharacter(player);
+				refresh();
+			}
+
 		}
 
 		// LEVEL 2
