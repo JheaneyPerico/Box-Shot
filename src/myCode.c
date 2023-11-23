@@ -151,25 +151,25 @@ int splash_screen() {
 
 }
 
-void printCharacter(Character character){
+void printCharacter(WINDOW *win, Character character){
 
 	if(has_colors()){
 		start_color();
 		init_pair(1, COLOR_BLACK, COLOR_GREEN);
 	}
 
-	attron(COLOR_PAIR(1));
+	wattron(win, COLOR_PAIR(1));
 
-	mvprintw(character.y, character.x, "%s", character.symbol);
+	mvwprintw(win, character.y, character.x, "%s", character.symbol);
 
-	attroff(COLOR_PAIR(1));
+	wattroff(win, COLOR_PAIR(1));
 	refresh();
 }
 
-void moveCharacter(Character *character, int key){
+void moveCharacter(WINDOW *win, Character *character, int key){
 
 	// MOVE PLAYER
-	keypad(stdscr, true);
+	keypad(win, true);
 
 	switch(key) {
 		case KEY_UP:
@@ -193,17 +193,18 @@ void moveCharacter(Character *character, int key){
 			break;
 	} 
 
-	refresh();
+	wrefresh(win);
+	return;
 
 
 }
 
-void Enemies(int MAX_ENEMIES, int lvl){
+void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl){
 
 	int enemyX[MAX_ENEMIES], enemyY[MAX_ENEMIES];
 
 	int max_y, max_x;
-	getmaxyx(stdscr, max_y, max_x);
+	getmaxyx(win, max_y, max_x);
 
 	int mid_height = max_y / 2;
 	int mid_width = max_x / 2;
@@ -218,9 +219,8 @@ void Enemies(int MAX_ENEMIES, int lvl){
 		init_pair(3, COLOR_BLACK, COLOR_RED);
 	}
 
-	srand(time(NULL));
 		
-	attron(COLOR_PAIR(3));
+	wattron(win,COLOR_PAIR(3));
 
 	int count1 = 35 / lvl;
 	int count2 = 35 / lvl;
@@ -259,20 +259,20 @@ void Enemies(int MAX_ENEMIES, int lvl){
 	
 	// Print Enemies
 	for (int i = 0; i < MAX_ENEMIES; ++i){
-		mvprintw(enemyY[i], enemyX[i], ENEMY);
-		refresh();
+		mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
+		wrefresh(win);
 	}
 
-	attroff(COLOR_PAIR(3));
-	refresh();
+	wattroff(win, COLOR_PAIR(3));
+	wrefresh(win);
 
 
 }
 
-int upgrade_box(int MAX_NUM){
+int upgrade_box(WINDOW *win, int MAX_NUM){
 
 	int max_y, max_x;
-	getmaxyx(stdscr, max_y, max_x);
+	getmaxyx(win, max_y, max_x);
 
 	int guntype;
 
@@ -282,38 +282,37 @@ int upgrade_box(int MAX_NUM){
 		init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
 	}
 
-	attron(COLOR_PAIR(4)); // yellow
+	wattron(win, COLOR_PAIR(4)); // yellow
 	switch(MAX_NUM) {
 		case 1: // (lvl 1 -> 1 box)
-			mvprintw(max_y / 2 + 7, max_x / 4 + 5, "##");
+			mvwprintw(win, max_y / 2 + 7, max_x / 4 + 5, "##");
 			guntype = 1;
 			break;
 
 		case 2: // (lvl 2 -> 2 boxes)
-			mvprintw(max_y / 4 - 1, max_x / 3 + 5, "##");
-			mvprintw(max_y / 2 + 8, max_x / 2 + 6, "##");
+			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
+			mvwprintw(win, max_y / 2 + 8, max_x / 2 + 6, "##");
 			guntype = 2;
 			break;
 
 		case 3: // (lvl 3 -> 3 boxes)
-			mvprintw(max_y / 4 - 1, max_x / 3 + 5, "##");
-			mvprintw(max_y / 2 + 3, max_x / 2 + 23, "##");
-			mvprintw(max_y / 2 + 8, max_x / 2 - 5, "##");
+			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
+			mvwprintw(win, max_y / 2 + 3, max_x / 2 + 23, "##");
+			mvwprintw(win, max_y / 2 + 8, max_x / 2 - 5, "##");
 			guntype = 3;
 			break;
 
 	}
 
-	attroff(COLOR_PAIR(4));
+	wattroff(win, COLOR_PAIR(4));
 
-	refresh();
+	wrefresh(win);
 
 	return guntype;
 
 }
 
-void display_level(int lvl){
-	clear();
+void display_level(WINDOW *win, int lvl){
 
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
@@ -323,9 +322,6 @@ void display_level(int lvl){
 
 	int start_y = (max_y - mid_height) / 2 - 2;
 	int start_x = (max_x - mid_width) / 2 - 5;
-
-	WINDOW *win = newwin(max_y, max_x, 0, 0);
-	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+'); // display the boundaries
 
 	// CREATE BOXES (WALL)
 	WINDOW *box1 = newwin(10, 20, start_y, start_x); // top left box

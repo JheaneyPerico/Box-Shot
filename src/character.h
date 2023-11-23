@@ -1,3 +1,4 @@
+#include <ncurses.h>
 typedef struct {
 	int x;
 	int y;
@@ -6,5 +7,5 @@ typedef struct {
 	int initial_y;
 } Character;
 
-void printCharacter(Character character);
-void moveCharacter(Character *character, int key);
+void printCharacter(WINDOW *win, Character character);
+void moveCharacter(WINDOW *win, Character *character, int key);
