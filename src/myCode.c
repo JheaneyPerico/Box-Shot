@@ -151,7 +151,10 @@ int splash_screen() {
 
 }
 
-void printCharacter(WINDOW *win, Character character){
+void printCharacter(WINDOW *win, int *yLoc, int *xLoc){
+	clear();
+
+	char symbol[] = "P1";
 
 	if(has_colors()){
 		start_color();
@@ -160,36 +163,37 @@ void printCharacter(WINDOW *win, Character character){
 
 	wattron(win, COLOR_PAIR(1));
 
-	mvwprintw(win, character.y, character.x, "%s", character.symbol);
+	mvwprintw(win, *yLoc, *xLoc, "%s", symbol);
 
 	wattroff(win, COLOR_PAIR(1));
-	refresh();
+	wrefresh(win);
 }
 
-void moveCharacter(WINDOW *win, Character *character, int key){
+void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 	// MOVE PLAYER
 	keypad(win, true);
 
 	switch(key) {
 		case KEY_UP:
-			character->y--;
+			*yLoc--;
 			break;
 
 		case KEY_DOWN:
-			character->y++;
+			*yLoc++;
 			break;
 
 		case KEY_LEFT:
-			character->x--;
+			*xLoc--;
 			break;
 
 		case KEY_RIGHT:
-			character->x++;
+			*xLoc++;
 			break;
 
 		default:
 			refresh();
+			wrefresh(win);
 			break;
 	} 
 

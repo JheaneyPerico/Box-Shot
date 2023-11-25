@@ -24,13 +24,17 @@ int main(){
 
 	if (lvl == 3) playerY -= 7;
 
-	Character player = {playerX, playerY, "P1", playerX, playerY};
+	int *xLoc, *yLoc;
+	xLoc = &playerX;
+	yLoc = &playerY;
 	
 
+	int key;
 
 	while(1){
 		clear();
 		wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
+		keypad(win, true);
 		refresh();
 
 		// LEVEL 1
@@ -38,16 +42,14 @@ int main(){
 			display_level(win, 1);
 			upgrade_box(win, 1);
 			Enemies(win, 5, 1);
-			printCharacter(win, player);
+			printCharacter(win, yLoc, xLoc);
 
-			char key = wgetch(win);
-			if (key != 'q'){
-				moveCharacter(win, &player, key);
-				printCharacter(win, player);
-				mvwprintw(win, 5,5, "I will again write this sentence to see if this works");
-			}
+			do {key = wgetch(win);
+			moveCharacter(win, yLoc, xLoc, key);
+			printCharacter(win, yLoc, xLoc);
 			wrefresh(win);
-		}
+			} while (key!= 'q');
+		}	
 
 		
 
