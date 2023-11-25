@@ -151,7 +151,7 @@ int splash_screen() {
 
 }
 
-void printCharacter(WINDOW *win, char symbol[20], int *yLoc, int *xLoc, int type){
+void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 	clear();
 
 	if(has_colors()){
@@ -161,14 +161,14 @@ void printCharacter(WINDOW *win, char symbol[20], int *yLoc, int *xLoc, int type
 	// Green Character
 	if (type == 1){
 		wattron(win, COLOR_PAIR(1));
-		mvwprintw(win, *(yLoc), *(xLoc), "%s", symbol);
+		mvwprintw(win, *(yLoc), *(xLoc), "%c", symbol);
 		wattroff(win, COLOR_PAIR(1));
 		}
 
 	// Leave invisible traces when moved
 	else{
 		wattron(win, A_INVIS);
-		mvwprintw(win, *yLoc, *xLoc, "%s", symbol);
+		mvwprintw(win, *yLoc, *xLoc, "%c", symbol);
 		wattroff(win, A_INVIS);
 	}
 
@@ -184,26 +184,32 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 	wrefresh(win);
 	
 	int y, x;
-	getyx(stdscr, y, x);
+	getyx(win, y, x);
+
 
 	switch(key) {
 		case KEY_UP:
-			(*yLoc)--;
+			if (mvwinch(win, *yLoc-1, *xLoc) == ' '){		
+				(*yLoc)--;
+			}
 			break;
 
 		case KEY_DOWN:
-			modifyFlag = 1;
-			(*yLoc)++;
+			if (mvwinch(win, *yLoc+1, *xLoc) == ' '){
+				(*yLoc)++;
+			}
 			break;
 
 		case KEY_LEFT:
-			modifyFlag = 1;
-			(*xLoc)--;
+			if (mvwinch(win, *yLoc, *xLoc-1) == ' '){
+				(*xLoc)--;
+			}
 			break;
 
 		case KEY_RIGHT:
-			modifyFlag = 1;
-			(*xLoc)++;
+			if (mvwinch(win, *yLoc, *xLoc+1) == ' '){
+				(*xLoc)++;
+			}
 			break;
 
 		default:
@@ -378,8 +384,8 @@ void display_level(WINDOW *win, int lvl){
 			// FILL BOXES WITH WHITE SPACE
 			for (int i = 1; i <  (mid_height - 15); ++i){
 				for (int j = 1; j < (mid_width - 45); ++j){
-					mvwaddch(box1, i, j, ' ');
-					mvwaddch(box4, i, j, ' ');
+					mvwaddch(box1, i, j, '-');
+					mvwaddch(box4, i, j, '-');
 
 				}
 			}
@@ -418,10 +424,10 @@ void display_level(WINDOW *win, int lvl){
 			// FILL BOXES WITH WHITE SPACE
 			for (int i = 1; i < (mid_height - 15); ++i){
 				for (int j = 1; j < (mid_width - 45); ++j){
-					mvwaddch(box1, i, j, ' ');
-					mvwaddch(box3, i, j, ' ');
-					mvwaddch(box4, i, j, ' ');
-					mvwaddch(box5, i, j, ' ');
+					mvwaddch(box1, i, j, '-');
+					mvwaddch(box3, i, j, '-');
+					mvwaddch(box4, i, j, '-');
+					mvwaddch(box5, i, j, '-');
 				}
 			}
 			
@@ -467,11 +473,11 @@ void display_level(WINDOW *win, int lvl){
 			// FILL BOXES WITH WHITE SPACE
 			for (int i = 1; i < (mid_height); ++i){
 				for (int j = 1; j < (mid_width); ++j){
-					mvwaddch(box1, i, j, ' ');
-					mvwaddch(box2, i, j, ' ');
-					mvwaddch(box3, i, j, ' ');
-					mvwaddch(box4, i, j, ' ');
-					mvwaddch(box5, i, j, ' ');
+					mvwaddch(box1, i, j, '-');
+					mvwaddch(box2, i, j, '-');
+					mvwaddch(box3, i, j, '-');
+					mvwaddch(box4, i, j, '-');
+					mvwaddch(box5, i, j, '-');
 				}
 			}
 
@@ -500,44 +506,3 @@ void display_level(WINDOW *win, int lvl){
 	refresh();
 }
 
-void quit_screen(){
-	int max_y, max_x;
-	getmaxyx(stdscr, max_y, max_x);
-
-	int mid_height = max_y/2;
-	int mid_width = max_x/2;
-/*
-	WINDOW *quit = newwin(max_y, max_x, 0,0);
-	
-	mvwprintw(quit, mid_height,mid_width, "DO YOU WANT TO QUIT? Y/N");
-	wrefresh(quit);
-
-	char ch = wgetch(quit);
-	if (ch == 'y'){
-		// Write exit code here
-	} 
-
-	if (ch == 'n'){
-		// Write stay code here
-	}
-
-	wgetch(quit);
-*/
-}
-/*
-void pause_screen(){
-	clear();
-
-	mvprintw(2, 10," _________  ___  ___  _______           ________  ________  _____ ______   _______           ___  ________           ________  ________  ___  ___  ________  _______   ________     ");
-	mvprintw(4,10, "|\\___   ___\\\\  \\|\\  \\|\\  ___ \\         |\\   ____\\|\\   __  \\|\\   _ \\  _   \\|\\  ___ \         |\\  \\|\\   ____\\         |\\   __  \\|\\   __  \\|\\  \\|\\  \\|\\   ____\\|\\  ___ \\ |\\   ___ \\    ");
-	mvprintw(6,10, "\\|___ \\  \\_\\ \\  \\\\\\  \\ \\   __/|        \\ \\  \\___|\\ \\  \\|\\  \\ \\  \\\\\\__\\ \\  \\ \\   __/|        \\ \\  \\ \\  \\___|_        \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\\\\\  \\ \\  \\___|\\ \\   __/|\\ \\  \\_|\\ \\   ");
-	mvprintw(8,10, "     \\ \\  \\ \\ \\   __  \\ \\  \\_|/__       \\ \\  \\  __\\ \\   __  \\ \\  \\\\|__| \\  \\ \\  \\_|/__       \\ \\  \\ \\_____  \\        \\ \\   ____\\ \\   __  \\ \\  \\\\\\  \\ \\_____  \\ \\  \\_|/_\\ \\  \\ \\\\ \\  ");
-	mvprintw(10,10,"      \\ \\  \\ \\ \\  \\ \\  \\ \\  \\_|\\ \\       \\ \\  \\|\\  \\ \\  \\ \\  \\ \\  \\    \\ \\  \\ \\  \\_|\\ \\       \\ \\  \\|____|\\  \\        \\ \\  \\___|\\ \\  \\ \\  \\ \\  \\\\\\  \\|____|\\  \\ \\  \\_|\\ \\ \\  \\_\\\\ \\ ");
-	mvprintw(12,10,"       \\ \\__\\ \\ \\__\\ \\__\\ \\_______\\       \\ \\_______\\ \\__\\ \__\\ \\__\\    \\ \\__\\ \\_______\\       \\ \\__\\____\\_\\  \\        \\ \\__\\    \\ \\__\\ \\__\\ \\_______\\____\\_\\  \\ \\_______\\ \\_______\\");
-	mvprintw(14,10,"        \\|__|  \\|__|\\|__|\\|_______|        \\|_______|\\|__|\\|__|\\|__|     \\|__|\\|_______|        \\|__|\\_________\\        \\|__|     \\|__|\\|__|\\|_______|\_________\\|_______|\\|_______|");
-	mvprintw(16,10,"                                                                                                    \\|_________|                                     \\|_________|                   ");
-
-	refresh();
-
-}
-*/

@@ -45,43 +45,69 @@ int main(){
 			upgrade_box(win, 1);
 			Enemies(win, 5, 1);
 
-			printCharacter(win, "P1", yLoc, xLoc, 1);
+			printCharacter(win, 'P', yLoc, xLoc, 1);
 
 			key = wgetch(win);
-			printCharacter(win, "  ", yLoc, xLoc, 0);
+			printCharacter(win, ' ', yLoc, xLoc, 0);
 			moveCharacter(win, yLoc, xLoc, key);
-			printCharacter(win, "P1", yLoc, xLoc, 1);
+			printCharacter(win, 'P', yLoc, xLoc, 1);
 
 			wrefresh(win);
-			} while (key!= 'q') ;
+			} while (key!= 'q' && key != 'p');
 		}	
 
 		
 
 		// LEVEL 2
 		else if (lvl == 2){
+			do{
 			display_level(win, 2);
 			upgrade_box(win, 2);
 			Enemies(win, 9, 2);
+
+			printCharacter(win, 'P', yLoc, xLoc, 1);
+
+			key = wgetch(win);
+			printCharacter(win, ' ', yLoc, xLoc, 0);
+			moveCharacter(win, yLoc, xLoc, key);
+			printCharacter(win, 'P', yLoc, xLoc, 1);
+
+			wrefresh(win);
+			} while (key!= 'q' && key != 'p');
+
 		}
 
 		// LEVEL 3
 		else if (lvl == 3){
+			do{
 			display_level(win, 3);
 			upgrade_box(win, 3);
 			Enemies(win, 15,3);
+
+			printCharacter(win, 'P', yLoc, xLoc, 1);
+
+			key = wgetch(win);
+			printCharacter(win, ' ', yLoc, xLoc, 0);
+			moveCharacter(win, yLoc, xLoc, key);
+			printCharacter(win, 'P', yLoc, xLoc, 1);
+
+			wrefresh(win);
+			} while (key != 'q' && key != 'p');
+
 		}
 		refresh();
 
-	
+		
+			
 		int y_n;
 
+		// QUIT PRESSED
 		if (key == 'q'){
 			clear();
 			char ch;
 			
 
-			mvwprintw(win, mid_y, mid_x - 5, "DO YOU WANT TO QUIT? y/n");
+			mvwprintw(win, mid_y, mid_x - 10, "DO YOU WANT TO QUIT? y/n");
 			wrefresh(win);
 				
 			do {
@@ -93,7 +119,7 @@ int main(){
 				}
 				if (ch == 'n'){
 					y_n = 0;
-					mvwprintw(win, mid_y, mid_x - 5, "                        ");
+					mvwprintw(win, mid_y, mid_x - 10, "                        ");
 					wrefresh(win);
 					break;
 					
@@ -106,20 +132,22 @@ int main(){
 		}	
 
 	
-
+		// PAUSE PRESSED
 		if (key == 'p'){
 			clear();
 			char ch;
 
 
-			mvwprintw(win, mid_x, mid_y - 10, "THE GAME IS PAUSED (press p to unpause");
+			mvwprintw(win, mid_y, mid_x - 20, "THE GAME IS PAUSED (press p to unpause)");
 			wrefresh(win);
 
 			do{
 				ch = wgetch(win);
 
-				if (ch == 'p')
+				if (ch == 'p'){
+					mvwprintw(win, mid_y, mid_x - 20, "                                       ");
 					break;
+				}
 
 			} while (ch != 'p');
 		}
