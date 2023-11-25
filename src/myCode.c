@@ -11,7 +11,7 @@
 int splash_screen() {
 
 	clear();
-
+	
 	// COLOR RED -> PAIR(1)
 	if (has_colors()){
 		start_color();
@@ -151,34 +151,43 @@ int splash_screen() {
 
 }
 
-void printCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc){
+void printCharacter(WINDOW *win, char symbol[20], int *yLoc, int *xLoc, int type){
 	clear();
 
 	if(has_colors()){
 		start_color();
 		init_pair(1, COLOR_BLACK, COLOR_GREEN);
 	}
+	// Green Character
+	if (type == 1){
+		wattron(win, COLOR_PAIR(1));
+		mvwprintw(win, *(yLoc), *(xLoc), "%s", symbol);
+		wattroff(win, COLOR_PAIR(1));
+		}
 
-	wattron(win, COLOR_PAIR(1));
+	// Leave invisible traces when moved
+	else{
+		wattron(win, A_INVIS);
+		mvwprintw(win, *yLoc, *xLoc, "%s", symbol);
+		wattroff(win, A_INVIS);
+	}
 
-	for (int i = 0; i < length; i++)
-		mvwprintw(win, *(yLoc+i), *(xLoc+i), "%c", *(body+i));
-
-	wattroff(win, COLOR_PAIR(1));
 	wrefresh(win);
 	return;
 }
 
-void moveCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc, int key){
+void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 	// MOVE PLAYER
 	int tempX = *xLoc, tempY = *yLoc, modifyFlag = 0;
 	keypad(win, true);
 	wrefresh(win);
+	
+	int y, x;
+	getyx(stdscr, y, x);
 
 	switch(key) {
 		case KEY_UP:
-			modifyFlag = 1;
 			(*yLoc)--;
 			break;
 
@@ -202,17 +211,7 @@ void moveCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc, in
 			wrefresh(win);
 			break;
 	} 
-	/*
-	if (modifyFlag == 1){
-		for (int i = length-1; i>1; i--){
-			*(yLoc+i) = *(yLoc+i-1);
-			*(xLoc+i) = *(xLoc+i-1);
-		}
 
-		*(yLoc+1) = tempY;
-		*(xLoc+1) = tempX;
-	}
-*/
 	wrefresh(win);
 	return;
 
@@ -333,6 +332,8 @@ int upgrade_box(WINDOW *win, int MAX_NUM){
 }
 
 void display_level(WINDOW *win, int lvl){
+	
+	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
 
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
@@ -497,6 +498,31 @@ void display_level(WINDOW *win, int lvl){
 
 	wrefresh(win);
 	refresh();
+}
+
+void quit_screen(){
+	int max_y, max_x;
+	getmaxyx(stdscr, max_y, max_x);
+
+	int mid_height = max_y/2;
+	int mid_width = max_x/2;
+/*
+	WINDOW *quit = newwin(max_y, max_x, 0,0);
+	
+	mvwprintw(quit, mid_height,mid_width, "DO YOU WANT TO QUIT? Y/N");
+	wrefresh(quit);
+
+	char ch = wgetch(quit);
+	if (ch == 'y'){
+		// Write exit code here
+	} 
+
+	if (ch == 'n'){
+		// Write stay code here
+	}
+
+	wgetch(quit);
+*/
 }
 /*
 void pause_screen(){

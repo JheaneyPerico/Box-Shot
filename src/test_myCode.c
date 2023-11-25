@@ -14,9 +14,6 @@ int main(){
 
 	WINDOW *win = newwin(max_y, max_x, 0,0);
 
-	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
-
-
 
 	int lvl;
 	lvl = splash_screen();
@@ -24,6 +21,9 @@ int main(){
 	int playerX, playerY;
 
 	getmaxyx(win, max_y, max_x);
+
+	int mid_y = max_y / 2;
+	int mid_x = max_x / 2;
 
 	playerX = (max_x / 2) - 3;
 	playerY = (max_y / 2);
@@ -33,36 +33,27 @@ int main(){
 	int *xLoc, *yLoc, charL = 2, key;
 	xLoc = &playerX;
 	yLoc = &playerY;
-	
-	char *charBody = malloc(charL*sizeof(char));
-	int *charYloc = malloc(charL*sizeof(int));
-	int *charXloc = malloc(charL*sizeof(int));
-
-	for (int i = 0; i < charL; i++){
-		*(charBody+i) = 'x';
-		*(charYloc+i) = playerY;
-		*(charXloc+i) = playerY;
-	}
-	*(charBody+charL-1) = ' ';
-
 
 	while(1){
 		keypad(win, true);
 		refresh();
-
+		wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
+			do{
 			display_level(win, 1);
 			upgrade_box(win, 1);
 			Enemies(win, 5, 1);
 
-			printCharacter(win, charL, charBody, charYloc, charXloc);
+			printCharacter(win, "P1", yLoc, xLoc, 1);
 
-			do {key = wgetch(win);
-			moveCharacter(win, charL, charBody, charYloc, charYloc, key);
-			printCharacter(win, charL, charBody, charYloc, charXloc);
+			key = wgetch(win);
+			printCharacter(win, "  ", yLoc, xLoc, 0);
+			moveCharacter(win, yLoc, xLoc, key);
+			printCharacter(win, "P1", yLoc, xLoc, 1);
+
 			wrefresh(win);
-			} while (key!= 'q');
+			} while (key!= 'q') ;
 		}	
 
 		
@@ -82,11 +73,57 @@ int main(){
 		}
 		refresh();
 
-		char ch = getch();
-		if (ch == 'q') break;
-		/*moveCharacter(&player, ch);
-		mvprintw(5, 5, "I will write this sentence to see if this works");
-		*/
+	
+		int y_n;
+
+		if (key == 'q'){
+			clear();
+			char ch;
+			
+
+			mvwprintw(win, mid_y, mid_x - 5, "DO YOU WANT TO QUIT? y/n");
+			wrefresh(win);
+				
+			do {
+				ch = wgetch(win);
+
+				if (ch == 'y'){
+					y_n = 1;
+					break;
+				}
+				if (ch == 'n'){
+					y_n = 0;
+					mvwprintw(win, mid_y, mid_x - 5, "                        ");
+					wrefresh(win);
+					break;
+					
+				}
+			} while(ch != 'n' || ch != 'y');
+
+			if (y_n == 1)
+				break;
+
+		}	
+
+	
+
+		if (key == 'p'){
+			clear();
+			char ch;
+
+
+			mvwprintw(win, mid_x, mid_y - 10, "THE GAME IS PAUSED (press p to unpause");
+			wrefresh(win);
+
+			do{
+				ch = wgetch(win);
+
+				if (ch == 'p')
+					break;
+
+			} while (ch != 'p');
+		}
+	
 		refresh();
 
 	}
