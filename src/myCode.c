@@ -151,10 +151,8 @@ int splash_screen() {
 
 }
 
-void printCharacter(WINDOW *win, int *yLoc, int *xLoc){
+void printCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc){
 	clear();
-
-	char symbol[] = "P1";
 
 	if(has_colors()){
 		start_color();
@@ -163,32 +161,40 @@ void printCharacter(WINDOW *win, int *yLoc, int *xLoc){
 
 	wattron(win, COLOR_PAIR(1));
 
-	mvwprintw(win, *yLoc, *xLoc, "%s", symbol);
+	for (int i = 0; i < length; i++)
+		mvwprintw(win, *(yLoc+i), *(xLoc+i) "%c", *(body+i));
 
 	wattroff(win, COLOR_PAIR(1));
 	wrefresh(win);
+	return;
 }
 
-void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
+void moveCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc, int key){
 
 	// MOVE PLAYER
+	int tempX = *xLoc, tempY = *yLoc, modifyFlag = 0;
 	keypad(win, true);
+	wrefresh(win);
 
 	switch(key) {
 		case KEY_UP:
-			*yLoc--;
+			modifyFlag = 1;
+			(*yLoc)--;
 			break;
 
 		case KEY_DOWN:
-			*yLoc++;
+			modifyFlag = 1;
+			(*yLoc)++;
 			break;
 
 		case KEY_LEFT:
-			*xLoc--;
+			modifyFlag = 1;
+			(*xLoc)--;
 			break;
 
 		case KEY_RIGHT:
-			*xLoc++;
+			modifyFlag = 1;
+			(*xLoc)++;
 			break;
 
 		default:
@@ -196,6 +202,16 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 			wrefresh(win);
 			break;
 	} 
+
+	if (modifyFlag == 1){
+		for (int i = length-1; i>1; i--){
+			*(yLoc+i) = *(yLoc+i-1);
+			*(xLoc+i) = *(xLoc+i-1);
+		}
+
+		*(yLoc+1) = tempY;
+		*(xLoc+1) = tempX;
+	}
 
 	wrefresh(win);
 	return;

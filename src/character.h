@@ -8,5 +8,5 @@ typedef struct {
 	int initial_y;
 } Character;
 */
-void printCharacter(WINDOW *win, int *yLoc, int *xLoc);
-void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key);
+void printCharacter(WINDOW *win, int length, char* body,  int *yLoc, int *xLoc);
+void moveCharacter(WINDOW *win, int length, char* body,  int *yLoc, int *xLoc, int key);

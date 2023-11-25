@@ -42,6 +42,7 @@ int main(){
 			display_level(win, 1);
 			upgrade_box(win, 1);
 			Enemies(win, 5, 1);
+
 			printCharacter(win, yLoc, xLoc);
 
 			do {key = wgetch(win);
