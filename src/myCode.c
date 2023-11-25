@@ -189,7 +189,8 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 	switch(key) {
 		case KEY_UP:
-			if (mvwinch(win, *yLoc-1, *xLoc) == ' '){		
+			if (mvwinch(win, *yLoc-1, *xLoc) == ' '){
+			//if ((mvwinch(win, *yLoc-1, *xLoc) == ' ') && (mvwinch(box1, *yLoc-1, *xLoc) == ' ') && (mvwinch(box4, *yLoc-1, *xLoc) == ' ')){		
 				(*yLoc)--;
 			}
 			break;
@@ -378,17 +379,18 @@ void display_level(WINDOW *win, int lvl){
 			wattron(box4, COLOR_PAIR(2));
 
 			// ADD BOXES
-			box(box1, 0,0);
-			box(box4,0,0);
-	
+			wborder(box1, '|', '|', '-', '-', '+', '+', '+', '+');
+			wborder(box4, '|', '|', '-', '-', '+', '+', '+', '+');
+
 			// FILL BOXES WITH WHITE SPACE
-			for (int i = 1; i <  (mid_height - 15); ++i){
-				for (int j = 1; j < (mid_width - 45); ++j){
+			for (int i = 1; i <  (mid_height - 1); ++i){
+				for (int j = 1; j < (mid_width - 1); ++j){
 					mvwaddch(box1, i, j, '-');
 					mvwaddch(box4, i, j, '-');
 
 				}
 			}
+
 
 			// TURN OFF COLOR
 			wattroff(box1, COLOR_PAIR(2));
