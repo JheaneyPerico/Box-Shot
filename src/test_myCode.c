@@ -1,4 +1,6 @@
 #include <ncurses.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include "myCode.h"
 #include "character.h"
 
@@ -12,6 +14,10 @@ int main(){
 
 	WINDOW *win = newwin(max_y, max_x, 0,0);
 
+	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
+
+
+
 	int lvl;
 	lvl = splash_screen();
 
@@ -24,16 +30,23 @@ int main(){
 
 	if (lvl == 3) playerY -= 7;
 
-	int *xLoc, *yLoc;
+	int *xLoc, *yLoc, charL = 2, key;
 	xLoc = &playerX;
 	yLoc = &playerY;
 	
+	char *charBody = malloc(charL*sizeof(char));
+	int *charYloc = malloc(charL*sizeof(int));
+	int *charXloc = malloc(charL*sizeof(int));
 
-	int key;
+	for (int i = 0; i < charL; i++){
+		*(charBody+i) = 'x';
+		*(charYloc+i) = playerY;
+		*(charXloc+i) = playerY;
+	}
+	*(charBody+charL-1) = ' ';
+
 
 	while(1){
-		clear();
-		wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
 		keypad(win, true);
 		refresh();
 
@@ -43,11 +56,11 @@ int main(){
 			upgrade_box(win, 1);
 			Enemies(win, 5, 1);
 
-			printCharacter(win, yLoc, xLoc);
+			printCharacter(win, charL, charBody, charYloc, charXloc);
 
 			do {key = wgetch(win);
-			moveCharacter(win, yLoc, xLoc, key);
-			printCharacter(win, yLoc, xLoc);
+			moveCharacter(win, charL, charBody, charYloc, charYloc, key);
+			printCharacter(win, charL, charBody, charYloc, charXloc);
 			wrefresh(win);
 			} while (key!= 'q');
 		}	

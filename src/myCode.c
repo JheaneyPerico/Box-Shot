@@ -162,7 +162,7 @@ void printCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc){
 	wattron(win, COLOR_PAIR(1));
 
 	for (int i = 0; i < length; i++)
-		mvwprintw(win, *(yLoc+i), *(xLoc+i) "%c", *(body+i));
+		mvwprintw(win, *(yLoc+i), *(xLoc+i), "%c", *(body+i));
 
 	wattroff(win, COLOR_PAIR(1));
 	wrefresh(win);
@@ -202,7 +202,7 @@ void moveCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc, in
 			wrefresh(win);
 			break;
 	} 
-
+	/*
 	if (modifyFlag == 1){
 		for (int i = length-1; i>1; i--){
 			*(yLoc+i) = *(yLoc+i-1);
@@ -212,7 +212,7 @@ void moveCharacter(WINDOW *win, int length, char* body, int *yLoc, int *xLoc, in
 		*(yLoc+1) = tempY;
 		*(xLoc+1) = tempX;
 	}
-
+*/
 	wrefresh(win);
 	return;
 
