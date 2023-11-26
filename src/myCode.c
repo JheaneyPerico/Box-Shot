@@ -375,47 +375,23 @@ void display_level(WINDOW *win, int lvl){
 			mvwprintw(win, 2, 2, "LEVEL 1");
 			wattroff(win, A_BOLD);
 
-			/*
-			// COLOR THE BOXES TO WHITE
-			wattron(box1, COLOR_PAIR(2));
-			wattron(box4, COLOR_PAIR(2));
-
-			// ADD BOXES
-			wborder(box1, '|', '|', '-', '-', '+', '+', '+', '+');
-			wborder(box4, '|', '|', '-', '-', '+', '+', '+', '+');
-
-			// FILL BOXES WITH WHITE SPACE
-			for (int i = 1; i <  (mid_height - 1); ++i){
-				for (int j = 1; j < (mid_width - 1); ++j){
-					mvwaddch(box1, i, j, '-');
-					mvwaddch(box4, i, j, '-');
-
-				}
-			}
-
-
-			// TURN OFF COLOR
-			wattroff(box1, COLOR_PAIR(2));
-			wattroff(box4, COLOR_PAIR(2));
-
-			// REFRESH
-			refresh();
-
-			wrefresh(win);
-			wrefresh(box1);
-			wrefresh(box4);
-
-*/
+			// BOX 1
 			wattron(win, COLOR_PAIR(2));
 			for ( int i = 1; i < 10; i++){
 				start_x = (max_x - mid_width) / 2 - 5;
 
-				for (int j = 1; j < 10; j++){
+				for (int j = 1; j < 20; j++){
 					mvwprintw(win, start_y, start_x, "*");
+					mvwprintw(win, start_y + 26, start_x + 100, "*");
 					start_x++;
 				}
 				start_y++;
 			}
+
+
+	
+
+			
 
 			wattroff(win, COLOR_PAIR(2));
 			wrefresh(win);

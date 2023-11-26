@@ -38,6 +38,7 @@ int main(){
 		keypad(win, true);
 		refresh();
 		wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
+
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
 			do{
