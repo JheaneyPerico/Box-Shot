@@ -156,8 +156,9 @@ void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 
 	if(has_colors()){
 		start_color();
-		init_pair(1, COLOR_BLACK, COLOR_GREEN);
-	}
+		init_pair(1, COLOR_BLACK, COLOR_GREEN); 
+	} 
+
 	// Green Character
 	if (type == 1){
 		wattron(win, COLOR_PAIR(1));
@@ -167,9 +168,7 @@ void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 
 	// Leave invisible traces when moved
 	else{
-		wattron(win, A_INVIS);
 		mvwprintw(win, *yLoc, *xLoc, "%c", symbol);
-		wattroff(win, A_INVIS);
 	}
 
 	wrefresh(win);
