@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <ncurses.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,13 +12,13 @@
 int splash_screen() {
 
 	clear();
-	
+
 	// COLOR RED -> PAIR(1)
 	if (has_colors()){
 		start_color();
 		init_pair(1, COLOR_RED, A_NORMAL);
 	}
-	
+
 	int max_x, max_y;
 	getmaxyx(stdscr, max_x, max_y);
 
@@ -50,7 +51,7 @@ int splash_screen() {
 	mvprintw(25, mid_width + strlen("WELCOME TO BOX SHOT")/2, "WELCOME TO BOX SHOT");
 	mvprintw(27, mid_width + 2, "SELECT DIFFICULTY AND PRESS ENTER");
 	attroff(A_BOLD);
-	
+
 	attron(A_DIM);
 	mvprintw(31, 9, "INSTRUCTIONS:");
 	mvprintw(33, 5, "MOVE USING ARROR KEYS");
@@ -62,7 +63,7 @@ int splash_screen() {
 	// BORDER
 	WINDOW *inputWin = newwin(11, 14, 30, 45);
 	wborder(inputWin, '|', '|', '-', '-', '+', '+', '+', '+');
-	
+
 
 	refresh();
 	wrefresh(inputWin);
@@ -74,11 +75,11 @@ int splash_screen() {
 	mvwprintw(inputWin, yStr + 2, xStr, "LEVEL 1");
 	mvwprintw(inputWin, yStr + 4, xStr, "LEVEL 2");
 	mvwprintw(inputWin, yStr + 6, xStr, "LEVEL 3");
-	
+
 	// Selecting button
 	int x = 10, y = 2;
 	mvwprintw(inputWin, y, x, "<");
-	
+
 	keypad(inputWin, true);
 
 	int ch;
@@ -140,7 +141,7 @@ int splash_screen() {
 	// Level 2
 	else if (y == yStr + 4)
 		return 2;
-	
+
 	// Level 3
 	else if (y == yStr + 6)
 		return 3;
@@ -156,8 +157,8 @@ void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 
 	if(has_colors()){
 		start_color();
-		init_pair(1, COLOR_BLACK, COLOR_GREEN); 
-	} 
+		init_pair(1, COLOR_BLACK, COLOR_GREEN);
+	}
 
 	// Green Character
 	if (type == 1){
@@ -181,7 +182,7 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 	int tempX = *xLoc, tempY = *yLoc, modifyFlag = 0;
 	keypad(win, true);
 	wrefresh(win);
-	
+
 	int y, x;
 	getyx(win, y, x);
 
@@ -189,7 +190,7 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 	switch(key) {
 		case KEY_UP:
 			if (mvwinch(win, *yLoc-1, *xLoc) == ' '){
-			//if ((mvwinch(win, *yLoc-1, *xLoc) == ' ') && (mvwinch(box1, *yLoc-1, *xLoc) == ' ') && (mvwinch(box4, *yLoc-1, *xLoc) == ' ')){		
+			//if ((mvwinch(win, *yLoc-1, *xLoc) == ' ') && (mvwinch(box1, *yLoc-1, *xLoc) == ' ') && (mvwinch(box4, *yLoc-1, *xLoc) == ' ')){
 				(*yLoc)--;
 			}
 			break;
@@ -216,7 +217,7 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 			refresh();
 			wrefresh(win);
 			break;
-	} 
+	}
 
 	wrefresh(win);
 	return;
@@ -244,7 +245,7 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl){
 		init_pair(3, COLOR_BLACK, COLOR_RED);
 	}
 
-		
+
 	wattron(win,COLOR_PAIR(3));
 
 	int count1 = 35 / lvl;
@@ -281,7 +282,7 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl){
 		enemyY[i] = max_y - 3;
 		count4 += 40;
 	}
-	
+
 	// Print Enemies
 	for (int i = 0; i < MAX_ENEMIES; ++i){
 		mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
@@ -338,12 +339,12 @@ int upgrade_box(WINDOW *win, int MAX_NUM){
 }
 
 void display_level(WINDOW *win, int lvl){
-	
+
 	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
 
 	int max_y, max_x;
 	getmaxyx(stdscr, max_y, max_x);
-	
+
 	int mid_height = max_y / 2;
 	int mid_width = max_x / 2;
 
@@ -368,12 +369,14 @@ void display_level(WINDOW *win, int lvl){
 	switch(lvl) {
 
 		case 1:
+
 			// Print lvl 1 layout
 			wattron(win, A_BOLD);
 			mvwprintw(win, 2, 2, "LEVEL 1");
 			wattroff(win, A_BOLD);
 
-			// COLOR THE BOXES TO WHITE		
+			/*
+			// COLOR THE BOXES TO WHITE
 			wattron(box1, COLOR_PAIR(2));
 			wattron(box4, COLOR_PAIR(2));
 
@@ -402,6 +405,21 @@ void display_level(WINDOW *win, int lvl){
 			wrefresh(box1);
 			wrefresh(box4);
 
+*/
+			wattron(win, COLOR_PAIR(2));
+			for ( int i = 1; i < 10; i++){
+				start_x = (max_x - mid_width) / 2 - 5;
+
+				for (int j = 1; j < 10; j++){
+					mvwprintw(win, start_y, start_x, "*");
+					start_x++;
+				}
+				start_y++;
+			}
+
+			wattroff(win, COLOR_PAIR(2));
+			wrefresh(win);
+
 			break;
 
 		case 2:
@@ -415,7 +433,7 @@ void display_level(WINDOW *win, int lvl){
 			wattron(box3, COLOR_PAIR(2));
 			wattron(box4, COLOR_PAIR(2));
 			wattron(box5, COLOR_PAIR(2));
-				
+
 			// ADD BOXES
 			box(box1, 0,0);
 			box(box3, 0,0);
@@ -431,7 +449,7 @@ void display_level(WINDOW *win, int lvl){
 					mvwaddch(box5, i, j, '-');
 				}
 			}
-			
+
 			// TURN OFF COLOR
 			wattroff(box1, COLOR_PAIR(2));
 			wattroff(box3, COLOR_PAIR(2));
@@ -448,15 +466,15 @@ void display_level(WINDOW *win, int lvl){
 			wrefresh(box5);
 
 			break;
-			
 
-		case 3: 
+
+		case 3:
 			// Print lvl 3 layout
 			wattron(win, A_BOLD);
 			mvwprintw(win, 2, 2, "LEVEL 3");
 			wattroff(win, A_BOLD);
-					
-			// BOXES COLOR	
+
+			// BOXES COLOR
 			wattron(box1, COLOR_PAIR(2));
 			wattron(box2, COLOR_PAIR(2));
 			wattron(box3, COLOR_PAIR(2));
@@ -501,9 +519,8 @@ void display_level(WINDOW *win, int lvl){
 
 			break;
 	}
-	
+
 
 	wrefresh(win);
 	refresh();
 }
-
