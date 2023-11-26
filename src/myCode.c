@@ -153,7 +153,6 @@ int splash_screen() {
 }
 
 void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
-	clear();
 
 	if(has_colors()){
 		start_color();
@@ -179,7 +178,6 @@ void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 	// MOVE PLAYER
-	int tempX = *xLoc, tempY = *yLoc, modifyFlag = 0;
 	keypad(win, true);
 	wrefresh(win);
 
@@ -190,7 +188,6 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 	switch(key) {
 		case KEY_UP:
 			if (mvwinch(win, *yLoc-1, *xLoc) == ' '){
-			//if ((mvwinch(win, *yLoc-1, *xLoc) == ' ') && (mvwinch(box1, *yLoc-1, *xLoc) == ' ') && (mvwinch(box4, *yLoc-1, *xLoc) == ' ')){
 				(*yLoc)--;
 			}
 			break;
@@ -351,13 +348,6 @@ void display_level(WINDOW *win, int lvl){
 	int start_y = (max_y - mid_height) / 2 - 2;
 	int start_x = (max_x - mid_width) / 2 - 5;
 
-	// CREATE BOXES (WALL)
-	WINDOW *box1 = newwin(10, 20, start_y, start_x); // top left box
-	WINDOW *box2 = newwin(10, 20, (start_y * 2), (start_x * 2)); // middle box
-	WINDOW *box3 = newwin(10, 20, (start_y), (start_x * 3)); // top right box
-	WINDOW *box4 = newwin(10, 20, (start_y * 3), (start_x * 3)); // bottom right box
-	WINDOW *box5 = newwin(10, 20, (start_y * 3), (start_x)); // bottom left box
-
 	// WHITE COLOR -> Pair(2)
 	if (has_colors()){
 		start_color();
@@ -387,10 +377,6 @@ void display_level(WINDOW *win, int lvl){
 				}
 				start_y++;
 			}
-
-
-	
-
 			
 
 			wattroff(win, COLOR_PAIR(2));
@@ -399,99 +385,62 @@ void display_level(WINDOW *win, int lvl){
 			break;
 
 		case 2:
-			// Print lvl 2 layout
-			wattron(win, A_BOLD);
-			mvwprintw(win, 2, 2, "LEVEL 2");
-			wattroff(win, A_BOLD);
 
-			// COLOR THE BOXES TO WHITE
-			wattron(box1, COLOR_PAIR(2));
-			wattron(box3, COLOR_PAIR(2));
-			wattron(box4, COLOR_PAIR(2));
-			wattron(box5, COLOR_PAIR(2));
+    			// Print lvl 1 layout
+                        wattron(win, A_BOLD);
+                        mvwprintw(win, 2, 2, "LEVEL 2");
+                        wattroff(win, A_BOLD);
+			
+			// BOX 1
+			wattron(win, COLOR_PAIR(2));
+			for ( int i = 1; i < 10; i++){
+				start_x = (max_x - mid_width) / 2 - 5;
 
-			// ADD BOXES
-			box(box1, 0,0);
-			box(box3, 0,0);
-			box(box4, 0,0);
-			box(box5,0,0);
+				for (int j = 1; j < 20; j++){
+					mvwprintw(win, start_y, start_x, "*");
+					mvwprintw(win, start_y + 26, start_x + 100, "*");
+					mvwprintw(win, start_y + 26, start_x, "*");
+					mvwprintw(win, start_y, start_x + 100, "*");
 
-			// FILL BOXES WITH WHITE SPACE
-			for (int i = 1; i < (mid_height - 15); ++i){
-				for (int j = 1; j < (mid_width - 45); ++j){
-					mvwaddch(box1, i, j, '-');
-					mvwaddch(box3, i, j, '-');
-					mvwaddch(box4, i, j, '-');
-					mvwaddch(box5, i, j, '-');
+					start_x++;
 				}
+				start_y++;
 			}
 
-			// TURN OFF COLOR
-			wattroff(box1, COLOR_PAIR(2));
-			wattroff(box3, COLOR_PAIR(2));
-			wattroff(box4, COLOR_PAIR(2));
-			wattroff(box5, COLOR_PAIR(2));
 
-			// REFRESH
-			refresh();
-
+			wattroff(win, COLOR_PAIR(2));
 			wrefresh(win);
-			wrefresh(box1);
-			wrefresh(box3);
-			wrefresh(box4);
-			wrefresh(box5);
-
 			break;
 
 
 		case 3:
 			// Print lvl 3 layout
-			wattron(win, A_BOLD);
-			mvwprintw(win, 2, 2, "LEVEL 3");
-			wattroff(win, A_BOLD);
+                        wattron(win, A_BOLD);
+                        mvwprintw(win, 2, 2, "LEVEL 3");
+                        wattroff(win, A_BOLD);
 
-			// BOXES COLOR
-			wattron(box1, COLOR_PAIR(2));
-			wattron(box2, COLOR_PAIR(2));
-			wattron(box3, COLOR_PAIR(2));
-			wattron(box4, COLOR_PAIR(2));
-			wattron(box5, COLOR_PAIR(2));
+                        // BOX 1
+                        wattron(win, COLOR_PAIR(2));
+                        for ( int i = 1; i < 10; i++){
+                                start_x = (max_x - mid_width) / 2 - 5;
+
+                                for (int j = 1; j < 20; j++){
+                                        mvwprintw(win, start_y, start_x, "*");
+                                        mvwprintw(win, start_y + 26, start_x + 100, "*");
+                                        mvwprintw(win, start_y + 26, start_x, "*");
+                                        mvwprintw(win, start_y, start_x + 100, "*");
+					mvwprintw(win, start_y + 13, start_x + 50, "*");
+
+                                        start_x++;
+                                }
+                                start_y++;
+                        }
 
 
-			// ADD BOXES
-			box(box1, 0,0);
-			box(box2, 0,0);
-			box(box3, 0,0);
-			box(box4, 0,0);
-			box(box5, 0,0);
+                        wattroff(win, COLOR_PAIR(2));
+                        wrefresh(win);
+                        break;
 
-			// FILL BOXES WITH WHITE SPACE
-			for (int i = 1; i < (mid_height); ++i){
-				for (int j = 1; j < (mid_width); ++j){
-					mvwaddch(box1, i, j, '-');
-					mvwaddch(box2, i, j, '-');
-					mvwaddch(box3, i, j, '-');
-					mvwaddch(box4, i, j, '-');
-					mvwaddch(box5, i, j, '-');
-				}
-			}
-
-			// TURN OFF COLOR
-			wattroff(box1, COLOR_PAIR(2));
-			wattroff(box2, COLOR_PAIR(2));
-			wattroff(box3, COLOR_PAIR(2));
-			wattroff(box4, COLOR_PAIR(2));
-			wattroff(box5, COLOR_PAIR(2));
-
-			// REFRESH
-			refresh();
-
-			wrefresh(win);
-			wrefresh(box1);
-			wrefresh(box2);
-			wrefresh(box3);
-			wrefresh(box4);
-			wrefresh(box5);
 
 			break;
 	}
