@@ -51,9 +51,7 @@ int main(){
 			do{
 			display_level(win, 1);
 			upgrade_box(win, 1);
-		//	printEnemies(win,5, ZyLoc, ZxLoc);
-			//Enemies(win, 5, 1, yLoc, xLoc);
-
+		
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 			printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
 
@@ -79,40 +77,57 @@ int main(){
 		// LEVEL 2
 		else if (lvl == 2){
 			do{
-			display_level(win, 2);
-			upgrade_box(win, 2);
-			//Enemies(win, 9, 2, yLoc, xLoc);
+                        display_level(win, 2);
+                        upgrade_box(win, 2);
 
-			printCharacter(win, 'P', yLoc, xLoc, 1);
+                        printCharacter(win, 'P', yLoc, xLoc, 1);
+                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
 
-			key = wgetch(win);
-			printCharacter(win, ' ', yLoc, xLoc, 0);
-			moveCharacter(win, yLoc, xLoc, key);
-			printCharacter(win, 'P', yLoc, xLoc, 1);
+                        key = wgetch(win);
+                        printCharacter(win, ' ', yLoc, xLoc, 0);
+                        printEnemy(win, ' ', ZyLoc, ZxLoc, 0);
+                        moveCharacter(win, yLoc, xLoc, key);
+                        moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
+                        printCharacter(win, 'P', yLoc, xLoc, 1);
+                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
 
-			wrefresh(win);
-			} while (key!= 'q' && key != 'p');
+                        wrefresh(win);
 
+                        if ((*yLoc == *ZyLoc) && (*xLoc == *ZxLoc)){
+                                key = 'o';
+                        }
+
+                        } while (key!= 'q' && key != 'p' && key != 'o');
 		}
+
 
 		// LEVEL 3
 		else if (lvl == 3){
-			do{
-			display_level(win, 3);
-			upgrade_box(win, 3);
-			//Enemies(win, 15,3, yLoc, xLoc);
+			  do{
+                        display_level(win, 3);
+                        upgrade_box(win, 3);
 
-			printCharacter(win, 'P', yLoc, xLoc, 1);
+                        printCharacter(win, 'P', yLoc, xLoc, 1);
+                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
 
-			key = wgetch(win);
-			printCharacter(win, ' ', yLoc, xLoc, 0);
-			moveCharacter(win, yLoc, xLoc, key);
-			printCharacter(win, 'P', yLoc, xLoc, 1);
+                        key = wgetch(win);
+                        printCharacter(win, ' ', yLoc, xLoc, 0);
+                        printEnemy(win, ' ', ZyLoc, ZxLoc, 0);
+                        moveCharacter(win, yLoc, xLoc, key);
+                        moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
+                        printCharacter(win, 'P', yLoc, xLoc, 1);
+                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
 
-			wrefresh(win);
-			} while (key != 'q' && key != 'p');
+                        wrefresh(win);
 
-		}
+                        if ((*yLoc == *ZyLoc) && (*xLoc == *ZxLoc)){
+                                key = 'o';
+                        }
+
+                        } while (key!= 'q' && key != 'p' && key != 'o');
+                }
+
+
 		refresh();
 	
 			
@@ -172,6 +187,7 @@ int main(){
 			} while (ch != 'p');
 		}
 
+		// GAME OVER
 		if (key == 'o'){
 			werase(win);
 			wrefresh(win);
