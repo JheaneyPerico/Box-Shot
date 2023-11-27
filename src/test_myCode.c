@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "myCode.h"
 #include "character.h"
+#include <unistd.h>
+#define DELAY_MICROSECONDS 1000000 // 1 second delay
 
 int main(){
 	initscr();
@@ -53,6 +55,7 @@ int main(){
 			moveCharacter(win, yLoc, xLoc, key);
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 
+			
 			wrefresh(win);
 			} while (key!= 'q' && key != 'p');
 		}	
