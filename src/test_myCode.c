@@ -67,10 +67,11 @@ int main(){
 			
 			wrefresh(win);
 
-			if (*yLoc == *ZyLoc && *xLoc == *ZyLoc)
-				break;
+			if ((*yLoc == *ZyLoc) && (*xLoc == *ZxLoc)){
+				key = 'o';
+			}
 			
-			} while (key!= 'q' && key != 'p');
+			} while (key!= 'q' && key != 'p' && key != 'o');
 		}	
 
 		
@@ -169,6 +170,16 @@ int main(){
 				}
 
 			} while (ch != 'p');
+		}
+
+		if (key == 'o'){
+			werase(win);
+			wrefresh(win);
+			mvwprintw(win, mid_y, mid_x - 5, "GAME OVER");
+			mvwprintw(win, mid_y + 2, mid_x - 11, "PRESS ANY KEY TO EXIT ");
+
+			char ch = wgetch(win);
+			break;
 		}
 	
 		refresh();

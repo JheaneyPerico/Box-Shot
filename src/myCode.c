@@ -249,8 +249,8 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type){
 }
 
 void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
-	int deltaY = (*yLoc > *ZyLoc) ? 1 : (*yLoc < *ZyLoc) ? -1 : 0;
-	int deltaX = (*xLoc > *ZxLoc) ? 1 : (*xLoc < *ZxLoc) ? -1 : 0;
+	int deltaY = (*yLoc > *ZyLoc) && mvwinch(win, *ZyLoc+1, *ZxLoc) == ' ' ? 1 : (*yLoc < *ZyLoc) && mvwinch(win, *ZyLoc-1, *ZxLoc) == ' ' ? -1 : 0;
+	int deltaX = (*xLoc > *ZxLoc) && mvwinch(win, *ZyLoc, *ZxLoc+1) == ' ' ? 1 : (*xLoc < *ZxLoc) && mvwinch(win, *ZyLoc, *ZxLoc-1) == ' ' ? -1 : 0;
 
 	(*ZyLoc) += deltaY;
 	(*ZxLoc) += deltaX;
