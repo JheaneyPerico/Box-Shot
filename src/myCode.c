@@ -225,9 +225,12 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 }
 
-void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *yLoc, int *xLoc){
+int *Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *ZyLoc, int *ZxLoc){
 
 	int enemyX[MAX_ENEMIES], enemyY[MAX_ENEMIES];
+
+	ZyLoc = enemyY;
+	ZxLoc = enemyX;
 
 	int max_y, max_x;
 	getmaxyx(win, max_y, max_x);
@@ -238,16 +241,18 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *yLoc, int *xLoc){
 	int start_y = (max_y - mid_height) / 2 - 2;
 	int start_x = (max_x - mid_width) / 2 - 5;
 
+	for (int i = 0; i < MAX_ENEMIES; i++){
+		enemyX[i] = start_x;
+		enemyY[i] = start_y;
 
-	// COLOR RED -> PAIR(3)
-	if (has_colors()){
-		start_color();
-		init_pair(3, COLOR_BLACK, COLOR_RED);
+		start_x += 20;
 	}
 
+	return 0;
+}
 
-	wattron(win,COLOR_PAIR(3));
 
+/*
 	int count1 = 35 / lvl;
 	int count2 = 35 / lvl;
 	int count3 = 140 /lvl;
@@ -283,38 +288,66 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *yLoc, int *xLoc){
 		count4 += 40;
 	}
 
+
+	return 0;
+
+*/
+}
+
+
+void printEnemies(WINDOW *win, int MAX_ENEMIES, int *ZyLoc, int *ZxLoc){
 	// Print Enemies
-	for (int i = 0; i < MAX_ENEMIES; ++i){
-		//mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
-		
+	for (int i = 0; i < MAX_ENEMIES; i++){
 
-		mvwaddch(win, enemyY[i], enemyX[i], ' ');
-		
 		wattron(win, COLOR_PAIR(3));
-
-		
-		int deltaY = (*yLoc > enemyY[i]) ? 1 : (*yLoc < enemyY[i]) ? -1 : 0;
-		int deltaX = (*xLoc > enemyX[i]) ? 1 : (*xLoc < enemyX[i]) ? -1 : 0;
-
-		enemyY[i] += deltaY;
-		enemyX[i] += deltaX;
-
-		mvwaddch(win, enemyY[i], enemyX[i], ENEMY);
+		mvwaddch(win, *(ZyLoc + i), *(ZxLoc + i), ENEMY);
 		wrefresh(win);
 
 		wattroff(win, COLOR_PAIR(3));
-
-		if ((enemyY[i] == *yLoc) && (enemyX[i] == *xLoc)){
-			WINDOW *over = newwin(max_y, max_x, 0,0);
-			mvwprintw(over, 1,1, "Game Over");
-		}
-
 
 		wrefresh(win);
 		
 	}
 
 }
+/*
+void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
+
+        // MOVE PLAYER
+        keypad(win, true);
+        wrefresh(win);
+
+        int y, x, max_y, max_x;
+        getyx(win, y, x);
+        getmaxyx(win, max_y, max_x);
+
+        switch(key) {
+                case KEY_UP:
+                        if (mvwinch(win, *yLoc-1, *xLoc) == ' ' || mvwinch(win, *yLoc-1, *xLoc) == 'Z'){
+                                (*yLoc)--;
+                        }
+
+
+                        break;
+
+                case KEY_DOWN:
+                        if (mvwinch(win, *yLoc+1, *xLoc) == ' '){
+                                (*yLoc)++;
+                        }
+                        break;
+
+                case KEY_LEFT:
+                        if (mvwinch(win, *yLoc, *xLoc-1) == ' '){
+                                (*xLoc)--;
+                        }
+                        break;
+
+                case KEY_RIGHT:
+                        if (mvwinch(win, *yLoc, *xLoc+1) == ' '){
+                                (*xLoc)++;
+                        }
+
+*/
 
 int upgrade_box(WINDOW *win, int MAX_NUM){
 
@@ -472,4 +505,4 @@ void display_level(WINDOW *win, int lvl){
 
 	wrefresh(win);
 	refresh();
-}
+}                                           
