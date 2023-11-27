@@ -188,9 +188,10 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 	switch(key) {
 		case KEY_UP:
-			if (mvwinch(win, *yLoc-1, *xLoc) == ' '){
+			if (mvwinch(win, *yLoc-1, *xLoc) == ' ' || mvwinch(win, *yLoc-1, *xLoc) == 'Z'){
 				(*yLoc)--;
 			}
+
 
 			break;
 
@@ -286,11 +287,12 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *yLoc, int *xLoc){
 	for (int i = 0; i < MAX_ENEMIES; ++i){
 		//mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
 		
+
 		mvwaddch(win, enemyY[i], enemyX[i], ' ');
 		
 		wattron(win, COLOR_PAIR(3));
 
-
+		
 		int deltaY = (*yLoc > enemyY[i]) ? 1 : (*yLoc < enemyY[i]) ? -1 : 0;
 		int deltaX = (*xLoc > enemyX[i]) ? 1 : (*xLoc < enemyX[i]) ? -1 : 0;
 
