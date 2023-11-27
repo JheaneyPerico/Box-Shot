@@ -44,7 +44,7 @@ int main(){
 			do{
 			display_level(win, 1);
 			upgrade_box(win, 1);
-			Enemies(win, 5, 1);
+			Enemies(win, 5, 1, yLoc, xLoc);
 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 
@@ -64,7 +64,7 @@ int main(){
 			do{
 			display_level(win, 2);
 			upgrade_box(win, 2);
-			Enemies(win, 9, 2);
+			Enemies(win, 9, 2, yLoc, xLoc);
 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 
@@ -83,7 +83,7 @@ int main(){
 			do{
 			display_level(win, 3);
 			upgrade_box(win, 3);
-			Enemies(win, 15,3);
+			Enemies(win, 15,3, yLoc, xLoc);
 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 

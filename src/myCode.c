@@ -5,6 +5,8 @@
 #include <time.h>
 #include <string.h>
 #include <math.h>
+#include <unistd.h>
+#define DELAY_MICROSECONDS 1000000 // 1 second delay
 #include "character.h"
 #define PLAYER "P1"
 #define ENEMY "Zb"
@@ -222,7 +224,7 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 }
 
-void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl){
+void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *yLoc, int *xLoc){
 
 	int enemyX[MAX_ENEMIES], enemyY[MAX_ENEMIES];
 
@@ -282,13 +284,26 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl){
 
 	// Print Enemies
 	for (int i = 0; i < MAX_ENEMIES; ++i){
-		mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
-		wrefresh(win);
+		//mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
+		//
+		while(1){
+			mvwprintw(win, enemyY[i], enemyX[i], " ");
+
+			int deltaY = (*yLoc > enemyY[i]) ? 1 : (*yLoc < enemyY[i]) ? -1 : 0;
+			int deltaX = (*xLoc > enemyX[i]) ? 1 : (*xLoc < enemyX[i]) ? -1 : 0;
+
+			enemyY[i] += deltaY;
+			enemyX[i] += deltaX;
+
+			mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
+
+			wrefresh(win);
+
+
+			wattroff(win, COLOR_PAIR(3));
+			wrefresh(win);
+		}
 	}
-
-	wattroff(win, COLOR_PAIR(3));
-	wrefresh(win);
-
 
 }
 
