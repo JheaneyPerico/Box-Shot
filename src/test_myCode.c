@@ -32,7 +32,7 @@ int main(){
 
 	if (lvl == 3) playerY -= 7;
 
-	int *xLoc, *yLoc, *ZyLoc1, *ZxLoc1, *ZyLoc2, *ZxLoc2, key;
+	int *xLoc, *yLoc, *ZyLoc1, *ZxLoc1, *ZyLoc2, *ZxLoc2, *ZyLoc3, *ZxLoc3, *ZyLoc4, *ZxLoc4, key;
 	xLoc = &playerX;
 	yLoc = &playerY;
 
@@ -50,6 +50,20 @@ int main(){
 
 	ZyLoc2 = &zombie2Y;
 	ZxLoc2 = &zombie2X;
+
+	// Third Zombie
+	int zombie3X = max_x - 5;
+	int zombie3Y = 5;
+
+	ZyLoc3 = &zombie3Y;
+	ZxLoc3 = &zombie3X;
+
+	// Fourth Zombie
+	int zombie4X = 5;
+	int zombie4Y = max_y - 5;
+
+	ZyLoc4 = &zombie4Y;
+	ZxLoc4 = &zombie4X;
 
 
 	while(1){
@@ -119,34 +133,52 @@ int main(){
                 }
 
 			
-/*
+
 
 		// LEVEL 3
 		else if (lvl == 3){
-			  do{
+			do{
                         display_level(win, 3);
                         upgrade_box(win, 3);
 
                         printCharacter(win, 'P', yLoc, xLoc, 1);
-                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
+                        printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
+                        printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1);
+			printEnemy(win, 'Z', ZyLoc3, ZxLoc3, 1);
 
                         key = wgetch(win);
+
                         printCharacter(win, ' ', yLoc, xLoc, 0);
-                        printEnemy(win, ' ', ZyLoc, ZxLoc, 0);
+                        printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0);
+                        printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0);
+			printEnemy(win, ' ', ZyLoc3, ZxLoc3, 0);
+			printEnemy(win, ' ', ZyLoc4, ZxLoc4, 0);
+
+
                         moveCharacter(win, yLoc, xLoc, key);
-                        moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
+                        moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc);
+                        moveEnemy(win, ZyLoc2, ZxLoc2, yLoc, xLoc);
+			moveEnemy(win, ZyLoc3, ZxLoc3, yLoc, xLoc);
+			moveEnemy(win, ZyLoc4, ZxLoc4, yLoc, xLoc);
+
+			
+
                         printCharacter(win, 'P', yLoc, xLoc, 1);
-                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
+                        printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
+                        printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1);
+			printEnemy(win, 'Z', ZyLoc3, ZxLoc3, 1);
+			printEnemy(win, 'Z', ZyLoc4, ZxLoc4, 1);
 
                         wrefresh(win);
 
-                        if ((*yLoc == *ZyLoc) && (*xLoc == *ZxLoc)){
+                        if (((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)) || ((*yLoc == *ZyLoc2) && (*xLoc == *ZxLoc2)) || ((*yLoc == *ZyLoc3) && (*xLoc == *ZxLoc3)) || ((*yLoc == *ZyLoc3) && (*xLoc == *ZxLoc3))) {
                                 key = 'o';
                         }
 
                         } while (key!= 'q' && key != 'p' && key != 'o');
                 }
-*/
+
+
 
 		refresh();
 	
