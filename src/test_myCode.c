@@ -100,14 +100,14 @@ int main(){
 
 		}
 		refresh();
-
-		
+	
 			
 		int y_n;
 
 		// QUIT PRESSED
 		if (key == 'q'){
-			clear();
+			werase(win);
+			wrefresh(win);
 			char ch;
 			
 
@@ -138,7 +138,9 @@ int main(){
 	
 		// PAUSE PRESSED
 		if (key == 'p'){
-			clear();
+			werase(win);
+			wrefresh(win);
+
 			char ch;
 
 

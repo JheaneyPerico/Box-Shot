@@ -8,7 +8,7 @@
 #include <unistd.h>
 #define DELAY_MICROSECONDS 1000000 // 1 second delay
 #include "character.h"
-#define ENEMY "Z"
+#define ENEMY 'Z'
 
 int splash_screen() {
 
@@ -182,13 +182,13 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 	keypad(win, true);
 	wrefresh(win);
 
-	int y, x;
+	int y, x, max_y, max_x;
 	getyx(win, y, x);
-
+	getmaxyx(win, max_y, max_x);
 
 	switch(key) {
 		case KEY_UP:
-			if (mvwinch(win, *yLoc-1, *xLoc) == ' ' || mvwinch(win, *yLoc-1, *xLoc) == 'Z'){
+			if (mvwinch(win, *yLoc-1, *xLoc) == ' '){
 				(*yLoc)--;
 			}
 
@@ -286,9 +286,10 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *yLoc, int *xLoc){
 	for (int i = 0; i < MAX_ENEMIES; ++i){
 		//mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
 		
-		mvwprintw(win, enemyY[i], enemyX[i], " ");
+		mvwaddch(win, enemyY[i], enemyX[i], ' ');
 		
 		wattron(win, COLOR_PAIR(3));
+
 
 		int deltaY = (*yLoc > enemyY[i]) ? 1 : (*yLoc < enemyY[i]) ? -1 : 0;
 		int deltaX = (*xLoc > enemyX[i]) ? 1 : (*xLoc < enemyX[i]) ? -1 : 0;
@@ -296,7 +297,7 @@ void Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *yLoc, int *xLoc){
 		enemyY[i] += deltaY;
 		enemyX[i] += deltaX;
 
-		mvwprintw(win, enemyY[i], enemyX[i], ENEMY);
+		mvwaddch(win, enemyY[i], enemyX[i], ENEMY);
 		wrefresh(win);
 
 		wattroff(win, COLOR_PAIR(3));
