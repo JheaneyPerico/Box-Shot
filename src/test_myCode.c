@@ -32,9 +32,14 @@ int main(){
 
 	if (lvl == 3) playerY -= 7;
 
-	int *xLoc, *yLoc, charL = 2, key;
+	int *xLoc, *yLoc, *ZyLoc, *ZxLoc, key;
 	xLoc = &playerX;
 	yLoc = &playerY;
+
+	int zombieX = 5;
+	int zombieY = 5;
+	ZyLoc = &zombieX;
+	ZxLoc = &zombieY;
 
 	while(1){
 		keypad(win, true);
@@ -43,24 +48,28 @@ int main(){
 
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
-			int *ZyLoc, *ZxLoc;
-			Enemies(win, 5, 1, *ZyLoc, *ZxLoc);
-
 			do{
 			display_level(win, 1);
 			upgrade_box(win, 1);
-			printEnemies(win,5, ZyLoc, ZxLoc);
+		//	printEnemies(win,5, ZyLoc, ZxLoc);
 			//Enemies(win, 5, 1, yLoc, xLoc);
 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
+			printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
 
 			key = wgetch(win);
 			printCharacter(win, ' ', yLoc, xLoc, 0);
+			printEnemy(win, ' ', ZyLoc, ZxLoc, 0);
 			moveCharacter(win, yLoc, xLoc, key);
+			moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc); 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
-
+			printEnemy(win, 'Z', ZyLoc, ZxLoc, 1);
 			
 			wrefresh(win);
+
+			if (*yLoc == *ZyLoc && *xLoc == *ZyLoc)
+				break;
+			
 			} while (key!= 'q' && key != 'p');
 		}	
 

@@ -196,19 +196,19 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 			break;
 
 		case KEY_DOWN:
-			if (mvwinch(win, *yLoc+1, *xLoc) == ' '){
+			if (mvwinch(win, *yLoc+1, *xLoc) == ' ' || mvwinch(win, *yLoc+1, *xLoc) == 'Z'){
 				(*yLoc)++;
 			}
 			break;
 
 		case KEY_LEFT:
-			if (mvwinch(win, *yLoc, *xLoc-1) == ' '){
+			if (mvwinch(win, *yLoc, *xLoc-1) == ' ' || mvwinch(win, *yLoc, *xLoc-1) == 'Z'){
 				(*xLoc)--;
 			}
 			break;
 
 		case KEY_RIGHT:
-			if (mvwinch(win, *yLoc, *xLoc+1) == ' '){
+			if (mvwinch(win, *yLoc, *xLoc+1) == ' ' || mvwinch(win, *yLoc, *xLoc+1) == 'Z'){
 				(*xLoc)++;
 			}
 			break;
@@ -225,6 +225,44 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
 }
 
+void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type){
+
+        if(has_colors()){
+                start_color();
+                init_pair(1, COLOR_BLACK, COLOR_RED);
+        }
+
+        // Red Character
+        if (type == 1){
+                wattron(win, COLOR_PAIR(1));
+                mvwprintw(win, *(ZyLoc), *(ZxLoc), "%c", symbol);
+                wattroff(win, COLOR_PAIR(1));
+                }
+
+        // Leave invisible traces when moved
+        else{
+                mvwprintw(win, *ZyLoc, *ZxLoc, "%c", symbol);
+        }
+
+        wrefresh(win);
+        return;
+}
+
+void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
+	int deltaY = (*yLoc > *ZyLoc) ? 1 : (*yLoc < *ZyLoc) ? -1 : 0;
+	int deltaX = (*xLoc > *ZxLoc) ? 1 : (*xLoc < *ZxLoc) ? -1 : 0;
+
+	(*ZyLoc) += deltaY;
+	(*ZxLoc) += deltaX;
+
+	wrefresh(win);
+
+}
+
+
+
+
+/*
 int *Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *ZyLoc, int *ZxLoc){
 
 	int enemyX[MAX_ENEMIES], enemyY[MAX_ENEMIES];
@@ -252,7 +290,7 @@ int *Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *ZyLoc, int *ZxLoc){
 }
 
 
-/*
+
 	int count1 = 35 / lvl;
 	int count2 = 35 / lvl;
 	int count3 = 140 /lvl;
@@ -291,7 +329,7 @@ int *Enemies(WINDOW *win, int MAX_ENEMIES, int lvl, int *ZyLoc, int *ZxLoc){
 
 	return 0;
 
-*/
+
 }
 
 
@@ -310,7 +348,7 @@ void printEnemies(WINDOW *win, int MAX_ENEMIES, int *ZyLoc, int *ZxLoc){
 	}
 
 }
-/*
+
 void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 
         // MOVE PLAYER
