@@ -28,29 +28,29 @@ int splash_screen() {
 
 	// SPLASH SCREEN
 	attron(A_BOLD);
-	mvprintw(10, mid_width - 25, " ________  ________     ___    ___");
-	mvprintw(11,mid_width - 25, "|\\   __  \\|\\   __  \\   |\\  \\  /  /|");
-	mvprintw(12,mid_width - 25, "\\ \\  \\|\\ /\\ \\  \\|\\  \\  \\ \\  \\/  / /");
-	mvprintw(13,mid_width - 25, " \\ \\   __  \\ \\  \\\\\\  \\  \\ \\    / /");
-	mvprintw(14,mid_width - 25, "  \\ \\  \\|\\  \\ \\  \\\\\\  \\  /     \\/");
-	mvprintw(15,mid_width - 25, "   \\ \\_______\\ \\_______\\/  /\\   \\");
-	mvprintw(16,mid_width - 25, "    \\|_______|\\|_______/__/ /\\ __\\");
-	mvprintw(17,mid_width - 25, "                       |__|/ \\|__|"); // 16
+	mvprintw(10, mid_width + 40, " ________  ________     ___    ___");
+	mvprintw(11,mid_width + 40, "|\\   __  \\|\\   __  \\   |\\  \\  /  /|");
+	mvprintw(12,mid_width + 40, "\\ \\  \\|\\ /\\ \\  \\|\\  \\  \\ \\  \\/  / /");
+	mvprintw(13,mid_width + 40, " \\ \\   __  \\ \\  \\\\\\  \\  \\ \\    / /");
+	mvprintw(14,mid_width + 40, "  \\ \\  \\|\\  \\ \\  \\\\\\  \\  /     \\/");
+	mvprintw(15,mid_width + 40, "   \\ \\_______\\ \\_______\\/  /\\   \\");
+	mvprintw(16,mid_width + 40, "    \\|_______|\\|_______/__/ /\\ __\\");
+	mvprintw(17,mid_width + 40, "                       |__|/ \\|__|"); // 16
 
 	attron(COLOR_PAIR(1)); // red
-	mvprintw(10, mid_width + 25, " ________  ___  ___  ________  _________");
-	mvprintw(11, mid_width + 25, "|\\       \\|\\  \\|\\  \\|\\   __  \\|\\___   ___\\");
-	mvprintw(12, mid_width + 25, "\\ \\  \\___|\\ \\  \\\\\\  \\ \\  \\|\\  \\|___ \\  \\_|");
-	mvprintw(13, mid_width + 25, " \\ \\_____  \\ \\   __  \\ \\  \\\\\\  \\   \\ \\  \\");
-	mvprintw(14, mid_width + 25, "  \\|____|\\  \\ \\  \\ \\  \\ \\  \\\\\\  \\   \\ \\  \\");
-	mvprintw(15, mid_width + 25, "    ____\\_\\  \\ \\__\\ \\__\\ \\_______\\   \\ \\__\\");
-	mvprintw(16, mid_width + 25, "   |\\_________\\|__|\\|__|\\|_______|    \\|__|");
-	mvprintw(17, mid_width + 25, "   \\|_________|"); // 58
+	mvprintw(10, mid_width + 90, " ________  ___  ___  ________  _________");
+	mvprintw(11, mid_width + 90, "|\\       \\|\\  \\|\\  \\|\\   __  \\|\\___   ___\\");
+	mvprintw(12, mid_width + 90, "\\ \\  \\___|\\ \\  \\\\\\  \\ \\  \\|\\  \\|___ \\  \\_|");
+	mvprintw(13, mid_width + 90, " \\ \\_____  \\ \\   __  \\ \\  \\\\\\  \\   \\ \\  \\");
+	mvprintw(14, mid_width + 90, "  \\|____|\\  \\ \\  \\ \\  \\ \\  \\\\\\  \\   \\ \\  \\");
+	mvprintw(15, mid_width + 90, "    ____\\_\\  \\ \\__\\ \\__\\ \\_______\\   \\ \\__\\");
+	mvprintw(16, mid_width + 90, "   |\\_________\\|__|\\|__|\\|_______|    \\|__|");
+	mvprintw(17, mid_width + 90, "   \\|_________|"); // 58
 
 	attroff(COLOR_PAIR(1));
 
-	mvprintw(25, mid_width + strlen("WELCOME TO BOX SHOT")/2, "WELCOME TO BOX SHOT");
-	mvprintw(27, mid_width + 2, "SELECT DIFFICULTY AND PRESS ENTER");
+	mvprintw(25, mid_width + 76, "WELCOME TO BOX SHOT");
+	mvprintw(27, mid_width + 69, "SELECT DIFFICULTY AND PRESS ENTER");
 	attroff(A_BOLD);
 
 	attron(A_DIM);
@@ -332,7 +332,7 @@ int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
 	
 	guntype = 0;
 
-	//wattron(win, COLOR_PAIR(4)); // yellow
+	wattron(win, COLOR_PAIR(4)); // yellow
 	switch(MAX_NUM) {
 		case 1: // (lvl 1 -> 1 box)
 			mvwprintw(win, max_y / 2 + 7, max_x / 4 + 5, "##");
@@ -355,7 +355,7 @@ int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
 		guntype += 1;
 
 	}
-	//wattroff(win, COLOR_PAIR(4));
+	wattroff(win, COLOR_PAIR(4));
 
 	wrefresh(win);
 
