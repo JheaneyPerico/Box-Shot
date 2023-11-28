@@ -199,6 +199,8 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 				(*yLoc)--;
 			}
 
+			//if (mvwinch(win, *yLoc, *xLoc) == '#')
+
 			break;
 
 		case KEY_DOWN:
@@ -266,7 +268,7 @@ void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
 }
 
 
-int upgrade_box(WINDOW *win, int MAX_NUM){
+int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
 
 	int max_y, max_x;
 	getmaxyx(win, max_y, max_x);
@@ -278,29 +280,32 @@ int upgrade_box(WINDOW *win, int MAX_NUM){
 		start_color();
 		init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
 	}
+	
+	guntype = 0;
 
 	//wattron(win, COLOR_PAIR(4)); // yellow
 	switch(MAX_NUM) {
 		case 1: // (lvl 1 -> 1 box)
 			mvwprintw(win, max_y / 2 + 7, max_x / 4 + 5, "##");
-			guntype = 1;
 			break;
 
 		case 2: // (lvl 2 -> 2 boxes)
 			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
 			mvwprintw(win, max_y / 2 + 8, max_x / 2 + 6, "##");
-			guntype = 2;
 			break;
 
 		case 3: // (lvl 3 -> 3 boxes)
 			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
 			mvwprintw(win, max_y / 2 + 3, max_x / 2 + 23, "##");
 			mvwprintw(win, max_y / 2 + 8, max_x / 2 - 5, "##");
-			guntype = 3;
 			break;
 
 	}
 
+	if (mvwinch(win, *yLoc, *xLoc) == '#'){
+		guntype += 1;
+
+	}
 	//wattroff(win, COLOR_PAIR(4));
 
 	wrefresh(win);

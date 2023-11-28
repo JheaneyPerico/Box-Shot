@@ -15,7 +15,10 @@ int main(){
 	getmaxyx(stdscr, max_y, max_x);
 
 	WINDOW *win = newwin(max_y, max_x, 0,0);
-
+	
+	if(has_colors()){
+		start_color();
+	}
 
 	int lvl;
 	lvl = splash_screen();
@@ -75,8 +78,21 @@ int main(){
 		if (lvl == 1 || lvl == 0){
 			do{
 			display_level(win, 1);
-			upgrade_box(win, 1);
-		
+			int guntype = upgrade_box(win, 1, yLoc, xLoc);
+			char gun[20] = "PISTOL";
+
+			wattron(win, A_BOLD | A_REVERSE);
+
+			if (guntype == 1){
+				char gun[20] = "SHOT GUN";
+			}
+			else if (guntype == 2){
+				char gun[20] = "RIFLE";
+			}
+
+			mvwprintw(win, 3, mid_x - 11, "GUN: %s", gun);
+			wattroff(win, A_BOLD | A_REVERSE);
+
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
 
@@ -103,7 +119,7 @@ int main(){
 		else if (lvl == 2){
                         do{
                         display_level(win, 2);
-                        upgrade_box(win, 2);
+                        upgrade_box(win, 2, yLoc, xLoc);
 
                         printCharacter(win, 'P', yLoc, xLoc, 1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
@@ -139,7 +155,21 @@ int main(){
 		else if (lvl == 3){
 			do{
                         display_level(win, 3);
-                        upgrade_box(win, 3);
+                        upgrade_box(win, 3, yLoc, xLoc);
+			int guntype = upgrade_box(win, 1, yLoc, xLoc);
+                        char gun[20] = "PISTOL";
+
+                        wattron(win, A_BOLD | A_REVERSE);
+
+                        if (guntype == 1){
+                                char gun[20] = "SHOT GUN";
+                        }
+                        else if (guntype == 2){
+                                char gun[20] = "RIFLE";
+                        }
+
+                        mvwprintw(win, 3, mid_x - 11, "GUN: %s", gun);
+                        wattroff(win, A_BOLD | A_REVERSE);
 
                         printCharacter(win, 'P', yLoc, xLoc, 1);
                         printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
