@@ -114,7 +114,9 @@ int main(){
 			wrefresh(win);
 
 			if ((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)){
-				key = 'o';
+				if (*hit == 0){
+					key = 'o';
+				}
 			}
 			
 			} while (key!= 'q' && key != 'p' && key != 'o');
@@ -147,11 +149,14 @@ int main(){
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit);
 
                         wrefresh(win);
-
+			
+			
                         if (((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)) || ((*yLoc == *ZyLoc2) && (*xLoc == *ZxLoc2))) {
-                                key = 'o';
-                        }
 
+                                key = 'o';
+                        
+
+			}
                         } while (key!= 'q' && key != 'p' && key != 'o');
                 }
 

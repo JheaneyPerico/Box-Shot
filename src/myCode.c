@@ -293,9 +293,11 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int 
                 mvwprintw(win, *ZyLoc, *ZxLoc, "%c", symbol);
         }
 
-//	if (mvwinch(win, *ZyLoc, *ZxLoc) == '-' || mvwinch(win, *ZyLoc, *ZxLoc) == '|')
-		
+	if (mvwinch(win, *ZyLoc, *ZxLoc) == '-' || mvwinch(win, *ZyLoc, *ZxLoc) == '|'){
+		*hit = 1;
 	}
+	}
+	
         wrefresh(win);
         return;
 }
