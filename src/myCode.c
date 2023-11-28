@@ -176,7 +176,7 @@ void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 	return;
 }
 
-void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
+void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, char *dir, int key){
 
 	// MOVE PLAYER
 	keypad(win, true);
@@ -197,6 +197,7 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 		case KEY_UP:
 			if (mvwinch(win, *yLoc-1, *xLoc) == ' ' || mvwinch(win, *yLoc-1, *xLoc) == 'Z' || mvwinch(win, *yLoc-1, *xLoc) == '#'){
 				(*yLoc)--;
+				*dir = 'u';
 			}
 
 			//if (mvwinch(win, *yLoc, *xLoc) == '#')
@@ -206,18 +207,21 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 		case KEY_DOWN:
 			if (mvwinch(win, *yLoc+1, *xLoc) == ' ' || mvwinch(win, *yLoc+1, *xLoc) == 'Z' || mvwinch(win, *yLoc+1, *xLoc) == '#'){
 				(*yLoc)++;
+				*dir = 'd';
 			}
 			break;
 
 		case KEY_LEFT:
 			if (mvwinch(win, *yLoc, *xLoc-1) == ' ' || mvwinch(win, *yLoc, *xLoc-1) == 'Z' || mvwinch(win, *yLoc, *xLoc-1) == '#'){
 				(*xLoc)--;
+				*dir = 'l';
 			}
 			break;
 
 		case KEY_RIGHT:
 			if (mvwinch(win, *yLoc, *xLoc+1) == ' ' || mvwinch(win, *yLoc, *xLoc+1) == 'Z'  || mvwinch(win, *yLoc, *xLoc+1) == '#'){
 				(*xLoc)++;
+				*dir = 'r';
 			}
 			break;
 
@@ -231,6 +235,41 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 	return;
 
 
+}
+
+void bullet(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, char *dir, int key){
+	
+	if (key == ' '){
+		if (*dir == 'r'){
+			mvwprintw(win, *yLoc,*xLoc + 1,"----------");
+			wrefresh(win);
+		}
+
+		else if (*dir == 'l'){
+			mvwprintw(win, *yLoc, *xLoc - 11, "----------");
+			wrefresh(win);
+		}
+
+		else if (*dir == 'd'){
+
+			for (int i = 1; i <= 5; i++){
+				mvwprintw(win, *yLoc + i, *xLoc, "|");
+			}
+
+			wrefresh(win);
+		}
+
+		else{
+			for (int i = 1; i <= 5; i++){
+				mvwprintw(win, *yLoc - i, *xLoc, "|");
+			}
+		}
+
+			wrefresh(win);
+
+	return;
+	}
+	
 }
 
 void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type){

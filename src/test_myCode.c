@@ -73,6 +73,7 @@ int main(){
 		keypad(win, true);
 		refresh();
 		wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
+		char direction = 'r';
 
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
@@ -97,9 +98,10 @@ int main(){
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
 
 			key = wgetch(win);
+			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
 			printCharacter(win, ' ', yLoc, xLoc, 0);
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0);
-			moveCharacter(win, yLoc, xLoc, key);
+			moveCharacter(win, yLoc, xLoc, &direction, key);
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
@@ -131,7 +133,7 @@ int main(){
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0);
                         printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0);
 
-                        moveCharacter(win, yLoc, xLoc, key);
+                        moveCharacter(win, yLoc, xLoc, &direction, key);
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc);
                         moveEnemy(win, ZyLoc2, ZxLoc2, yLoc, xLoc);
 
@@ -185,7 +187,7 @@ int main(){
 			printEnemy(win, ' ', ZyLoc4, ZxLoc4, 0);
 
 
-                        moveCharacter(win, yLoc, xLoc, key);
+                        moveCharacter(win, yLoc, xLoc, &direction, key);
                         moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc);
                         moveEnemy(win, ZyLoc2, ZxLoc2, yLoc, xLoc);
 			moveEnemy(win, ZyLoc3, ZxLoc3, yLoc, xLoc);
