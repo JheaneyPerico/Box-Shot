@@ -77,6 +77,8 @@ int main(){
 	hit3 = &collide3;
 	hit4 = &collide4;
 
+	int nkey;
+
 	while(1){
 		keypad(win, true);
 		refresh();
@@ -118,11 +120,15 @@ int main(){
 
 			if ((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)){
 				if (*hit1 == 0){
-					key = 'o';
+					nkey = 'o';
 				}
 			}
+
+			if(*hit1 == 1){
+				nkey = 'n';
+			}
 			
-			} while (key!= 'q' && key != 'p' && key != 'o');
+			} while (key!= 'q' && key != 'p' && nkey != 'o' && nkey != 'n');
 		}	
 
 		
@@ -156,18 +162,22 @@ int main(){
 			
                         if ((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)) {
 				if (*hit1 == 0){
-                                	key = 'o';
+                                	nkey = 'o';
 				}
 
 			}
 
 			if ((*yLoc == *ZyLoc2) && (*xLoc == *ZxLoc2)){
 				if (*hit2 == 0){
-					key = 'o';
+					nkey = 'o';
 				}
 			}
 
-                        } while (key!= 'q' && key != 'p' && key != 'o');
+			if (*hit1 == 1 && *hit2 == 1){
+				nkey = 'n';
+			}
+
+                        } while (key!= 'q' && key != 'p' && nkey != 'o' && nkey != 'n');
                 }
 
 			
@@ -225,11 +235,36 @@ int main(){
 
                         wrefresh(win);
 
-                        if (((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)) || ((*yLoc == *ZyLoc2) && (*xLoc == *ZxLoc2)) || ((*yLoc == *ZyLoc3) && (*xLoc == *ZxLoc3)) || ((*yLoc == *ZyLoc3) && (*xLoc == *ZxLoc3))) {
-                                key = 'o';
+                        if ((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)) {
+				if (*hit1 == 0){
+                                	nkey = 'o';
+				}
                         }
 
-                        } while (key!= 'q' && key != 'p' && key != 'o');
+			if ((*yLoc == *ZyLoc2) && (*xLoc == *ZxLoc2)){
+				if (*hit2 == 0){
+					nkey = 'o';
+				}
+
+			}
+
+			if  ((*yLoc == *ZyLoc3) && (*xLoc == *ZxLoc3)){
+				if (*hit3 == 0){
+					nkey = 'o';
+				}
+			}
+
+			if ((*yLoc == *ZyLoc4) && (*xLoc == *ZxLoc4)){
+				if (*hit4 == 0){
+					nkey = 'o';
+				}
+			}
+
+			if (*hit1 == 1 && *hit2 == 1 && *hit3 == 1 && *hit4 == 1){
+				nkey = 'w';
+			}
+
+                        } while (key!= 'q' && key != 'p' && nkey != 'o' && nkey != 'w');
                 }
 
 
@@ -294,7 +329,7 @@ int main(){
 		}
 
 		// GAME OVER
-		if (key == 'o'){
+		if (nkey == 'o'){
 			werase(win);
 			wrefresh(win);
 			mvwprintw(win, mid_y, mid_x - 5, "GAME OVER");
@@ -302,6 +337,76 @@ int main(){
 
 			char ch = wgetch(win);
 			break;
+		}
+
+		if (nkey == 'n'){
+			// REINITIALIZE VALUES TO RESET POTISION
+			werase(win);
+			wrefresh(win);
+			mvwprintw(win, mid_y, mid_x - 10, "YOU BEAT THIS LEVEL!");
+			mvwprintw(win, mid_y + 2, mid_x-20, "PRESS ANY KEY TO GO TO THE NEXT LEVEL ");
+			char ch = wgetch(win);
+			lvl += 1;
+
+			playerX = (max_x / 2) - 3;
+			playerY = (max_y / 2);
+
+			if (lvl == 3) playerY -= 7;
+
+			xLoc = &playerX;
+		        yLoc = &playerY;
+
+        		// First Zombie
+        		int zombie1X = 5;
+       			int zombie1Y = 5;
+
+        		ZyLoc1 = &zombie1Y;
+        		ZxLoc1 = &zombie1X;
+
+
+        		// Second Zombie
+        		int zombie2X = max_x - 5;
+        		int zombie2Y = max_y - 5;
+
+        		ZyLoc2 = &zombie2Y;
+        		ZxLoc2 = &zombie2X;
+
+        		// Third Zombie
+        		int zombie3X = max_x - 5;
+        		int zombie3Y = 5;
+
+        		ZyLoc3 = &zombie3Y;
+        		ZxLoc3 = &zombie3X;
+
+        		// Fourth Zombie
+        		int zombie4X = 5;
+        		int zombie4Y = max_y - 5;
+
+        		ZyLoc4 = &zombie4Y;
+        		ZxLoc4 = &zombie4X;
+
+			*hit1 = 0;
+			*hit2 = 0;
+			*hit3 = 0;
+			*hit4 = 0;
+
+			nkey = 0;
+
+			werase(win);
+			wrefresh(win);
+			continue;
+			
+		}
+
+		if (nkey == 'w'){
+			werase(win);
+			wrefresh(win);
+			mvwprintw(win, mid_y, mid_x - 5, "YOU WIN!");
+			wrefresh(win);
+
+			int winch = getch();
+			break;
+
 		}
 	
 		refresh();
