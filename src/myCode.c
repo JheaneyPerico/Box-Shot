@@ -8,6 +8,7 @@
 #include <unistd.h>
 #define DELAY_MICROSECONDS 1000000 // 1 second delay
 #include "character.h"
+#include "myCode.h"
 #define ENEMY 'Z'
 
 int splash_screen() {
@@ -363,7 +364,7 @@ int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
 
 }
 
-void display_level(WINDOW *win, int lvl){
+void display_level(WINDOW *win, int lvl, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, int *hit){
 
 	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
 
@@ -405,11 +406,19 @@ void display_level(WINDOW *win, int lvl){
 				}
 				start_y++;
 			}
+
+	
+			printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
+			sleep(1);
+                        printEnemy(win, ' ', ZyLoc, ZxLoc, 0, hit);
+                        moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
+                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
 			
 
 			wattroff(win, COLOR_PAIR(2));
 			wrefresh(win);
 
+			
 			break;
 
 		case 2:

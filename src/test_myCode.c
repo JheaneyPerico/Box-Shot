@@ -68,16 +68,22 @@ int main(){
 	ZyLoc4 = &zombie4Y;
 	ZxLoc4 = &zombie4X;
 
-	int *hit1, *hit2, *hit3, *hit4;
+	int *hit1, *hit2, *hit3, *hit4, *quit;
 
-	int collide1 = 0, collide2 = 0, collide3 = 0, collide4 = 0;
+	int collide1 = 0, collide2 = 0, collide3 = 0, collide4 = 0, exit = 0;
 
 	hit1 = &collide1;
 	hit2 = &collide2;
 	hit3 = &collide3;
 	hit4 = &collide4;
+	quit = &exit;
 
 	int nkey;
+
+	if (lvl == 1)
+		while(1){
+			display_level(win, 1, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
+                        }
 
 	while(1){
 		keypad(win, true);
@@ -87,8 +93,10 @@ int main(){
 
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
+			//while (*quit != 1){
+			//	display_level(win, 1, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1, quit);
+			//}
 			do{
-			display_level(win, 1);
 			int guntype = upgrade_box(win, 1, yLoc, xLoc);
 			char gun[20] = "PISTOL";
 
@@ -105,16 +113,16 @@ int main(){
 			wattroff(win, A_BOLD | A_REVERSE);
 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
-			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
+//			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
 
 			key = wgetch(win);
 			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
 			printCharacter(win, ' ', yLoc, xLoc, 0);
-			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
+//			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
 			moveCharacter(win, yLoc, xLoc, &direction, key);
-			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
+//			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
-			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
+//			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
 			
 			wrefresh(win);
 
@@ -136,7 +144,7 @@ int main(){
 		// LEVEL 2
 		else if (lvl == 2){
                         do{
-                        display_level(win, 2);
+                        display_level(win, 1, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
                         upgrade_box(win, 2, yLoc, xLoc);
 
                         printCharacter(win, 'P', yLoc, xLoc, 1);
@@ -186,7 +194,7 @@ int main(){
 		// LEVEL 3
 		else if (lvl == 3){
 			do{
-                        display_level(win, 3);
+                        display_level(win, 1, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
                         upgrade_box(win, 3, yLoc, xLoc);
 			int guntype = upgrade_box(win, 1, yLoc, xLoc);
                         char gun[20] = "PISTOL";
@@ -280,6 +288,8 @@ int main(){
 			wrefresh(win);
 			char ch;
 			
+
+			*quit = 1;
 
 			mvwprintw(win, mid_y, mid_x - 10, "DO YOU WANT TO QUIT? y/n");
 			wrefresh(win);
