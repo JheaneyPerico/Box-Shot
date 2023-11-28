@@ -272,7 +272,9 @@ void bullet(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, char *dir
 	
 }
 
-void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type){
+void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int *hit){
+
+	if (*hit == 0){
 
         if(has_colors()){
                 start_color();
@@ -287,10 +289,13 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type){
                 }
 
         // Leave invisible traces when moved
-        if (type == 0){
+        if (type == 0 && (!(mvwinch(win, *ZyLoc, *ZxLoc) == '-') && !(mvwinch(win, *ZyLoc, *ZxLoc) == '|'))){
                 mvwprintw(win, *ZyLoc, *ZxLoc, "%c", symbol);
         }
 
+//	if (mvwinch(win, *ZyLoc, *ZxLoc) == '-' || mvwinch(win, *ZyLoc, *ZxLoc) == '|')
+		
+	}
         wrefresh(win);
         return;
 }

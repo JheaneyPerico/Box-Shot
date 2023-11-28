@@ -68,6 +68,11 @@ int main(){
 	ZyLoc4 = &zombie4Y;
 	ZxLoc4 = &zombie4X;
 
+	int *hit1;
+
+	int collide = 0;
+
+	hit1 = &collide;
 
 	while(1){
 		keypad(win, true);
@@ -95,16 +100,16 @@ int main(){
 			wattroff(win, A_BOLD | A_REVERSE);
 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
-			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
+			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, *hit);
 
 			key = wgetch(win);
 			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
 			printCharacter(win, ' ', yLoc, xLoc, 0);
-			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0);
+			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, *hit);
 			moveCharacter(win, yLoc, xLoc, &direction, key);
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
-			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1);
+			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, *hit);
 			
 			wrefresh(win);
 
