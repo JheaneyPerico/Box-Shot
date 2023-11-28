@@ -186,29 +186,36 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, int key){
 	getyx(win, y, x);
 	getmaxyx(win, max_y, max_x);
 
+	// COLOR YELLOW -> PAIR(4)
+        if (has_colors()){
+                start_color();
+                init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
+        }
+
+
 	switch(key) {
 		case KEY_UP:
-			if (mvwinch(win, *yLoc-1, *xLoc) == ' ' || mvwinch(win, *yLoc-1, *xLoc) == 'Z'){
+			if (mvwinch(win, *yLoc-1, *xLoc) == ' ' || mvwinch(win, *yLoc-1, *xLoc) == 'Z' ||  mvwinch(win, *yLoc-1, *xLoc) == '#'){
 				(*yLoc)--;
 			}
-
+			
 
 			break;
 
 		case KEY_DOWN:
-			if (mvwinch(win, *yLoc+1, *xLoc) == ' ' || mvwinch(win, *yLoc+1, *xLoc) == 'Z'){
+			if (mvwinch(win, *yLoc+1, *xLoc) == ' ' || mvwinch(win, *yLoc+1, *xLoc) == 'Z' || mvwinch(win, *yLoc+1, *xLoc) == '#'){
 				(*yLoc)++;
 			}
 			break;
 
 		case KEY_LEFT:
-			if (mvwinch(win, *yLoc, *xLoc-1) == ' ' || mvwinch(win, *yLoc, *xLoc-1) == 'Z'){
+			if (mvwinch(win, *yLoc, *xLoc-1) == ' ' || mvwinch(win, *yLoc, *xLoc-1) == 'Z' || mvwinch(win, *yLoc, *xLoc-1) == '#'){
 				(*xLoc)--;
 			}
 			break;
 
 		case KEY_RIGHT:
-			if (mvwinch(win, *yLoc, *xLoc+1) == ' ' || mvwinch(win, *yLoc, *xLoc+1) == 'Z'){
+			if (mvwinch(win, *yLoc, *xLoc+1) == ' ' || mvwinch(win, *yLoc, *xLoc+1) == 'Z'  || mvwinch(win, *yLoc, *xLoc+1) == '#'){
 				(*xLoc)++;
 			}
 			break;
@@ -267,7 +274,7 @@ int upgrade_box(WINDOW *win, int MAX_NUM){
 
 	int guntype;
 
-	// COLOR YELLO -> PAIR(4)
+	// COLOR YELLOW -> PAIR(4)
 	if (has_colors()){
 		start_color();
 		init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
@@ -276,20 +283,20 @@ int upgrade_box(WINDOW *win, int MAX_NUM){
 	wattron(win, COLOR_PAIR(4)); // yellow
 	switch(MAX_NUM) {
 		case 1: // (lvl 1 -> 1 box)
-			mvwprintw(win, max_y / 2 + 7, max_x / 4 + 5, "##");
+			mvwaddch(win, max_y / 2 + 7, max_x / 4 + 5, '#');
 			guntype = 1;
 			break;
 
 		case 2: // (lvl 2 -> 2 boxes)
-			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
-			mvwprintw(win, max_y / 2 + 8, max_x / 2 + 6, "##");
+			mvwaddch(win, max_y / 4 - 1, max_x / 3 + 5, '#');
+			mvwaddch(win, max_y / 2 + 8, max_x / 2 + 6, '#');
 			guntype = 2;
 			break;
 
 		case 3: // (lvl 3 -> 3 boxes)
-			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
-			mvwprintw(win, max_y / 2 + 3, max_x / 2 + 23, "##");
-			mvwprintw(win, max_y / 2 + 8, max_x / 2 - 5, "##");
+			mvwaddch(win, max_y / 4 - 1, max_x / 3 + 5, '#');
+			mvwaddch(win, max_y / 2 + 3, max_x / 2 + 23, '#');
+			mvwaddch(win, max_y / 2 + 8, max_x / 2 - 5, '#');
 			guntype = 3;
 			break;
 
