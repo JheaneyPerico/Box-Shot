@@ -62,7 +62,7 @@ int splash_screen() {
 	attroff(A_DIM);
 
 	// BORDER
-	WINDOW *inputWin = newwin(11, 14, 30, 45);
+	WINDOW *inputWin = newwin(11, 14, 32, 109);
 	wborder(inputWin, '|', '|', '-', '-', '+', '+', '+', '+');
 
 
