@@ -280,7 +280,7 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type){
         }
 
         // Red Character
-        if (type == 1){
+        if (type == 1 || mvwinch(win, *ZyLoc, *ZxLoc) == '-' || mvwinch(win, *ZyLoc, *ZxLoc) == '|'){ 
                 wattron(win, COLOR_PAIR(1));
                 mvwprintw(win, *(ZyLoc), *(ZxLoc), "%c", symbol);
                 wattroff(win, COLOR_PAIR(1));
@@ -296,11 +296,14 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type){
 }
 
 void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
-	int deltaY = (*yLoc > *ZyLoc) && mvwinch(win, *ZyLoc+1, *ZxLoc) == ' ' ? 1 : (*yLoc < *ZyLoc) && mvwinch(win, *ZyLoc-1, *ZxLoc) == ' ' ? -1 : 0;
-	int deltaX = (*xLoc > *ZxLoc) && mvwinch(win, *ZyLoc, *ZxLoc+1) == ' ' ? 1 : (*xLoc < *ZxLoc) && mvwinch(win, *ZyLoc, *ZxLoc-1) == ' ' ? -1 : 0;
+	int deltaY = (*yLoc > *ZyLoc) && (mvwinch(win, *ZyLoc+1, *ZxLoc) == ' ') ? 1 : (*yLoc < *ZyLoc) && (mvwinch(win, *ZyLoc-1, *ZxLoc) == ' ') ? -1 : 0;
+
+
+	int deltaX = (*xLoc > *ZxLoc) && (mvwinch(win, *ZyLoc, *ZxLoc+1) == ' ') ? 1 : (*xLoc < *ZxLoc) && (mvwinch(win, *ZyLoc, *ZxLoc-1) == ' ') ? -1 : 0;
 
 	(*ZyLoc) += deltaY;
 	(*ZxLoc) += deltaX;
+
 
 	wrefresh(win);
 
