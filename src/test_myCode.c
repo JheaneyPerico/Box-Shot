@@ -28,21 +28,25 @@ int main(){
 	int *xLoc, *yLoc, *ZyLoc1, *ZxLoc1, *ZyLoc2, *ZxLoc2, *ZyLoc3, *ZxLoc3, *ZyLoc4, *ZxLoc4, key;
 	xLoc = &playerX;
 	yLoc = &playerY;
+
 	// First Zombie
 	int zombie1X = 5;
 	int zombie1Y = 5;
 	ZyLoc1 = &zombie1Y;
 	ZxLoc1 = &zombie1X;
+
 	// Second Zombie
 	int zombie2X = max_x - 5;
 	int zombie2Y = max_y - 5;
 	ZyLoc2 = &zombie2Y;
 	ZxLoc2 = &zombie2X;
+
 	// Third Zombie
 	int zombie3X = max_x - 5;
 	int zombie3Y = 5;
 	ZyLoc3 = &zombie3Y;
 	ZxLoc3 = &zombie3X;
+
 	// Fourth Zombie
 	int zombie4X = 5;
 	int zombie4Y = max_y - 5;
@@ -57,6 +61,7 @@ int main(){
 	hit2 = &collide2;
 	hit3 = &collide3;
 	hit4 = &collide4;
+	int hit_count = 4;
 	quit = &exit;
 
 	int nkey;
@@ -69,26 +74,25 @@ int main(){
 
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
+
+			hit_count = 1;
+
 			do{
 			display_level(win, 1);
-			int guntype = upgrade_box(win, 1, yLoc, xLoc);
-			char gun[20] = "PISTOL";
+			upgrade_box(win, 1, yLoc, xLoc);
 
-			wattron(win, A_BOLD | A_REVERSE);
-			if (guntype == 1){
-				char gun[20] = "SHOT GUN";
-			}
-			else if (guntype == 2){
-				char gun[20] = "RIFLE";
-			}
-			mvwprintw(win, 3, mid_x - 11, "GUN: %s", gun);
-			wattroff(win, A_BOLD | A_REVERSE);
+
+			wattron(win, A_BOLD);
+
+			mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
+			wattroff(win, A_BOLD);		
 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
 //			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
-
+			
 			key = wgetch(win);
+//			sleep(0.5);
 			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
 			printCharacter(win, ' ', yLoc, xLoc, 0);
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
@@ -97,8 +101,10 @@ int main(){
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 //			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
+//uh			enemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
 //			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
+
 
 			wrefresh(win);
 
@@ -107,6 +113,7 @@ int main(){
 					nkey = 'o';
 				}
 			}
+
 			if(*hit1 == 1){
 				nkey = 'n';
 			}
@@ -116,9 +123,15 @@ int main(){
 		
 		// LEVEL 2
 		else if (lvl == 2){
+
+			hit_count = 2;
+
                         do{
+
                         display_level(win, 2);
                         upgrade_box(win, 2, yLoc, xLoc);
+
+			mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
 
                         printCharacter(win, 'P', yLoc, xLoc, 1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
@@ -147,6 +160,9 @@ int main(){
 					nkey = 'o';
 				}
 			}
+			if (*hit1 == 1 || *hit2 == 1)
+				hit_count = 1;
+
 			if (*hit1 == 1 && *hit2 == 1){
 				nkey = 'n';
 			}
@@ -155,19 +171,14 @@ int main(){
 			
 		// LEVEL 3
 		else if (lvl == 3){
+	
+			hit_count = 4;
+
 			do{
                         display_level(win, 3);
                         upgrade_box(win, 3, yLoc, xLoc);
-			int guntype = upgrade_box(win, 1, yLoc, xLoc);
-                        char gun[20] = "PISTOL";
-                        wattron(win, A_BOLD | A_REVERSE);
-                        if (guntype == 1){
-                                char gun[20] = "SHOT GUN";
-                        }
-                        else if (guntype == 2){
-                                char gun[20] = "RIFLE";
-                        }
-                        mvwprintw(win, 3, mid_x - 11, "GUN: %s", gun);
+                        
+       //                 mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
                         wattroff(win, A_BOLD | A_REVERSE);
                         printCharacter(win, 'P', yLoc, xLoc, 1);
                         printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
@@ -213,11 +224,25 @@ int main(){
 					nkey = 'o';
 				}
 			}
+/*
+			// Counter
+			if ((*hit1 == 1 && *hit2 == 0 && *hit3 == 0 && *hit4 == 0) || (*hit1 == 0 && *hit2 == 1 && *hit3 == 0 && *hit4 == 0) || (*hit1 == 0 && *hit2 == 0 && *hit3 == 1 && *hit4 == 0) || (*hit1 == 0 && *hit2 == 0 && *hit3 == 0 && *hit4 == 1))
+				hit_count = 3;
+
+
+			else if ((*hit1 == 1 && *hit2 == 1 && *hit3 == 0 && *hit4 == 0) || (*hit1 == 1 && *hit2 == 0 && *hit3 == 1 && *hit4 == 0) || (*hit1 == 1 && *hit2 == 0 && *hit3 == 0 && *hit4 == 1) || (*hit1 == 0 && *hit2 == 0 && *hit3 == 1 && *hit4 == 1) || (*hit1 == 0 && *hit2 == 1 && *hit3 == 0 && *hit4 == 1))
+                                hit_count = 2;
+
+			else
+				hit_count = 1;
+*/
+
 			if (*hit1 == 1 && *hit2 == 1 && *hit3 == 1 && *hit4 == 1){
 				nkey = 'w';
 			}
                         } while (key!= 'q' && key != 'p' && nkey != 'o' && nkey != 'w');
                 }
+	
 		refresh();
 	
 			
@@ -273,7 +298,7 @@ int main(){
 			wrefresh(win);
 			mvwprintw(win, mid_y, mid_x - 5, "GAME OVER");
 			mvwprintw(win, mid_y + 2, mid_x - 11, "PRESS ANY KEY TO EXIT ");
-			char ch = wgetch(win);
+			wgetch(win);
 			break;
 		}
 		if (nkey == 'n'){
@@ -282,7 +307,8 @@ int main(){
 			wrefresh(win);
 			mvwprintw(win, mid_y, mid_x - 10, "YOU BEAT THIS LEVEL!");
 			mvwprintw(win, mid_y + 2, mid_x-20, "PRESS ANY KEY TO GO TO THE NEXT LEVEL ");
-			char ch = wgetch(win);
+			wgetch(win);
+
 			lvl += 1;
 			playerX = (max_x / 2) - 3;
 			playerY = (max_y / 2);
@@ -313,6 +339,7 @@ int main(){
 			*hit2 = 0;
 			*hit3 = 0;
 			*hit4 = 0;
+
 			nkey = 0;
 			werase(win);
 			wrefresh(win);
@@ -324,7 +351,7 @@ int main(){
 			wrefresh(win);
 			mvwprintw(win, mid_y, mid_x - 5, "YOU WIN!");
 			wrefresh(win);
-			int winch = getch();
+			getch();
 			break;
 		}
 	

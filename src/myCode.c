@@ -23,8 +23,8 @@ int splash_screen() {
 
 	int max_x, max_y;
 	getmaxyx(stdscr, max_x, max_y);
+	printf("%d", max_y);
 
-	int mid_height = max_y / 2;
 	int mid_width = max_x / 2;
 
 	// SPLASH SCREEN
@@ -158,14 +158,14 @@ void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 
 	if(has_colors()){
 		start_color();
-		init_pair(1, COLOR_BLACK, COLOR_GREEN);
+		init_pair(2, COLOR_BLACK, COLOR_GREEN);
 	}
 
 	// Green Character
 	if (type == 1){
-		wattron(win, COLOR_PAIR(1));
+		wattron(win, COLOR_PAIR(2));
 		mvwprintw(win, *(yLoc), *(xLoc), "%c", symbol);
-		wattroff(win, COLOR_PAIR(1));
+		wattroff(win, COLOR_PAIR(2));
 		}
 
 	// Leave invisible traces when moved
@@ -182,17 +182,6 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, char *dir, int key){
 	// MOVE PLAYER
 	keypad(win, true);
 	wrefresh(win);
-
-	int y, x, max_y, max_x;
-	getyx(win, y, x);
-	getmaxyx(win, max_y, max_x);
-
-	// COLOR YELLOW -> PAIR(4)
-        if (has_colors()){
-                start_color();
-                init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
-        }
-
 
 	switch(key) {
 		case KEY_UP:
@@ -279,25 +268,28 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int 
 
         if(has_colors()){
                 start_color();
-                init_pair(1, COLOR_BLACK, COLOR_RED);
+                init_pair(3, COLOR_BLACK, COLOR_RED);
         }
 
         // Red Character
         if (type == 1 && (!(mvwinch(win, *ZyLoc, *ZxLoc) == '-') && !(mvwinch(win, *ZyLoc, *ZxLoc) == '|'))){ 
-                wattron(win, COLOR_PAIR(1));
+                wattron(win, COLOR_PAIR(3));
                 mvwprintw(win, *(ZyLoc), *(ZxLoc), "%c", symbol);
-                wattroff(win, COLOR_PAIR(1));
+                wattroff(win, COLOR_PAIR(3));
                 }
 
+	}
+
         // Leave invisible traces when moved
-        if (type == 0 && (!(mvwinch(win, *ZyLoc, *ZxLoc) == '-') && !(mvwinch(win, *ZyLoc, *ZxLoc) == '|'))){
+	if (type == 0 && (!(mvwinch(win, *ZyLoc, *ZxLoc) == '-') && !(mvwinch(win, *ZyLoc, *ZxLoc) == '|'))){
                 mvwprintw(win, *ZyLoc, *ZxLoc, "%c", symbol);
         }
 
 	if (mvwinch(win, *ZyLoc, *ZxLoc) == '-' || mvwinch(win, *ZyLoc, *ZxLoc) == '|'){
 		*hit = 1;
+		
 	}
-	}
+	
 	
         wrefresh(win);
         return;
@@ -314,6 +306,7 @@ void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
 
 
 	wrefresh(win);
+
 
 }
 
@@ -364,14 +357,17 @@ int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
 
 }
 
+/*
 void enemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, int *hit){
       printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
-      sleep(1);
+      //sleep(1);
       printEnemy(win, ' ', ZyLoc, ZxLoc, 0, hit);
       moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
       printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
 
 }
+
+*/
 
 void display_level(WINDOW *win, int lvl){
 
@@ -389,7 +385,7 @@ void display_level(WINDOW *win, int lvl){
 	// WHITE COLOR -> Pair(2)
 	if (has_colors()){
 		start_color();
-		init_pair(2, COLOR_WHITE, COLOR_WHITE);
+		init_pair(5, COLOR_WHITE, COLOR_WHITE);
 	}
 
 
@@ -404,7 +400,7 @@ void display_level(WINDOW *win, int lvl){
 			wattroff(win, A_BOLD);
 
 			// BOX 1
-			wattron(win, COLOR_PAIR(2));
+			wattron(win, COLOR_PAIR(5));
 			for ( int i = 1; i < 10; i++){
 				start_x = (max_x - mid_width) / 2 - 5;
 
@@ -417,7 +413,7 @@ void display_level(WINDOW *win, int lvl){
 			}
 			
 
-			wattroff(win, COLOR_PAIR(2));
+			wattroff(win, COLOR_PAIR(5));
 			wrefresh(win);
 
 			
@@ -431,7 +427,7 @@ void display_level(WINDOW *win, int lvl){
                         wattroff(win, A_BOLD);
 			
 			// BOX 1
-			wattron(win, COLOR_PAIR(2));
+			wattron(win, COLOR_PAIR(5));
 			for ( int i = 1; i < 10; i++){
 				start_x = (max_x - mid_width) / 2 - 5;
 
@@ -447,7 +443,7 @@ void display_level(WINDOW *win, int lvl){
 			}
 
 
-			wattroff(win, COLOR_PAIR(2));
+			wattroff(win, COLOR_PAIR(5));
 			wrefresh(win);
 			break;
 
@@ -459,7 +455,7 @@ void display_level(WINDOW *win, int lvl){
                         wattroff(win, A_BOLD);
 
                         // BOX 1
-                        wattron(win, COLOR_PAIR(2));
+                        wattron(win, COLOR_PAIR(5));
                         for ( int i = 1; i < 10; i++){
                                 start_x = (max_x - mid_width) / 2 - 5;
 
@@ -476,7 +472,7 @@ void display_level(WINDOW *win, int lvl){
                         }
 
 
-                        wattroff(win, COLOR_PAIR(2));
+                        wattroff(win, COLOR_PAIR(5));
                         wrefresh(win);
                         break;
 
