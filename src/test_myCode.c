@@ -87,23 +87,23 @@ int main(){
 			mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
 			wattroff(win, A_BOLD);		
 
+			// Character
 			printCharacter(win, 'P', yLoc, xLoc, 1);
-			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
-//			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
-			
 			key = wgetch(win);
-//			sleep(0.5);
+
 			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
 			printCharacter(win, ' ', yLoc, xLoc, 0);
-			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
-//			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
 			moveCharacter(win, yLoc, xLoc, &direction, key);
-			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
-//			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 			printCharacter(win, 'P', yLoc, xLoc, 1);
+
+
+			// Zombies
+			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
+			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
+			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 //uh			enemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
-//			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
+
 
 
 			wrefresh(win);
@@ -133,18 +133,25 @@ int main(){
 
 			mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
 
+			// Character
                         printCharacter(win, 'P', yLoc, xLoc, 1);
+			key = wgetch(win);
+			printCharacter(win, ' ', yLoc, xLoc, 0);
+			moveCharacter(win, yLoc, xLoc, &direction, key);
+			printCharacter(win, 'P', yLoc, xLoc, 1);
+
+			// Zombies
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit2);
-                        key = wgetch(win);
+                        
 			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
-                        printCharacter(win, ' ', yLoc, xLoc, 0);
+                        
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
                         printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0, hit2);
-                        moveCharacter(win, yLoc, xLoc, &direction, key);
+                       
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc);
                         moveEnemy(win, ZyLoc2, ZxLoc2, yLoc, xLoc);
-                        printCharacter(win, 'P', yLoc, xLoc, 1);
+                       
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit2);
                         wrefresh(win);
@@ -180,25 +187,31 @@ int main(){
                         
        //                 mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
                         wattroff(win, A_BOLD | A_REVERSE);
+
+			// CHARACTER
                         printCharacter(win, 'P', yLoc, xLoc, 1);
+			key = wgetch(win);
+			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
+			printCharacter(win, ' ', yLoc, xLoc, 0);
+			moveCharacter(win, yLoc, xLoc, &direction, key);
+			printCharacter(win, 'P', yLoc, xLoc, 1);
+
+			// ZOMBIES
                         printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit2);
 			printEnemy(win, 'Z', ZyLoc3, ZxLoc3, 1, hit3);
 			printEnemy(win, 'Z', ZyLoc4, ZxLoc4, 1, hit4);
-                        key = wgetch(win);
-			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
-                        printCharacter(win, ' ', yLoc, xLoc, 0);
+                        
                         printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
                         printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0, hit2);
 			printEnemy(win, ' ', ZyLoc3, ZxLoc3, 0, hit3);
 			printEnemy(win, ' ', ZyLoc4, ZxLoc4, 0, hit4);
-                        moveCharacter(win, yLoc, xLoc, &direction, key);
+                        
                         moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc);
                         moveEnemy(win, ZyLoc2, ZxLoc2, yLoc, xLoc);
 			moveEnemy(win, ZyLoc3, ZxLoc3, yLoc, xLoc);
 			moveEnemy(win, ZyLoc4, ZxLoc4, yLoc, xLoc);
 			
-                        printCharacter(win, 'P', yLoc, xLoc, 1);
                         printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit2);
 			printEnemy(win, 'Z', ZyLoc3, ZxLoc3, 1, hit3);
