@@ -364,7 +364,16 @@ int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
 
 }
 
-void display_level(WINDOW *win, int lvl, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, int *hit){
+void enemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, int *hit){
+      printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
+      sleep(1);
+      printEnemy(win, ' ', ZyLoc, ZxLoc, 0, hit);
+      moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
+      printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
+
+}
+
+void display_level(WINDOW *win, int lvl){
 
 	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
 
@@ -406,13 +415,6 @@ void display_level(WINDOW *win, int lvl, int *ZyLoc, int *ZxLoc, int *yLoc, int 
 				}
 				start_y++;
 			}
-
-	
-			printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
-			sleep(1);
-                        printEnemy(win, ' ', ZyLoc, ZxLoc, 0, hit);
-                        moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
-                        printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
 			
 
 			wattroff(win, COLOR_PAIR(2));
@@ -478,8 +480,6 @@ void display_level(WINDOW *win, int lvl, int *ZyLoc, int *ZxLoc, int *yLoc, int 
                         wrefresh(win);
                         break;
 
-
-			break;
 	}
 
 
