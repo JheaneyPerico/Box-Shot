@@ -156,16 +156,19 @@ int splash_screen() {
 
 void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 
+	/*
 	if(has_colors()){
 		start_color();
 		init_pair(2, COLOR_BLACK, COLOR_GREEN);
 	}
+	*/
 
 	// Green Character
 	if (type == 1){
-		wattron(win, COLOR_PAIR(2));
+		
+	//	wattron(win, COLOR_PAIR(2));
 		mvwprintw(win, *(yLoc), *(xLoc), "%c", symbol);
-		wattroff(win, COLOR_PAIR(2));
+	//	wattroff(win, COLOR_PAIR(2));
 		}
 
 	// Leave invisible traces when moved
@@ -256,26 +259,47 @@ void bullet(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, char *dir
 		}
 
 			wrefresh(win);
-
-	return;
 	}
+
+	/*
+	int max_y, max_x;
+	getmaxyx(win, max_y, max_x);
+
+	int y = *(yLoc);
+	int x = *(xLoc);
+
+	if (key == ' '){
+		if (*dir == 'r'){
+			while (x < max_x){
+				
+				//mvwprintw(win, y, x, " ");
+				mvwprintw(win, y, x + 1, "-");
+				x += 1;
+				sleep(1);
+			}	
+		}
+	}
+*/
+	return;
+	
 	
 }
 
 void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int *hit){
 
 	if (*hit == 0){
-
+/*
         if(has_colors()){
                 start_color();
                 init_pair(3, COLOR_BLACK, COLOR_RED);
         }
+	*/
 
         // Red Character
         if (type == 1 && (!(mvwinch(win, *ZyLoc, *ZxLoc) == '-') && !(mvwinch(win, *ZyLoc, *ZxLoc) == '|'))){ 
-                wattron(win, COLOR_PAIR(3));
+                //wattron(win, COLOR_PAIR(3));
                 mvwprintw(win, *(ZyLoc), *(ZxLoc), "%c", symbol);
-                wattroff(win, COLOR_PAIR(3));
+                //wattroff(win, COLOR_PAIR(3));
                 }
 
 	}
@@ -296,10 +320,10 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int 
 }
 
 void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
-	int deltaY = (*yLoc > *ZyLoc) && (mvwinch(win, *ZyLoc+1, *ZxLoc) == ' ' || mvwinch(win, *ZyLoc+1, *ZxLoc) == '-' || mvwinch(win, *ZyLoc+1, *ZxLoc) == '|') ? 1 : (*yLoc < *ZyLoc) && (mvwinch(win, *ZyLoc-1, *ZxLoc) == ' ' || mvwinch(win, *ZyLoc-1, *ZxLoc) == '-' || mvwinch(win, *ZyLoc-1, *ZxLoc) == '|' ) ? -1 : 0;
+	int deltaY = ((*yLoc > *ZyLoc)) && ((mvwinch(win, *ZyLoc+1, *ZxLoc) == ' ' || mvwinch(win, *ZyLoc+1, *ZxLoc) == '-' || mvwinch(win, *ZyLoc+1, *ZxLoc) == '|') || (mvwinch(win, *ZyLoc+1, *ZxLoc)== 'P')) ? 1 : ((*yLoc < *ZyLoc)) && ((mvwinch(win, *ZyLoc-1, *ZxLoc) == ' ' || mvwinch(win, *ZyLoc-1, *ZxLoc) == '-' || mvwinch(win, *ZyLoc-1, *ZxLoc) == '|' ) || (mvwinch(win, *ZyLoc-1, *ZxLoc) == 'P')) ? -1 : 0;
 
 
-	int deltaX = (*xLoc > *ZxLoc) && (mvwinch(win, *ZyLoc, *ZxLoc+1) == ' ' || mvwinch(win, *ZyLoc, *ZxLoc+1) == '-' || mvwinch(win, *ZyLoc, *ZxLoc+1) == '|' ) ? 1 : (*xLoc < *ZxLoc) && (mvwinch(win, *ZyLoc, *ZxLoc-1) == ' ' || mvwinch(win, *ZyLoc, *ZxLoc-1) == '-' || mvwinch(win, *ZyLoc, *ZxLoc-1) == '|') ? -1 : 0;
+	int deltaX = (*xLoc > *ZxLoc) && (mvwinch(win, *ZyLoc, *ZxLoc+1) == ' ' || mvwinch(win, *ZyLoc, *ZxLoc+1) == '-' || mvwinch(win, *ZyLoc, *ZxLoc+1) == '|' || mvwinch(win, *ZyLoc, *ZxLoc+1) == 'P' ) ? 1 : (*xLoc < *ZxLoc) && (mvwinch(win, *ZyLoc, *ZxLoc-1) == ' ' || mvwinch(win, *ZyLoc, *ZxLoc-1) == '-' || mvwinch(win, *ZyLoc, *ZxLoc-1) == '|' || mvwinch(win, *ZyLoc, *ZxLoc-1) == 'P') ? -1 : 0;
 
 	(*ZyLoc) += deltaY;
 	(*ZxLoc) += deltaX;
@@ -357,17 +381,17 @@ int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
 
 }
 
-/*
 void enemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, int *hit){
-      printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
-      //sleep(1);
-      printEnemy(win, ' ', ZyLoc, ZxLoc, 0, hit);
-      moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
-      printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
+	 printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
+	 printEnemy(win, ' ', ZyLoc, ZxLoc, 0, hit);
+	 moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
+	 printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
 
+//	 if ((mvwinch(win, *ZyLoc, *ZxLoc) == 'P'){ 
 }
 
-*/
+
+
 
 void display_level(WINDOW *win, int lvl){
 

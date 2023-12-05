@@ -68,16 +68,18 @@ int main(){
 
 	while(1){
 		keypad(win, true);
+		nodelay(win, true);
 		refresh();
 		wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
 		char direction = 'r';
 
 		// LEVEL 1
 		if (lvl == 1 || lvl == 0){
-
+			
 			hit_count = 1;
 
 			do{
+
 			display_level(win, 1);
 			upgrade_box(win, 1, yLoc, xLoc);
 
@@ -99,10 +101,14 @@ int main(){
 
 			// Zombies
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
+			napms(110);
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
-//uh			enemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
+			
+
+			enemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
+			
 
 
 
@@ -145,7 +151,7 @@ int main(){
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit2);
                         
 			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
-                        
+                        napms(110);
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
                         printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0, hit2);
                        
@@ -201,7 +207,8 @@ int main(){
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit2);
 			printEnemy(win, 'Z', ZyLoc3, ZxLoc3, 1, hit3);
 			printEnemy(win, 'Z', ZyLoc4, ZxLoc4, 1, hit4);
-                        
+                       
+		        napms(110);	
                         printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
                         printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0, hit2);
 			printEnemy(win, ' ', ZyLoc3, ZxLoc3, 0, hit3);
@@ -217,6 +224,7 @@ int main(){
 			printEnemy(win, 'Z', ZyLoc3, ZxLoc3, 1, hit3);
 			printEnemy(win, 'Z', ZyLoc4, ZxLoc4, 1, hit4);
                         wrefresh(win);
+
                         if ((*yLoc == *ZyLoc1) && (*xLoc == *ZxLoc1)) {
 				if (*hit1 == 0){
                                 	nkey = 'o';
