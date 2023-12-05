@@ -288,18 +288,18 @@ void bullet(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, char *dir
 void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int *hit){
 
 	if (*hit == 0){
-/*
+
         if(has_colors()){
                 start_color();
                 init_pair(3, COLOR_BLACK, COLOR_RED);
         }
-	*/
+	
 
         // Red Character
         if (type == 1 && (!(mvwinch(win, *ZyLoc, *ZxLoc) == '-') && !(mvwinch(win, *ZyLoc, *ZxLoc) == '|'))){ 
-                //wattron(win, COLOR_PAIR(3));
+                wattron(win, COLOR_PAIR(3));
                 mvwprintw(win, *(ZyLoc), *(ZxLoc), "%c", symbol);
-                //wattroff(win, COLOR_PAIR(3));
+                wattroff(win, COLOR_PAIR(3));
                 }
 
 	}

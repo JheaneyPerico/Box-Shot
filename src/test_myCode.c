@@ -13,9 +13,6 @@ int main(){
 	getmaxyx(stdscr, max_y, max_x);
 	WINDOW *win = newwin(max_y, max_x, 0,0);
 	
-	if(has_colors()){
-		start_color();
-	}
 	int lvl;
 	lvl = splash_screen();
 	int playerX, playerY;
@@ -101,7 +98,7 @@ int main(){
 
 			// Zombies
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
-			napms(110);
+			napms(105);
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
@@ -151,7 +148,7 @@ int main(){
                         printEnemy(win, 'Z', ZyLoc2, ZxLoc2, 1, hit2);
                         
 			bullet(win, ZyLoc1, ZxLoc1, yLoc, xLoc, &direction, key);
-                        napms(110);
+                        napms(105);
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
                         printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0, hit2);
                        
@@ -208,7 +205,7 @@ int main(){
 			printEnemy(win, 'Z', ZyLoc3, ZxLoc3, 1, hit3);
 			printEnemy(win, 'Z', ZyLoc4, ZxLoc4, 1, hit4);
                        
-		        napms(110);	
+		        napms(105);	
                         printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
                         printEnemy(win, ' ', ZyLoc2, ZxLoc2, 0, hit2);
 			printEnemy(win, ' ', ZyLoc3, ZxLoc3, 0, hit3);
