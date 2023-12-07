@@ -1,0 +1,83 @@
+\hypertarget{myCode_8h}{}\section{my\+Code.\+h File Reference}
+\label{myCode_8h}\index{my\+Code.\+h@{my\+Code.\+h}}
+{\ttfamily \#include $<$ncurses.\+h$>$}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{myCode_8h_a31122e82e58eb74a834773faaeced4a8}{splash\+\_\+screen}} ()
+\item 
+void \mbox{\hyperlink{myCode_8h_a504d2bf5380fd706150a85fef573ee06}{display\+\_\+level}} (W\+I\+N\+D\+OW $\ast$win, int lvl)
+\item 
+void \mbox{\hyperlink{myCode_8h_a4d7131fc9fd81f16dec89a43cd6168e7}{bullet}} (W\+I\+N\+D\+OW $\ast$win, int $\ast$Zy\+Loc, int $\ast$Zx\+Loc, int $\ast$y\+Loc, int $\ast$x\+Loc, char $\ast$dir, int key)
+\item 
+void \mbox{\hyperlink{myCode_8h_a73a8d7e98be85f67961ca682c291033a}{sleep\+\_\+ms}} (int milliseconds)
+\item 
+void \mbox{\hyperlink{myCode_8h_ab7ef12246bed6b8035097aa283722d9c}{quit\+\_\+screen}} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{myCode_8h_a4d7131fc9fd81f16dec89a43cd6168e7}\label{myCode_8h_a4d7131fc9fd81f16dec89a43cd6168e7}} 
+\index{my\+Code.\+h@{my\+Code.\+h}!bullet@{bullet}}
+\index{bullet@{bullet}!my\+Code.\+h@{my\+Code.\+h}}
+\subsubsection{\texorpdfstring{bullet()}{bullet()}}
+{\footnotesize\ttfamily void bullet (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int $\ast$}]{Zy\+Loc,  }\item[{int $\ast$}]{Zx\+Loc,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc,  }\item[{char $\ast$}]{dir,  }\item[{int}]{key }\end{DoxyParamCaption})}
+
+$\ast$$\ast$ Bullet $\ast$$\ast$
+
+This function will print a fired bullet if the space key is pressed
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, Zy\+Loc and Zx\+Loc represents the zombie locations, y\+Loc and x\+Loc represents the player location, dir represents the direction the player is looking towards, and key is the key pressed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8h_a504d2bf5380fd706150a85fef573ee06}\label{myCode_8h_a504d2bf5380fd706150a85fef573ee06}} 
+\index{my\+Code.\+h@{my\+Code.\+h}!display\+\_\+level@{display\+\_\+level}}
+\index{display\+\_\+level@{display\+\_\+level}!my\+Code.\+h@{my\+Code.\+h}}
+\subsubsection{\texorpdfstring{display\+\_\+level()}{display\_level()}}
+{\footnotesize\ttfamily void display\+\_\+level (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int}]{lvl }\end{DoxyParamCaption})}
+
+$\ast$$\ast$ Display Level $\ast$$\ast$
+
+This function will format and display all 3 levels of the game.
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, lvl represents the current level \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8h_ab7ef12246bed6b8035097aa283722d9c}\label{myCode_8h_ab7ef12246bed6b8035097aa283722d9c}} 
+\index{my\+Code.\+h@{my\+Code.\+h}!quit\+\_\+screen@{quit\+\_\+screen}}
+\index{quit\+\_\+screen@{quit\+\_\+screen}!my\+Code.\+h@{my\+Code.\+h}}
+\subsubsection{\texorpdfstring{quit\+\_\+screen()}{quit\_screen()}}
+{\footnotesize\ttfamily void quit\+\_\+screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{myCode_8h_a73a8d7e98be85f67961ca682c291033a}\label{myCode_8h_a73a8d7e98be85f67961ca682c291033a}} 
+\index{my\+Code.\+h@{my\+Code.\+h}!sleep\+\_\+ms@{sleep\+\_\+ms}}
+\index{sleep\+\_\+ms@{sleep\+\_\+ms}!my\+Code.\+h@{my\+Code.\+h}}
+\subsubsection{\texorpdfstring{sleep\+\_\+ms()}{sleep\_ms()}}
+{\footnotesize\ttfamily void sleep\+\_\+ms (\begin{DoxyParamCaption}\item[{int}]{milliseconds }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{myCode_8h_a31122e82e58eb74a834773faaeced4a8}\label{myCode_8h_a31122e82e58eb74a834773faaeced4a8}} 
+\index{my\+Code.\+h@{my\+Code.\+h}!splash\+\_\+screen@{splash\+\_\+screen}}
+\index{splash\+\_\+screen@{splash\+\_\+screen}!my\+Code.\+h@{my\+Code.\+h}}
+\subsubsection{\texorpdfstring{splash\+\_\+screen()}{splash\_screen()}}
+{\footnotesize\ttfamily int splash\+\_\+screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$\ast$$\ast$$\ast$ Spash Screen $\ast$$\ast$$\ast$ This function will provide a title (splash) screen that will show the title and the buttons. An instruction will also be laid out.
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns 0 in normal execution 
+\end{DoxyReturn}

@@ -5,6 +5,15 @@
 #include "character.h"
 #include <unistd.h>
 #define DELAY_MICROSECONDS 1000000 // 1 second delay
+				   
+
+/// ** MAIN FUNCTION **
+///
+/// This is the main function that will call all helper functions to create a simple box shot game.
+///
+/// @param None
+/// @return returns 0 for normal execution
+
 int main(){
 	initscr();
 	noecho();
@@ -78,7 +87,7 @@ int main(){
 			do{
 
 			display_level(win, 1);
-			upgrade_box(win, 1, yLoc, xLoc);
+			//upgrade_box(win, 1, yLoc, xLoc);
 
 
 			wattron(win, A_BOLD);
@@ -102,12 +111,6 @@ int main(){
 			printEnemy(win, ' ', ZyLoc1, ZxLoc1, 0, hit1);
 			moveEnemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc); 
 			printEnemy(win, 'Z', ZyLoc1, ZxLoc1, 1, hit1);
-			
-
-			enemy(win, ZyLoc1, ZxLoc1, yLoc, xLoc, hit1);
-			
-
-
 
 			wrefresh(win);
 
@@ -132,7 +135,7 @@ int main(){
                         do{
 
                         display_level(win, 2);
-                        upgrade_box(win, 2, yLoc, xLoc);
+                        //upgrade_box(win, 2, yLoc, xLoc);
 
 			mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
 
@@ -186,9 +189,9 @@ int main(){
 
 			do{
                         display_level(win, 3);
-                        upgrade_box(win, 3, yLoc, xLoc);
+                        //upgrade_box(win, 3, yLoc, xLoc);
                         
-       //                 mvwprintw(win, 3, mid_x - 11, "ZOMBIES LEFT: %d", hit_count);
+       			mvwprintw(win, 3, mid_x - 20, "LAST STAGE: DEFEAT ALL ZOMBIES TO WIN!");
                         wattroff(win, A_BOLD | A_REVERSE);
 
 			// CHARACTER
@@ -242,18 +245,7 @@ int main(){
 					nkey = 'o';
 				}
 			}
-/*
-			// Counter
-			if ((*hit1 == 1 && *hit2 == 0 && *hit3 == 0 && *hit4 == 0) || (*hit1 == 0 && *hit2 == 1 && *hit3 == 0 && *hit4 == 0) || (*hit1 == 0 && *hit2 == 0 && *hit3 == 1 && *hit4 == 0) || (*hit1 == 0 && *hit2 == 0 && *hit3 == 0 && *hit4 == 1))
-				hit_count = 3;
 
-
-			else if ((*hit1 == 1 && *hit2 == 1 && *hit3 == 0 && *hit4 == 0) || (*hit1 == 1 && *hit2 == 0 && *hit3 == 1 && *hit4 == 0) || (*hit1 == 1 && *hit2 == 0 && *hit3 == 0 && *hit4 == 1) || (*hit1 == 0 && *hit2 == 0 && *hit3 == 1 && *hit4 == 1) || (*hit1 == 0 && *hit2 == 1 && *hit3 == 0 && *hit4 == 1))
-                                hit_count = 2;
-
-			else
-				hit_count = 1;
-*/
 
 			if (*hit1 == 1 && *hit2 == 1 && *hit3 == 1 && *hit4 == 1){
 				nkey = 'w';

@@ -1,0 +1,177 @@
+\hypertarget{myCode_8c}{}\section{my\+Code.\+c File Reference}
+\label{myCode_8c}\index{my\+Code.\+c@{my\+Code.\+c}}
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include $<$ncurses.\+h$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$time.\+h$>$}\newline
+{\ttfamily \#include $<$string.\+h$>$}\newline
+{\ttfamily \#include $<$math.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}character.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}my\+Code.\+h\char`\"{}}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{myCode_8c_a0d5fc89b1699803f94df0258a03d9171}{D\+E\+L\+A\+Y\+\_\+\+M\+I\+C\+R\+O\+S\+E\+C\+O\+N\+DS}}~1000000
+\item 
+\#define \mbox{\hyperlink{myCode_8c_af5e3aa7c9b13673c6a94f8ebb70010db}{E\+N\+E\+MY}}~\textquotesingle{}Z\textquotesingle{}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{myCode_8c_a31122e82e58eb74a834773faaeced4a8}{splash\+\_\+screen}} ()
+\item 
+void \mbox{\hyperlink{myCode_8c_a4b59939f24bdeb0c8185e64b0eafcfae}{print\+Character}} (W\+I\+N\+D\+OW $\ast$win, char symbol, int $\ast$y\+Loc, int $\ast$x\+Loc, int type)
+\item 
+void \mbox{\hyperlink{myCode_8c_a14d4d7f1077d10b5505cf23e93af2ff0}{move\+Character}} (W\+I\+N\+D\+OW $\ast$win, int $\ast$y\+Loc, int $\ast$x\+Loc, char $\ast$dir, int key)
+\item 
+void \mbox{\hyperlink{myCode_8c_a4d7131fc9fd81f16dec89a43cd6168e7}{bullet}} (W\+I\+N\+D\+OW $\ast$win, int $\ast$Zy\+Loc, int $\ast$Zx\+Loc, int $\ast$y\+Loc, int $\ast$x\+Loc, char $\ast$dir, int key)
+\item 
+void \mbox{\hyperlink{myCode_8c_a58681c272cc6823a0da0cef379100df2}{print\+Enemy}} (W\+I\+N\+D\+OW $\ast$win, char symbol, int $\ast$Zy\+Loc, int $\ast$Zx\+Loc, int type, int $\ast$hit)
+\item 
+void \mbox{\hyperlink{myCode_8c_ab3d0713d509ed661ef53423996d1b2b0}{move\+Enemy}} (W\+I\+N\+D\+OW $\ast$win, int $\ast$Zy\+Loc, int $\ast$Zx\+Loc, int $\ast$y\+Loc, int $\ast$x\+Loc)
+\item 
+void \mbox{\hyperlink{myCode_8c_a504d2bf5380fd706150a85fef573ee06}{display\+\_\+level}} (W\+I\+N\+D\+OW $\ast$win, int lvl)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{myCode_8c_a0d5fc89b1699803f94df0258a03d9171}\label{myCode_8c_a0d5fc89b1699803f94df0258a03d9171}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!D\+E\+L\+A\+Y\+\_\+\+M\+I\+C\+R\+O\+S\+E\+C\+O\+N\+DS@{D\+E\+L\+A\+Y\+\_\+\+M\+I\+C\+R\+O\+S\+E\+C\+O\+N\+DS}}
+\index{D\+E\+L\+A\+Y\+\_\+\+M\+I\+C\+R\+O\+S\+E\+C\+O\+N\+DS@{D\+E\+L\+A\+Y\+\_\+\+M\+I\+C\+R\+O\+S\+E\+C\+O\+N\+DS}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{D\+E\+L\+A\+Y\+\_\+\+M\+I\+C\+R\+O\+S\+E\+C\+O\+N\+DS}{DELAY\_MICROSECONDS}}
+{\footnotesize\ttfamily \#define D\+E\+L\+A\+Y\+\_\+\+M\+I\+C\+R\+O\+S\+E\+C\+O\+N\+DS~1000000}
+
+\mbox{\Hypertarget{myCode_8c_af5e3aa7c9b13673c6a94f8ebb70010db}\label{myCode_8c_af5e3aa7c9b13673c6a94f8ebb70010db}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!E\+N\+E\+MY@{E\+N\+E\+MY}}
+\index{E\+N\+E\+MY@{E\+N\+E\+MY}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{E\+N\+E\+MY}{ENEMY}}
+{\footnotesize\ttfamily \#define E\+N\+E\+MY~\textquotesingle{}Z\textquotesingle{}}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{myCode_8c_a4d7131fc9fd81f16dec89a43cd6168e7}\label{myCode_8c_a4d7131fc9fd81f16dec89a43cd6168e7}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!bullet@{bullet}}
+\index{bullet@{bullet}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{bullet()}{bullet()}}
+{\footnotesize\ttfamily void bullet (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int $\ast$}]{Zy\+Loc,  }\item[{int $\ast$}]{Zx\+Loc,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc,  }\item[{char $\ast$}]{dir,  }\item[{int}]{key }\end{DoxyParamCaption})}
+
+$\ast$$\ast$ Bullet $\ast$$\ast$
+
+This function will print a fired bullet if the space key is pressed
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, Zy\+Loc and Zx\+Loc represents the zombie locations, y\+Loc and x\+Loc represents the player location, dir represents the direction the player is looking towards, and key is the key pressed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8c_a504d2bf5380fd706150a85fef573ee06}\label{myCode_8c_a504d2bf5380fd706150a85fef573ee06}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!display\+\_\+level@{display\+\_\+level}}
+\index{display\+\_\+level@{display\+\_\+level}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{display\+\_\+level()}{display\_level()}}
+{\footnotesize\ttfamily void display\+\_\+level (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int}]{lvl }\end{DoxyParamCaption})}
+
+$\ast$$\ast$ Display Level $\ast$$\ast$
+
+This function will format and display all 3 levels of the game.
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, lvl represents the current level \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8c_a14d4d7f1077d10b5505cf23e93af2ff0}\label{myCode_8c_a14d4d7f1077d10b5505cf23e93af2ff0}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!move\+Character@{move\+Character}}
+\index{move\+Character@{move\+Character}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{move\+Character()}{moveCharacter()}}
+{\footnotesize\ttfamily void move\+Character (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc,  }\item[{char $\ast$}]{dir,  }\item[{int}]{key }\end{DoxyParamCaption})}
+
+$\ast$$\ast$ Move Character$\ast$$\ast$
+
+This function will move the character to a new location based on the key pressed
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, y\+Loc and x\+Loc represents the player location, dir represents the direction the player is looking towards, and key is the key pressed by the player. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8c_ab3d0713d509ed661ef53423996d1b2b0}\label{myCode_8c_ab3d0713d509ed661ef53423996d1b2b0}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!move\+Enemy@{move\+Enemy}}
+\index{move\+Enemy@{move\+Enemy}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{move\+Enemy()}{moveEnemy()}}
+{\footnotesize\ttfamily void move\+Enemy (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int $\ast$}]{Zy\+Loc,  }\item[{int $\ast$}]{Zx\+Loc,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc }\end{DoxyParamCaption})}
+
+{\bfseries Move Enemy}
+
+This function will move the zombie location towards the player\textquotesingle{}s location.
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, Zy\+Loc and Zx\+Loc represents the zombie location, y\+Loc and x\+Loc represents the player location \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8c_a4b59939f24bdeb0c8185e64b0eafcfae}\label{myCode_8c_a4b59939f24bdeb0c8185e64b0eafcfae}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!print\+Character@{print\+Character}}
+\index{print\+Character@{print\+Character}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{print\+Character()}{printCharacter()}}
+{\footnotesize\ttfamily void print\+Character (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{char}]{symbol,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc,  }\item[{int}]{type }\end{DoxyParamCaption})}
+
+{\bfseries Print Character}
+
+This function will delete (fill white space) and print the character
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, symbol represents the symbol used to print the character, y\+Loc and x\+Loc represent the player location and type represents whether to delete (0) or print (1) the character \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8c_a58681c272cc6823a0da0cef379100df2}\label{myCode_8c_a58681c272cc6823a0da0cef379100df2}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!print\+Enemy@{print\+Enemy}}
+\index{print\+Enemy@{print\+Enemy}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{print\+Enemy()}{printEnemy()}}
+{\footnotesize\ttfamily void print\+Enemy (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{char}]{symbol,  }\item[{int $\ast$}]{Zy\+Loc,  }\item[{int $\ast$}]{Zx\+Loc,  }\item[{int}]{type,  }\item[{int $\ast$}]{hit }\end{DoxyParamCaption})}
+
+{\bfseries Print Enemy (zombies)}
+
+This function will delete (fill white space) and print the zombies
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, symbol represents the symbol used to print the zombie, Zy\+Loc and Zx\+Loc represent the zombie location and type represents whether to delete or print the character, hit represents whether the zombie has been hit by a bullet or not \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{myCode_8c_a31122e82e58eb74a834773faaeced4a8}\label{myCode_8c_a31122e82e58eb74a834773faaeced4a8}} 
+\index{my\+Code.\+c@{my\+Code.\+c}!splash\+\_\+screen@{splash\+\_\+screen}}
+\index{splash\+\_\+screen@{splash\+\_\+screen}!my\+Code.\+c@{my\+Code.\+c}}
+\subsubsection{\texorpdfstring{splash\+\_\+screen()}{splash\_screen()}}
+{\footnotesize\ttfamily int splash\+\_\+screen (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+$\ast$$\ast$$\ast$ Spash Screen $\ast$$\ast$$\ast$ This function will provide a title (splash) screen that will show the title and the buttons. An instruction will also be laid out.
+
+
+\begin{DoxyParams}{Parameters}
+{\em None} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns 0 in normal execution 
+\end{DoxyReturn}

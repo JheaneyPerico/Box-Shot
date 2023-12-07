@@ -1,0 +1,89 @@
+\hypertarget{character_8h}{}\section{character.\+h File Reference}
+\label{character_8h}\index{character.\+h@{character.\+h}}
+{\ttfamily \#include $<$ncurses.\+h$>$}\newline
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{character_8h_a4b59939f24bdeb0c8185e64b0eafcfae}{print\+Character}} (W\+I\+N\+D\+OW $\ast$win, char symbol, int $\ast$y\+Loc, int $\ast$x\+Loc, int type)
+\item 
+void \mbox{\hyperlink{character_8h_a14d4d7f1077d10b5505cf23e93af2ff0}{move\+Character}} (W\+I\+N\+D\+OW $\ast$win, int $\ast$y\+Loc, int $\ast$x\+Loc, char $\ast$dir, int key)
+\item 
+void \mbox{\hyperlink{character_8h_a58681c272cc6823a0da0cef379100df2}{print\+Enemy}} (W\+I\+N\+D\+OW $\ast$win, char symbol, int $\ast$Zy\+Loc, int $\ast$Zx\+Loc, int type, int $\ast$hit)
+\item 
+void \mbox{\hyperlink{character_8h_ab3d0713d509ed661ef53423996d1b2b0}{move\+Enemy}} (W\+I\+N\+D\+OW $\ast$win, int $\ast$Zy\+Loc, int $\ast$Zx\+Loc, int $\ast$y\+Loc, int $\ast$x\+Loc)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{character_8h_a14d4d7f1077d10b5505cf23e93af2ff0}\label{character_8h_a14d4d7f1077d10b5505cf23e93af2ff0}} 
+\index{character.\+h@{character.\+h}!move\+Character@{move\+Character}}
+\index{move\+Character@{move\+Character}!character.\+h@{character.\+h}}
+\subsubsection{\texorpdfstring{move\+Character()}{moveCharacter()}}
+{\footnotesize\ttfamily void move\+Character (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc,  }\item[{char $\ast$}]{dir,  }\item[{int}]{key }\end{DoxyParamCaption})}
+
+$\ast$$\ast$ Move Character$\ast$$\ast$
+
+This function will move the character to a new location based on the key pressed
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, y\+Loc and x\+Loc represents the player location, dir represents the direction the player is looking towards, and key is the key pressed by the player. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{character_8h_ab3d0713d509ed661ef53423996d1b2b0}\label{character_8h_ab3d0713d509ed661ef53423996d1b2b0}} 
+\index{character.\+h@{character.\+h}!move\+Enemy@{move\+Enemy}}
+\index{move\+Enemy@{move\+Enemy}!character.\+h@{character.\+h}}
+\subsubsection{\texorpdfstring{move\+Enemy()}{moveEnemy()}}
+{\footnotesize\ttfamily void move\+Enemy (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{int $\ast$}]{Zy\+Loc,  }\item[{int $\ast$}]{Zx\+Loc,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc }\end{DoxyParamCaption})}
+
+{\bfseries Move Enemy}
+
+This function will move the zombie location towards the player\textquotesingle{}s location.
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, Zy\+Loc and Zx\+Loc represents the zombie location, y\+Loc and x\+Loc represents the player location \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{character_8h_a4b59939f24bdeb0c8185e64b0eafcfae}\label{character_8h_a4b59939f24bdeb0c8185e64b0eafcfae}} 
+\index{character.\+h@{character.\+h}!print\+Character@{print\+Character}}
+\index{print\+Character@{print\+Character}!character.\+h@{character.\+h}}
+\subsubsection{\texorpdfstring{print\+Character()}{printCharacter()}}
+{\footnotesize\ttfamily void print\+Character (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{char}]{symbol,  }\item[{int $\ast$}]{y\+Loc,  }\item[{int $\ast$}]{x\+Loc,  }\item[{int}]{type }\end{DoxyParamCaption})}
+
+{\bfseries Print Character}
+
+This function will delete (fill white space) and print the character
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, symbol represents the symbol used to print the character, y\+Loc and x\+Loc represent the player location and type represents whether to delete (0) or print (1) the character \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{character_8h_a58681c272cc6823a0da0cef379100df2}\label{character_8h_a58681c272cc6823a0da0cef379100df2}} 
+\index{character.\+h@{character.\+h}!print\+Enemy@{print\+Enemy}}
+\index{print\+Enemy@{print\+Enemy}!character.\+h@{character.\+h}}
+\subsubsection{\texorpdfstring{print\+Enemy()}{printEnemy()}}
+{\footnotesize\ttfamily void print\+Enemy (\begin{DoxyParamCaption}\item[{W\+I\+N\+D\+OW $\ast$}]{win,  }\item[{char}]{symbol,  }\item[{int $\ast$}]{Zy\+Loc,  }\item[{int $\ast$}]{Zx\+Loc,  }\item[{int}]{type,  }\item[{int $\ast$}]{hit }\end{DoxyParamCaption})}
+
+{\bfseries Print Enemy (zombies)}
+
+This function will delete (fill white space) and print the zombies
+
+
+\begin{DoxyParams}{Parameters}
+{\em win} & represents the game window, symbol represents the symbol used to print the zombie, Zy\+Loc and Zx\+Loc represent the zombie location and type represents whether to delete or print the character, hit represents whether the zombie has been hit by a bullet or not \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+returns None 
+\end{DoxyReturn}

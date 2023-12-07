@@ -11,6 +11,12 @@
 #include "myCode.h"
 #define ENEMY 'Z'
 
+
+/// *** Spash Screen ***
+/// This function will provide a title (splash) screen that will show the title and the buttons. An instruction will also be laid out.
+///
+/// @param None
+/// @return returns 0 in normal execution
 int splash_screen() {
 
 	clear();
@@ -58,8 +64,8 @@ int splash_screen() {
 	mvprintw(31, 9, "INSTRUCTIONS:");
 	mvprintw(33, 5, "MOVE USING ARROR KEYS");
 	mvprintw(35, 5, "USE 'SPACE' TO SHOOT");
-	mvprintw(37, 4, "COLLECT WEAPONS AND ITEMS");
-	mvprintw(39, 3, "ELIMINATE ALL ZOMBIES TO WIN");
+//	mvprintw(37, 4, "COLLECT WEAPONS AND ITEMS");
+	mvprintw(37, 3, "ELIMINATE ALL ZOMBIES TO WIN");
 	attroff(A_DIM);
 
 	// BORDER
@@ -153,22 +159,17 @@ int splash_screen() {
 
 
 }
-
+/// **Print Character**
+///
+/// This function will delete (fill white space) and print the character
+/// 
+/// @param win represents the game window, symbol represents the symbol used to print the character, yLoc and xLoc represent the player location and type represents whether to delete (0) or print (1) the character
+/// @return returns None
 void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
-
-	/*
-	if(has_colors()){
-		start_color();
-		init_pair(2, COLOR_BLACK, COLOR_GREEN);
-	}
-	*/
 
 	// Green Character
 	if (type == 1){
-		
-	//	wattron(win, COLOR_PAIR(2));
 		mvwprintw(win, *(yLoc), *(xLoc), "%c", symbol);
-	//	wattroff(win, COLOR_PAIR(2));
 		}
 
 	// Leave invisible traces when moved
@@ -180,6 +181,12 @@ void printCharacter(WINDOW *win, char symbol, int *yLoc, int *xLoc, int type){
 	return;
 }
 
+/// ** Move Character**
+///
+/// This function will move the character to a new location based on the key pressed
+///
+/// @param win represents the game window, yLoc and xLoc represents the player location, dir represents the direction the player is looking towards, and key is the key pressed by the player.
+/// @return returns None
 void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, char *dir, int key){
 
 	// MOVE PLAYER
@@ -192,8 +199,6 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, char *dir, int key){
 				(*yLoc)--;
 				*dir = 'u';
 			}
-
-			//if (mvwinch(win, *yLoc, *xLoc) == '#')
 
 			break;
 
@@ -229,7 +234,12 @@ void moveCharacter(WINDOW *win, int *yLoc, int *xLoc, char *dir, int key){
 
 
 }
-
+/// ** Bullet **
+///
+/// This function will print a fired bullet if the space key is pressed
+///
+/// @param win represents the game window, ZyLoc and ZxLoc represents the zombie locations, yLoc and xLoc represents the player location, dir represents the direction the player is looking towards, and key is the key pressed.
+/// @return returns None
 void bullet(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, char *dir, int key){
 	
 	if (key == ' '){
@@ -261,30 +271,17 @@ void bullet(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, char *dir
 			wrefresh(win);
 	}
 
-	/*
-	int max_y, max_x;
-	getmaxyx(win, max_y, max_x);
-
-	int y = *(yLoc);
-	int x = *(xLoc);
-
-	if (key == ' '){
-		if (*dir == 'r'){
-			while (x < max_x){
-				
-				//mvwprintw(win, y, x, " ");
-				mvwprintw(win, y, x + 1, "-");
-				x += 1;
-				sleep(1);
-			}	
-		}
-	}
-*/
 	return;
 	
 	
 }
-
+/// **Print Enemy (zombies)**
+///
+/// This function will delete (fill white space) and print the zombies
+///
+/// @param win represents the game window, symbol represents the symbol used to print the zombie, ZyLoc and ZxLoc represent the zombie location and type represents whether to delete or print the character, hit represents whether
+/// the zombie has been hit by a bullet or not
+/// @return returns None
 void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int *hit){
 
 	if (*hit == 0){
@@ -319,6 +316,13 @@ void printEnemy(WINDOW *win, char symbol, int *ZyLoc, int *ZxLoc, int type, int 
         return;
 }
 
+
+/// **Move Enemy**
+///
+/// This function will move the zombie location towards the player's location.
+///
+/// @param win represents the game window, ZyLoc and ZxLoc represents the zombie location, yLoc and xLoc represents the player location
+/// @return returns None
 void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
 	int deltaY = ((*yLoc > *ZyLoc)) && ((mvwinch(win, *ZyLoc+1, *ZxLoc) == ' ' || mvwinch(win, *ZyLoc+1, *ZxLoc) == '-' || mvwinch(win, *ZyLoc+1, *ZxLoc) == '|') || (mvwinch(win, *ZyLoc+1, *ZxLoc)== 'P')) ? 1 : ((*yLoc < *ZyLoc)) && ((mvwinch(win, *ZyLoc-1, *ZxLoc) == ' ' || mvwinch(win, *ZyLoc-1, *ZxLoc) == '-' || mvwinch(win, *ZyLoc-1, *ZxLoc) == '|' ) || (mvwinch(win, *ZyLoc-1, *ZxLoc) == 'P')) ? -1 : 0;
 
@@ -334,65 +338,12 @@ void moveEnemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc){
 
 }
 
-
-int upgrade_box(WINDOW *win, int MAX_NUM, int *yLoc, int *xLoc){
-
-	int max_y, max_x;
-	getmaxyx(win, max_y, max_x);
-
-	int guntype;
-
-	// COLOR YELLOW -> PAIR(4)
-	if (has_colors()){
-		start_color();
-		init_pair(4, COLOR_YELLOW, COLOR_YELLOW);
-	}
-	
-	guntype = 0;
-
-	wattron(win, COLOR_PAIR(4)); // yellow
-	switch(MAX_NUM) {
-		case 1: // (lvl 1 -> 1 box)
-			mvwprintw(win, max_y / 2 + 7, max_x / 4 + 5, "##");
-			break;
-
-		case 2: // (lvl 2 -> 2 boxes)
-			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
-			mvwprintw(win, max_y / 2 + 8, max_x / 2 + 6, "##");
-			break;
-
-		case 3: // (lvl 3 -> 3 boxes)
-			mvwprintw(win, max_y / 4 - 1, max_x / 3 + 5, "##");
-			mvwprintw(win, max_y / 2 + 3, max_x / 2 + 23, "##");
-			mvwprintw(win, max_y / 2 + 8, max_x / 2 - 5, "##");
-			break;
-
-	}
-
-	if (mvwinch(win, *yLoc, *xLoc) == '#'){
-		guntype += 1;
-
-	}
-	wattroff(win, COLOR_PAIR(4));
-
-	wrefresh(win);
-
-	return guntype;
-
-}
-
-void enemy(WINDOW *win, int *ZyLoc, int *ZxLoc, int *yLoc, int *xLoc, int *hit){
-	 printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
-	 printEnemy(win, ' ', ZyLoc, ZxLoc, 0, hit);
-	 moveEnemy(win, ZyLoc, ZxLoc, yLoc, xLoc);
-	 printEnemy(win, 'Z', ZyLoc, ZxLoc, 1, hit);
-
-//	 if ((mvwinch(win, *ZyLoc, *ZxLoc) == 'P'){ 
-}
-
-
-
-
+/// ** Display Level **
+///
+/// This function will format and display all 3 levels of the game.
+///
+/// @param win represents the game window, lvl represents the current level
+/// @return returns None
 void display_level(WINDOW *win, int lvl){
 
 	wborder(win, '|', '|', '-', '-', '+', '+', '+', '+');
