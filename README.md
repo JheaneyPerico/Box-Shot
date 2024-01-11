@@ -1,5 +1,5 @@
 # BOX SHOT
-**Box Shot** is a simple 2d 3rd person game that requires the player to survive and eliminate all zombies to win. Each level will get more difficult. Have fun!
+**Box Shot** is a simple 2d 3rd person terminal game created using C language that requires the player to survive and eliminate all zombies to win. Each level will get more difficult. Have fun!
 
 ## GAME PLAN:
 1.  *Shoot and kill* all zombies, while evading them (avoid collision) to win and progress through levels. 
